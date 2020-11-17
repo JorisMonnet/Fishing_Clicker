@@ -13,17 +13,11 @@
     android:orientation="horizontal"
     android:gravity="bottom">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_upgrade"
-        android:contentDescription="@string/nav_header_desc"
-        android:id="@+id/imageView" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:drawablePadding="5dp"
+        app:drawableStartCompat="@drawable/ic_upgrade" />
 </LinearLayout>
