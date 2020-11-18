@@ -4,7 +4,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_boat1">Boat 1</string>
-    <string name="menu_boat2">Boat 2</string>
-    <string name="menu_boat3">Boat 3</string>
+    <string name="menu_boat1">Boat 1 Level : </string>
+    <string name="menu_boat2">Boat 2 Level : </string>
+    <string name="menu_boat3">Boat 3 Level : </string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close Drawer</string>
 </resources>
