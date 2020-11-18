@@ -7,7 +7,6 @@ import kotlin.math.log10
 class Boat(var efficiency: Double, private val index: Int) {
 
     //var init
-    private var clickReward=efficiency*3600/100;
     private var level=0;
     private var image = when (index) {
         1 -> R.drawable.ic_boat
@@ -19,24 +18,11 @@ class Boat(var efficiency: Double, private val index: Int) {
     }
 
     /**
-     * getter for the level of the boat
-     */
-    fun getLevel():Int{return level}
-
-    /**
      * Function to self update on call the level & then the efficiency of the boat
      */
     fun increaseLevel() {
         level.inc();
         efficiency = efficiency*level/10;
-        clickReward=efficiency;
-    }
-
-    /**
-     * Function to return the amount of gain per click on the boat
-     */
-    fun doClickReward():Double{
-        return clickReward;
     }
 
     /**
