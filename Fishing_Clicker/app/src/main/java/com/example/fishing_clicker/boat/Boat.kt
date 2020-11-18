@@ -29,7 +29,7 @@ class Boat(var efficiency: Double, private val index: Int) {
     fun increaseLevel() {
         level.inc();
         efficiency = efficiency*level/10;
-        clickReward=efficiency*3600/100
+        clickReward=efficiency;
     }
 
     /**
@@ -43,6 +43,6 @@ class Boat(var efficiency: Double, private val index: Int) {
      * Function to return the reward within a time period
      */
     fun doMoneyReward(elapsedSec: Double): Double {
-        return elapsedSec / 3600 * efficiency;
+        return elapsedSec * efficiency;
     }
 }
