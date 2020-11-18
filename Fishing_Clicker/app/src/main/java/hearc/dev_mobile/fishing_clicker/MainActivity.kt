@@ -1,4 +1,4 @@
-package com.example.fishing_clicker
+package hearc.dev_mobile.fishing_clicker
 
 import android.os.Bundle
 import android.view.Menu

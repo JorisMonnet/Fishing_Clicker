@@ -3,18 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="all"
-            android:id="@+id/menu">
+    <group android:checkableBehavior="all">
         <item
-            android:id="@+id/boat1"
             android:icon="@drawable/ic_boat"
             android:title="@string/menu_boat1"/>
         <item
-            android:id="@+id/boat2"
             android:icon="@drawable/ic_boat"
             android:title="@string/menu_boat2" />
         <item
-            android:id="@+id/boat3"
             android:icon="@drawable/ic_boat"
             android:title="@string/menu_boat3" />
     </group>
