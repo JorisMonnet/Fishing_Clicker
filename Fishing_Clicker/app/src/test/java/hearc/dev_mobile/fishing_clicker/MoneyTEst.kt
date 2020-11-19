@@ -9,25 +9,21 @@ import kotlin.math.pow
  *
  */
 class MoneyTEst {
-    private var thousands : Int = 60
-    private val thousandsList : MutableList<String> = mutableListOf("","k","M","B")
-    private val alphabet : String = "abcdefghijklmnopqrstuvwxyz"
-
     @Test
     fun generateList() {
-        for(i in thousandsList.size+1..thousands) {
-            if (i - 4 > alphabet.length) {
-                var power = 1
-                while(i-4-alphabet.length*power>alphabet.length)power++
-                thousandsList.add(alphabet[power-1].toString()+alphabet[i - 5 - alphabet.length*power].toString())
-            } else {
-                thousandsList.add(alphabet[i-5].toString())
-            }
-        }
+        val thousandsList : MutableList<String> = mutableListOf("","k","M","B")
+        //a to z
+        for(element in CharRange('a','z'))
+            thousandsList.add(element.toString())
+        //aa to zz
+        for(firstChar in CharRange('a','z'))
+            for(SecondChar in CharRange('a','z'))
+                thousandsList.add(firstChar.toString() + SecondChar.toString())
         assertEquals(thousandsList[0],"")
         assertEquals(thousandsList[2],"M")
         assertEquals(thousandsList[5],"b")
-        assertEquals(thousandsList[27+3], "aa")
-        assertEquals(thousandsList[54+3], "bb")
+        assertEquals(thousandsList[26+4], "aa") //value after one time alphabet with only one char and the 4 first values
+        assertEquals(thousandsList[52+5], "bb") //value after one time alphabet with 'a' as first character and the 30 before
+        assertEquals(thousandsList[thousandsList.size-1],"zz")
     }
 }
