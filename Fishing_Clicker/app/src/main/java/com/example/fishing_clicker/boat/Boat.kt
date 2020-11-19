@@ -21,14 +21,14 @@ class Boat(var efficiency: Double, private val index: Int) {
      * Function to self update on call the level & then the efficiency of the boat
      */
     fun increaseLevel() {
-        level.inc();
-        efficiency = efficiency*level/10;
+        level.inc()
+        efficiency = efficiency*level/10
     }
 
     /**
      * Function to return the reward within a time period
      */
     fun doMoneyReward(elapsedSec: Double): Double {
-        return elapsedSec * efficiency;
+        return elapsedSec * efficiency
     }
 }

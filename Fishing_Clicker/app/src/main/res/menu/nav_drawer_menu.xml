@@ -6,14 +6,18 @@
     <group
         android:id="@+id/menu"
         android:checkableBehavior="all">
+
         <item
             android:id="@+id/boat1"
             android:icon="@drawable/ic_boat"
-            android:title="@string/menu_boat1" />
-
+            android:title="@string/menu_boat1_init" />
         <item
-            android:id="@+id/buttonBuy"
-            android:title="Buy a boat (100)" />
-
+            android:id="@+id/boat2"
+            android:icon="@drawable/ic_boat2"
+            android:title="@string/menu_boat2_init" />
+        <item
+            android:id="@+id/boat3"
+            android:icon="@drawable/ic_boat3"
+            android:title="@string/menu_boat3_init" />
     </group>
 </menu>
