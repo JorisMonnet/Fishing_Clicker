@@ -1,23 +1,19 @@
 package hearc.dev_mobile.fishing_clicker
 
-import android.nfc.Tag
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import kotlinx.android.synthetic.main.app_bar_main.*
+import androidx.fragment.app.FragmentContainerView
 import java.math.BigInteger
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-
+    var generalMoney = Money()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,15 +27,22 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-        val money = Money()
-        money.value= BigInteger("15234567453156431564")
-        val text : TextView = findViewById(R.id.moneyTextView)
-        text.text = money.valueToString()
+        val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
+        updateMoneyTextView(BigInteger.ZERO)
+        contentLayout.setOnClickListener {
+            updateMoneyTextView(BigInteger.valueOf(1))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
+    }
+
+    fun updateMoneyTextView(valueToAdd : BigInteger){
+        val text : TextView = findViewById(R.id.moneyTextView)
+        generalMoney.value = generalMoney.value.add(valueToAdd)
+        text.text = generalMoney.toString()
     }
 }

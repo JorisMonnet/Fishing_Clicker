@@ -4,7 +4,6 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import java.math.BigInteger
-import kotlin.math.pow
 
 /**
  *

@@ -30,7 +30,6 @@
         android:layout_gravity="top|end"
         android:layout_marginTop="74dp"
         android:layout_marginEnd="8dp"
-        android:text="0123415641523156453121586341531"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         app:drawableEndCompat="@drawable/ic_money" />
