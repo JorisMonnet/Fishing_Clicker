@@ -23,10 +23,9 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var boatManager: BoatManager
-    var generalMoney = Money()
+
 
     var user = User()
-    private val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-
+        val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
         updateMoneyTextView(BigInteger.ZERO)
         contentLayout.setOnClickListener {
             updateMoneyTextView(user.getClickValue())
@@ -90,7 +89,8 @@ class MainActivity : AppCompatActivity() {
 
 
     fun updateMoneyTextView(valueToAdd : BigInteger){
-        val text : TextView = findViewById(R.id.moneyTextView)
+
+        val text: TextView = findViewById(R.id.moneyTextView)
         user.money.value = user.money.value.add(valueToAdd)
         text.text = user.money.toString()
         if(user.money.value.compareTo(BigInteger.valueOf(10.0.pow(user.level*3+6).toLong()))==1){
