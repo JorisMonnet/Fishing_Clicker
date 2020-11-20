@@ -10,10 +10,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentContainerView
 import java.math.BigInteger
+import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
 
-    var generalMoney = Money()
+    var user = User()
+    private val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,10 +30,10 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-        val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
+
         updateMoneyTextView(BigInteger.ZERO)
         contentLayout.setOnClickListener {
-            updateMoneyTextView(BigInteger.valueOf(1))
+            updateMoneyTextView(user.getClickValue())
         }
     }
 
@@ -42,7 +45,12 @@ class MainActivity : AppCompatActivity() {
 
     fun updateMoneyTextView(valueToAdd : BigInteger){
         val text : TextView = findViewById(R.id.moneyTextView)
-        generalMoney.value = generalMoney.value.add(valueToAdd)
-        text.text = generalMoney.toString()
+        user.money.value = user.money.value.add(valueToAdd)
+        text.text = user.money.toString()
+        if(user.money.value.compareTo(BigInteger.valueOf(10.0.pow(user.level*3+6).toLong()))==1){
+            user.level++
+            TODO()  //change background when changing of level
+            //contentLayout.background = R.drawable.bgLevel1
+        }
     }
 }
