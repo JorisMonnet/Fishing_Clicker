@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
 
     private lateinit var boatManager: BoatManager
-    var generalMoney = Money(6)
+    var generalMoney = Money()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
             while (true) {
                 for (boat in boatManager.boatList) {
                     // try to touch View of UI thread
-                    this@MainActivity.runOnUiThread(java.lang.Runnable {
-                        boat.doMoneyReward(1.0)
-                    })
+                    this@MainActivity.runOnUiThread {
+                        boat.doMoneyReward(1L)
+                    }
                 }
                 try {
                     Thread.sleep(999)
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             }
         }).start()
 
-        updateMoneyTextView(BigInteger.valueOf(50000000000))
+        //updateMoneyTextView(BigInteger.valueOf(5000000))// TOREMOVE FOR RELEASE
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -87,5 +87,4 @@ class MainActivity : AppCompatActivity() {
         generalMoney.value = generalMoney.value.add(valueToAdd)
         text.text = generalMoney.toString()
     }
-
 }

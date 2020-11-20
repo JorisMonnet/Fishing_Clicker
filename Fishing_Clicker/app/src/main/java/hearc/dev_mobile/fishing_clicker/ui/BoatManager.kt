@@ -12,31 +12,30 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigInteger
 import java.util.*
 
-class BoatManager(val mainActivity: MainActivity) {
+class BoatManager(private val mainActivity: MainActivity) {
 
 
     var boatList = LinkedList<Boat>()
     private var boatIndex = 1
-    private var baseEfficiency = 1.0
+    private var baseEfficiency = BigInteger.valueOf(1)
     val initPriceBoat: BigInteger = BigInteger.valueOf(100)
     private var currentNewBoatPrice = BigInteger.valueOf(100)
 
     private var navView: NavigationView = mainActivity.nav_view
     private var applicationContext: Context = mainActivity.applicationContext
-    var money = mainActivity.generalMoney
+    private var money = mainActivity.generalMoney
 
 
     private fun buyABoat() {
         boatList.add(
             Boat(
-                // baseEfficiency, boatIndex, powInt(initPriceBoat, boatIndex++,mainActivity)TODO remove line under this (it's here only for test)
                 baseEfficiency,
                 boatIndex,
                 initPriceBoat.multiply(BigInteger.valueOf(2)),
                 mainActivity
             )
         )
-        baseEfficiency *= 1.5
+        baseEfficiency = baseEfficiency.multiply(BigInteger.valueOf(10))
         mainActivity.updateMoneyTextView(currentNewBoatPrice.negate())
         currentNewBoatPrice = currentNewBoatPrice.multiply(BigInteger.valueOf(150))
     }
@@ -102,10 +101,10 @@ class BoatManager(val mainActivity: MainActivity) {
                 .show()
         }
         if (action) {
-            var money=Money(4)
-            money.value= boatList[inxBoat].priceUpdate
+            val money = Money()
+            money.value = boatList[inxBoat].priceUpdate
             it.title =
-                "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${money.toString()}$"
+                "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${money}$"
         }
 
     }
