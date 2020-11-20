@@ -9,7 +9,6 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -25,12 +24,12 @@
 
     <include layout="@layout/content_main"/>
     <TextView
+        android:id="@+id/moneyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
         android:layout_marginTop="74dp"
         android:layout_marginEnd="8dp"
-        android:text="0123415641523156453121586341531"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         app:drawableEndCompat="@drawable/ic_money" />
