@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
 
     private lateinit var boatManager: BoatManager
-    var generalMoney = Money()
+    var generalMoney = Money(6)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +64,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }).start()
+
+        updateMoneyTextView(BigInteger.valueOf(50000000000))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

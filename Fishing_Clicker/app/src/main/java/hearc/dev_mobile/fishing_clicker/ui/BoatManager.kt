@@ -6,6 +6,7 @@ import android.widget.Toast
 import hearc.dev_mobile.fishing_clicker.boat.Boat
 import com.google.android.material.navigation.NavigationView
 import hearc.dev_mobile.fishing_clicker.MainActivity
+import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigInteger
@@ -101,8 +102,10 @@ class BoatManager(val mainActivity: MainActivity) {
                 .show()
         }
         if (action) {
+            var money=Money(4)
+            money.value= boatList[inxBoat].priceUpdate
             it.title =
-                "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${boatList[inxBoat].priceUpdate}$"
+                "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${money.toString()}$"
         }
 
     }
