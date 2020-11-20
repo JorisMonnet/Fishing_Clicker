@@ -34,7 +34,7 @@ class MoneyTEst {
         assertEquals(valueToString(BigInteger.valueOf(12345678)),"12345k")
         assertEquals(valueToString(BigInteger.valueOf(123456789)),"123456k")
         assertEquals(valueToString(BigInteger.valueOf(1234567891)),"1234M")
-
+        assertEquals(valueToString(BigInteger("100000000000000000000000000000000000000000000000000")),"100000l")
     }
 
     private fun valueToString(value : BigInteger): String{
