@@ -1,16 +1,13 @@
 package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import hearc.dev_mobile.fishing_clicker.boat.Boat
 import com.google.android.material.navigation.NavigationView
 import hearc.dev_mobile.fishing_clicker.MainActivity
-import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 import java.math.BigInteger
 import java.util.*
 
@@ -23,7 +20,7 @@ class BoatManager(val mainActivity: MainActivity) {
     val initPriceBoat: BigInteger = BigInteger.valueOf(100)
     private var currentNewBoatPrice = BigInteger.valueOf(100)
 
-    private var nav_view: NavigationView = mainActivity.nav_view
+    private var navView: NavigationView = mainActivity.nav_view
     private var applicationContext: Context = mainActivity.applicationContext
     var money = mainActivity.generalMoney
 
@@ -32,17 +29,20 @@ class BoatManager(val mainActivity: MainActivity) {
         boatList.add(
             Boat(
                 // baseEfficiency, boatIndex, powInt(initPriceBoat, boatIndex++,mainActivity)TODO remove line under this (it's here only for test)
-                baseEfficiency, boatIndex, initPriceBoat, mainActivity
+                baseEfficiency,
+                boatIndex,
+                initPriceBoat.multiply(BigInteger.valueOf(2)),
+                mainActivity
             )
         )
         baseEfficiency *= 1.5
         mainActivity.updateMoneyTextView(currentNewBoatPrice.negate())
-        currentNewBoatPrice = currentNewBoatPrice.multiply(BigInteger.valueOf(2))
+        currentNewBoatPrice = currentNewBoatPrice.multiply(BigInteger.valueOf(150))
     }
 
 
     fun createBoatMenuListener() {
-        nav_view.setNavigationItemSelectedListener {
+        navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.boat1 -> {
 
@@ -64,11 +64,13 @@ class BoatManager(val mainActivity: MainActivity) {
         it: MenuItem,
         nextIdBoat: Int, inxBoat: Int
     ) {
+        var action = false
         if (money.value >= currentNewBoatPrice && boatList.size <= inxBoat) {
+            action = true
             buyABoat()
             if (nextIdBoat != -1) {
-                nav_view.menu.findItem(nextIdBoat).isVisible = true
-                nav_view.menu.findItem(nextIdBoat).title =
+                navView.menu.findItem(nextIdBoat).isVisible = true
+                navView.menu.findItem(nextIdBoat).title =
                     "Buy Boat ${inxBoat + 2} for $currentNewBoatPrice$"
             }
             Toast.makeText(
@@ -81,6 +83,7 @@ class BoatManager(val mainActivity: MainActivity) {
             it.title =
                 "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${boatList[inxBoat].priceUpdate}$"
         } else if (boatList.size > inxBoat && (money.value.compareTo(boatList[inxBoat].priceUpdate) == 1 || money.value == boatList[inxBoat].priceUpdate)) {
+            action = true
             boatList[inxBoat].increaseLevel()
             money.value.subtract(boatList[inxBoat].priceUpdate)
             Toast.makeText(
@@ -89,6 +92,15 @@ class BoatManager(val mainActivity: MainActivity) {
                 Toast.LENGTH_SHORT
             )
                 .show()
+        } else if (!(boatList.size > inxBoat && (money.value.compareTo(boatList[inxBoat].priceUpdate) == 1 || money.value == boatList[inxBoat].priceUpdate)) || !(money.value >= currentNewBoatPrice && boatList.size <= inxBoat)) {
+            Toast.makeText(
+                applicationContext,
+                "Not enough money ! Go Fish !",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
+        if (action) {
             it.title =
                 "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${boatList[inxBoat].priceUpdate}$"
         }

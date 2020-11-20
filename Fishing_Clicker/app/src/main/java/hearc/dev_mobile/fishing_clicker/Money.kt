@@ -3,7 +3,7 @@ package hearc.dev_mobile.fishing_clicker
 import java.math.BigInteger
 
 class Money {
-    private val digitDisplayed = 6   //power of ten
+    private val digitDisplayed = 5   //power of ten
     var value : BigInteger = BigInteger.valueOf(0)
     private val mthousandsList : MutableList<String> = generateThousandsList()
 
