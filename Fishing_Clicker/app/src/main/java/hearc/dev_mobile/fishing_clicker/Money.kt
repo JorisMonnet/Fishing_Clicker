@@ -5,11 +5,10 @@ import kotlin.math.pow
 
 class Money {
     private val digitDisplayed = 6   //power of ten
-    private var value : BigInteger = BigInteger.valueOf(0)
-    private var thousands : Int = 0         //3 power of ten by 3
+    public var value : BigInteger = BigInteger.valueOf(0)
     private val mthousandsList : MutableList<String> = generateThousandsList()
 
-    fun valueToString(value : BigInteger): String{
+    fun valueToString(): String{
         val stringValue = value.toString()
         if(value < BigInteger.valueOf(999999)) return stringValue
         var power = 1

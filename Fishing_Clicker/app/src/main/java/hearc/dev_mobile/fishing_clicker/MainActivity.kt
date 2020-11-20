@@ -1,13 +1,18 @@
 package hearc.dev_mobile.fishing_clicker
 
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import kotlinx.android.synthetic.main.app_bar_main.*
+import java.math.BigInteger
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
+        val money = Money()
+        money.value= BigInteger("15234567453156431564")
+        val text : TextView = findViewById(R.id.moneyTextView)
+        text.text = money.valueToString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
