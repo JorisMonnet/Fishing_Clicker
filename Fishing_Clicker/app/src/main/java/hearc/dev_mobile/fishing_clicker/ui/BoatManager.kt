@@ -23,7 +23,7 @@ class BoatManager(private val mainActivity: MainActivity) {
 
     private var navView: NavigationView = mainActivity.nav_view
     private var applicationContext: Context = mainActivity.applicationContext
-    private var money = mainActivity.generalMoney
+    private var money = mainActivity.user.money
 
 
     private fun buyABoat() {
