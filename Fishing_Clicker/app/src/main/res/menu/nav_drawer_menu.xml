@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/menu"
+        android:checkableBehavior="all">
+
+        <item
+            android:id="@+id/boat1"
+            android:icon="@drawable/ic_boat"
+            android:title="@string/menu_boat1_init" />
+
+        <item
+            android:id="@+id/boat2"
+            android:icon="@drawable/ic_boat2"
+            android:visible="false"
+            android:title="@string/menu_boat2_init" />
+
+        <item
+            android:id="@+id/boat3"
+            android:icon="@drawable/ic_boat3"
+            android:visible="false"
+            android:title="@string/menu_boat3_init" />
+
+    </group>
+</menu>

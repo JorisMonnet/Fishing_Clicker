@@ -28,4 +28,6 @@ class Money {
                 thousandsList.add(firstChar.toString() + SecondChar.toString())
         return thousandsList
     }
+
+
 }

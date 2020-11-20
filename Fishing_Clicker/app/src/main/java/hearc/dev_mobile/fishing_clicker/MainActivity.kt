@@ -1,25 +1,38 @@
 package hearc.dev_mobile.fishing_clicker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.TextView
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentContainerView
+import hearc.dev_mobile.fishing_clicker.ui.BoatManager
+import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 import java.math.BigInteger
 import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var toggle: ActionBarDrawerToggle
+
+
+    private lateinit var boatManager: BoatManager
+    var generalMoney = Money()
 
     var user = User()
     private val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        boatManager = BoatManager(this)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -35,13 +48,46 @@ class MainActivity : AppCompatActivity() {
         contentLayout.setOnClickListener {
             updateMoneyTextView(user.getClickValue())
         }
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        boatManager.createBoatMenuListener()
+        Thread(Runnable {
+            while (true) {
+                for (boat in boatManager.boatList) {
+                    // try to touch View of UI thread
+                    this@MainActivity.runOnUiThread {
+                        boat.doMoneyReward(1L)
+                    }
+                }
+                try {
+                    Thread.sleep(999)
+                } catch (e: Exception) {
+                    Log.d("ThreadSleepError", e.toString())
+                }
+            }
+        }).start()
+
+        //updateMoneyTextView(BigInteger.valueOf(5000000))// TOREMOVE FOR RELEASE
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        nav_view.menu.findItem(R.id.boat1).title = "Boat1 cost ${boatManager.initPriceBoat}$"
         return true
     }
+
 
     fun updateMoneyTextView(valueToAdd : BigInteger){
         val text : TextView = findViewById(R.id.moneyTextView)
