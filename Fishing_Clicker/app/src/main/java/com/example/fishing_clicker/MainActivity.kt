@@ -3,8 +3,6 @@ package com.example.fishing_clicker
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,27 +10,15 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import com.example.fishing_clicker.boat.Boat
+import com.example.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
 
-    private var boatList: MutableList<Boat> = LinkedList<Boat>();
-    private var boatIndex = 1;
-    private var baseEfficiency = 1.0;
-
-
-    fun buyABoat(view: View) {
-        boatList.add(Boat(baseEfficiency, boatIndex));
-        baseEfficiency *= 1.5;
-        boatIndex++;
-    }
-
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var toggle: ActionBarDrawerToggle
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,26 +40,8 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        nav_view.setNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.boat1 -> {
-                    Toast.makeText(applicationContext, "Boat 1 clicked", Toast.LENGTH_SHORT).show()
-                    it.title = "Boat1 up cost 10£"
-                    
-                }
-                R.id.boat2 -> Toast.makeText(
-                    applicationContext,
-                    "Boat 2 clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.boat3 -> Toast.makeText(
-                    applicationContext,
-                    "Boat 3 clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            true
-        }
+        BoatManager.createBoatMenuListener(nav_view,applicationContext)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -86,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        nav_view.menu.findItem(R.id.boat1).title="Boat1 cost ${BoatManager.initPriceBoat}$"
         return true
     }
 
