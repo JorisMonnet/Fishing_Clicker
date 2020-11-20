@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.fishing_clicker"
+        applicationId "hearc.dev_mobile.fishing_clicker"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
