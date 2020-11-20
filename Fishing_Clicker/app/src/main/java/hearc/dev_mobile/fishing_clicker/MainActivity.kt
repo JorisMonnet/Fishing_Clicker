@@ -1,6 +1,7 @@
 package hearc.dev_mobile.fishing_clicker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.TextView
 import android.view.MenuItem
@@ -13,18 +14,19 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentContainerView
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 import java.math.BigInteger
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private lateinit var boatManager:BoatManager
+    private lateinit var boatManager: BoatManager
     var generalMoney = Money()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        boatManager=BoatManager(this)
+        boatManager = BoatManager(this)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -47,7 +49,21 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         boatManager.createBoatMenuListener()
-
+        Thread(Runnable {
+            while (true) {
+                for (boat in boatManager.boatList) {
+                    // try to touch View of UI thread
+                    this@MainActivity.runOnUiThread(java.lang.Runnable {
+                        boat.doMoneyReward(1.0)
+                    })
+                }
+                try {
+                    Thread.sleep(999)
+                } catch (e: Exception) {
+                    Log.d("ThreadSleepError", e.toString())
+                }
+            }
+        }).start()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -70,9 +86,4 @@ class MainActivity : AppCompatActivity() {
         text.text = generalMoney.toString()
     }
 
-    fun setMoneyTextView(value : BigInteger){
-        val text: TextView = findViewById(R.id.moneyTextView)
-        generalMoney.value = value
-        text.text = generalMoney.toString()
-    }
 }

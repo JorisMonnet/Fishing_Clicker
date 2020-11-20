@@ -10,7 +10,8 @@ class Boat(var efficiency: Double, private val index: Int, var priceUpdate: BigI
 
 
 
-    var level = 1;
+    var level = 1
+
     private var imageId = when (index) {
         0 -> R.drawable.ic_boat
         1 -> R.drawable.ic_boat2
@@ -25,17 +26,25 @@ class Boat(var efficiency: Double, private val index: Int, var priceUpdate: BigI
     /**
      * Function to self update on call the level & then the efficiency of the boat
      */
-    fun increaseLevel(money : Money) {
+    fun increaseLevel() {
         level+=1
-        efficiency = efficiency * level / 10
-        mainActivity.setMoneyTextView(money.value.subtract(priceUpdate))
-        priceUpdate=priceUpdate.multiply(BigInteger.valueOf(2))
+        efficiency += level*5
+        mainActivity.updateMoneyTextView(priceUpdate.negate())
+        priceUpdate+=priceUpdate.divide(BigInteger.valueOf(2))
     }
 
     /**
      * Function to return the reward within a time period
      */
-    fun doMoneyReward(elapsedSec: Double): Double {
-        return elapsedSec * efficiency
+    fun doMoneyReward(eSec: Double) {
+        mainActivity.updateMoneyTextView(BigInteger.valueOf((efficiency*eSec).toLong()))
+    }
+
+    fun powInt(n: Long, exp: Long): Long {
+        var temp = 1L
+        for (i in 1..exp) {
+            temp *= n
+        }
+        return temp
     }
 }

@@ -1,6 +1,7 @@
 package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import hearc.dev_mobile.fishing_clicker.boat.Boat
@@ -9,12 +10,14 @@ import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 import java.math.BigInteger
 import java.util.*
 
 class BoatManager(val mainActivity: MainActivity) {
 
-    private var boatList = LinkedList<Boat>()
+
+    var boatList = LinkedList<Boat>()
     private var boatIndex = 1
     private var baseEfficiency = 1.0
     val initPriceBoat: BigInteger = BigInteger.valueOf(100)
@@ -33,7 +36,7 @@ class BoatManager(val mainActivity: MainActivity) {
             )
         )
         baseEfficiency *= 1.5
-        mainActivity.setMoneyTextView(money.value.subtract(currentNewBoatPrice))
+        mainActivity.updateMoneyTextView(currentNewBoatPrice.negate())
         currentNewBoatPrice = currentNewBoatPrice.multiply(BigInteger.valueOf(2))
     }
 
@@ -78,7 +81,7 @@ class BoatManager(val mainActivity: MainActivity) {
             it.title =
                 "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${boatList[inxBoat].priceUpdate}$"
         } else if (boatList.size > inxBoat && (money.value.compareTo(boatList[inxBoat].priceUpdate) == 1 || money.value == boatList[inxBoat].priceUpdate)) {
-            boatList[inxBoat].increaseLevel(money)
+            boatList[inxBoat].increaseLevel()
             money.value.subtract(boatList[inxBoat].priceUpdate)
             Toast.makeText(
                 applicationContext,
@@ -91,14 +94,4 @@ class BoatManager(val mainActivity: MainActivity) {
         }
 
     }
-
-    fun powInt(n: Int, exp: Int): Int {
-        var temp = 1
-        for (i in 1..exp) {
-            temp *= n
-        }
-        return temp
-    }
-
-
 }
