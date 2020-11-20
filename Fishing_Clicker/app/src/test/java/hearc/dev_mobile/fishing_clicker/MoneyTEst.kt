@@ -3,6 +3,8 @@ package hearc.dev_mobile.fishing_clicker
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.math.BigInteger
+import kotlin.math.pow
 
 /**
  *
@@ -27,15 +29,15 @@ class MoneyTEst {
     }
     @Test
     fun testVtStr(){
-        assertEquals(valueToString(123456),"123456")
-        assertEquals(valueToString(1234567),"1234k")
-        assertEquals(valueToString(12345678),"12345k")
-        assertEquals(valueToString(123456789),"123456k")
-        assertEquals(valueToString(1234567891),"1234M")
+        assertEquals(valueToString(BigInteger.valueOf(123456)),"123456")
+        assertEquals(valueToString(BigInteger.valueOf(1234567)),"1234k")
+        assertEquals(valueToString(BigInteger.valueOf(12345678)),"12345k")
+        assertEquals(valueToString(BigInteger.valueOf(123456789)),"123456k")
+        assertEquals(valueToString(BigInteger.valueOf(1234567891)),"1234M")
 
     }
 
-    private fun valueToString(value : Long): String{
+    private fun valueToString(value : BigInteger): String{
         val thousandsList : MutableList<String> = mutableListOf("","k","M","B")
         //a to z
         for(element in CharRange('a','z'))
@@ -44,12 +46,13 @@ class MoneyTEst {
         for(firstChar in CharRange('a','z'))
             for(SecondChar in CharRange('a','z'))
                 thousandsList.add(firstChar.toString() + SecondChar.toString())
+        val digitDisplayed =6
         val stringValue = value.toString()
-        if(value < 999999) return stringValue
+        if(value < BigInteger.valueOf(999999)) return stringValue
         var power = 1
-        while((stringValue.length-6)-3.0*power>0)power++
-        if((stringValue.length-6)%3==0)
-            return stringValue.substring(0,6) + thousandsList[power]
+        while((stringValue.length-digitDisplayed)-3.0*power>0)power++
+        if((stringValue.length-digitDisplayed)%3==0)
+            return stringValue.substring(0,digitDisplayed) + thousandsList[power]
         return stringValue.substring(0,stringValue.length-3*power) + thousandsList[power]
     }
 }

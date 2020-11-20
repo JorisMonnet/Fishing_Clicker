@@ -1,20 +1,21 @@
 package hearc.dev_mobile.fishing_clicker
 
+import java.math.BigInteger
 import kotlin.math.pow
 
 class Money {
-    private val digitDisplayedPLusOne = 7   //power of ten
-    private var value : Long = 0
+    private val digitDisplayed = 6   //power of ten
+    private var value : BigInteger = BigInteger.valueOf(0)
     private var thousands : Int = 0         //3 power of ten by 3
     private val mthousandsList : MutableList<String> = generateThousandsList()
 
-    fun valueToString(value : Long): String{
+    fun valueToString(value : BigInteger): String{
         val stringValue = value.toString()
-        if(value < 999999) return stringValue
+        if(value < BigInteger.valueOf(999999)) return stringValue
         var power = 1
-        while((stringValue.length-6)-3.0*power>0)power++
-        if((stringValue.length-6)%3==0)
-            return stringValue.substring(0,6) + mthousandsList[power]
+        while((stringValue.length-digitDisplayed)-3.0*power>0)power++
+        if((stringValue.length-digitDisplayed)%3==0)
+            return stringValue.substring(0,digitDisplayed) + mthousandsList[power]
         return stringValue.substring(0,stringValue.length-3*power) + mthousandsList[power]
     }
 
