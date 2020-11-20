@@ -11,15 +11,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentContainerView
+import hearc.dev_mobile.fishing_clicker.ui.BoatManager
+import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigInteger
 
 class MainActivity : AppCompatActivity() {
-private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
+
+    private lateinit var boatManager:BoatManager
     var generalMoney = Money()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        boatManager=BoatManager(this)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -30,7 +35,7 @@ private lateinit var toggle: ActionBarDrawerToggle
         fab.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-        val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
+        val contentLayout: FragmentContainerView = findViewById(R.id.FragmentContainerView)
         updateMoneyTextView(BigInteger.ZERO)
         contentLayout.setOnClickListener {
             updateMoneyTextView(BigInteger.valueOf(1))
@@ -41,7 +46,7 @@ private lateinit var toggle: ActionBarDrawerToggle
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        BoatManager.createBoatMenuListener(nav_view,applicationContext)
+        boatManager.createBoatMenuListener()
 
     }
 
@@ -55,13 +60,19 @@ private lateinit var toggle: ActionBarDrawerToggle
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
-        nav_view.menu.findItem(R.id.boat1).title="Boat1 cost ${BoatManager.initPriceBoat}$"
+        nav_view.menu.findItem(R.id.boat1).title = "Boat1 cost ${boatManager.initPriceBoat}$"
         return true
     }
 
-    fun updateMoneyTextView(valueToAdd : BigInteger){
-        val text : TextView = findViewById(R.id.moneyTextView)
+    fun updateMoneyTextView(valueToAdd: BigInteger) {
+        val text: TextView = findViewById(R.id.moneyTextView)
         generalMoney.value = generalMoney.value.add(valueToAdd)
+        text.text = generalMoney.toString()
+    }
+
+    fun setMoneyTextView(value : BigInteger){
+        val text: TextView = findViewById(R.id.moneyTextView)
+        generalMoney.value = value
         text.text = generalMoney.toString()
     }
 }

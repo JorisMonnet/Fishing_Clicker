@@ -1,10 +1,12 @@
-package com.example.fishing_clicker.boat
+package hearc.dev_mobile.fishing_clicker.boat
 
-import android.graphics.drawable.Drawable
-import com.example.fishing_clicker.R
-import kotlin.math.log10
+import hearc.dev_mobile.fishing_clicker.MainActivity
+import hearc.dev_mobile.fishing_clicker.Money
+import hearc.dev_mobile.fishing_clicker.R
+import java.math.BigInteger
 
-class Boat(var efficiency: Double, private val index: Int, var priceUpdate: Int) {
+
+class Boat(var efficiency: Double, private val index: Int, var priceUpdate: BigInteger,val mainActivity: MainActivity) {
 
 
 
@@ -23,10 +25,11 @@ class Boat(var efficiency: Double, private val index: Int, var priceUpdate: Int)
     /**
      * Function to self update on call the level & then the efficiency of the boat
      */
-    fun increaseLevel() {
+    fun increaseLevel(money : Money) {
         level+=1
         efficiency = efficiency * level / 10
-        priceUpdate*=2
+        mainActivity.setMoneyTextView(money.value.subtract(priceUpdate))
+        priceUpdate=priceUpdate.multiply(BigInteger.valueOf(2))
     }
 
     /**
