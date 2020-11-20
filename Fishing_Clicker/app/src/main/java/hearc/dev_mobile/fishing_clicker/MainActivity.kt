@@ -16,12 +16,18 @@ import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 import java.math.BigInteger
+import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
 
+
     private lateinit var boatManager: BoatManager
     var generalMoney = Money()
+
+    var user = User()
+    private val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +43,10 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-        val contentLayout: FragmentContainerView = findViewById(R.id.FragmentContainerView)
+
         updateMoneyTextView(BigInteger.ZERO)
         contentLayout.setOnClickListener {
-            updateMoneyTextView(BigInteger.valueOf(1))
+            updateMoneyTextView(user.getClickValue())
         }
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -82,9 +88,15 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    fun updateMoneyTextView(valueToAdd: BigInteger) {
-        val text: TextView = findViewById(R.id.moneyTextView)
-        generalMoney.value = generalMoney.value.add(valueToAdd)
-        text.text = generalMoney.toString()
+
+    fun updateMoneyTextView(valueToAdd : BigInteger){
+        val text : TextView = findViewById(R.id.moneyTextView)
+        user.money.value = user.money.value.add(valueToAdd)
+        text.text = user.money.toString()
+        if(user.money.value.compareTo(BigInteger.valueOf(10.0.pow(user.level*3+6).toLong()))==1){
+            user.level++
+            TODO()  //change background when changing of level
+            //contentLayout.background = R.drawable.bgLevel1
+        }
     }
 }
