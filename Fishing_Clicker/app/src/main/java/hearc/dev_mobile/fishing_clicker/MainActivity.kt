@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         boatManager.createBoatMenuListener()
-        Thread {
+        Thread {//AFK MECHANISM
             while (true) {
                 for (boat in boatManager.boatList) {
                     // try to touch View of UI thread
@@ -65,8 +65,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.start()
-
-        //updateMoneyTextView(BigInteger.valueOf(5000000))// TOREMOVE FOR RELEASE
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -79,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
-        nav_view.menu.findItem(R.id.boat1).title = "Boat1 cost ${boatManager.initPriceBoat}$"
+        nav_view.menu.findItem(R.id.boat1).title = "Boat1 cost ${boatManager.currentNewBoatPrice}$"
         return true
     }
 
@@ -89,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         text.text = user.money.toString()
         if(user.money.value.compareTo(BigInteger.valueOf(10.0.pow(user.level*3+6).toLong()))==1){
             user.level++
-            TODO()  //change background when changing of level
+            //TODO()  //change background when changing of level
             //contentLayout.background = R.drawable.bgLevel1
         }
     }

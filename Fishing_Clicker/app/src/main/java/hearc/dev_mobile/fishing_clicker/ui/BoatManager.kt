@@ -18,8 +18,7 @@ class BoatManager(private val mainActivity: MainActivity) {
     var boatList = LinkedList<Boat>()
     private var boatIndex = 1
     private var baseEfficiency = BigInteger.valueOf(1)
-    val initPriceBoat: BigInteger = BigInteger.valueOf(100)
-    private var currentNewBoatPrice = BigInteger.valueOf(100)
+    var currentNewBoatPrice: BigInteger = BigInteger.valueOf(1)//TODO TOSET GOOD VALUE
 
     private var navView: NavigationView = mainActivity.nav_view
     private var applicationContext: Context = mainActivity.applicationContext
@@ -31,7 +30,7 @@ class BoatManager(private val mainActivity: MainActivity) {
             Boat(
                 baseEfficiency,
                 boatIndex,
-                initPriceBoat.multiply(BigInteger.valueOf(2)),
+                currentNewBoatPrice.multiply(BigInteger.valueOf(2)),
                 mainActivity
             )
         )
@@ -39,7 +38,6 @@ class BoatManager(private val mainActivity: MainActivity) {
         mainActivity.updateMoneyTextView(currentNewBoatPrice.negate())
         currentNewBoatPrice = currentNewBoatPrice.multiply(BigInteger.valueOf(150))
     }
-
 
     fun createBoatMenuListener() {
         navView.setNavigationItemSelectedListener {
@@ -79,7 +77,7 @@ class BoatManager(private val mainActivity: MainActivity) {
                 Toast.LENGTH_SHORT
             )
                 .show()
-            money.value.subtract(initPriceBoat)
+            money.value.subtract(currentNewBoatPrice)
             it.title =
                 "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${boatList[inxBoat].priceUpdate}$"
         } else if (boatList.size > inxBoat && (money.value.compareTo(boatList[inxBoat].priceUpdate) == 1 || money.value == boatList[inxBoat].priceUpdate)) {
