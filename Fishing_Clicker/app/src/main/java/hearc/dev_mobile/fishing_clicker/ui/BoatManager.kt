@@ -15,8 +15,8 @@ import java.util.*
 
 class BoatManager(private val mainActivity: MainActivity) {
 
-    private val boatImgW=60
-    private val boatImgH=25
+    private val boatImgW = 60
+    private val boatImgH = 25
 
     var boatList = LinkedList<Boat>()
     private var boatIndex = 1
@@ -41,9 +41,9 @@ class BoatManager(private val mainActivity: MainActivity) {
         currentNewBoatPrice = currentNewBoatPrice.multiply(BigInteger.valueOf(150))
 
         val textView = TextView(mainActivity)
-        textView.textAlignment= View.TEXT_ALIGNMENT_CENTER
-        textView.text="Boat n° ${boatIndex++}"
-        
+        textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        textView.text = "Boat n° ${boatIndex++}"
+
         val imageView =
             ImageView(mainActivity)
         imageView.layoutParams = LinearLayout.LayoutParams(400, 400)
@@ -52,8 +52,8 @@ class BoatManager(private val mainActivity: MainActivity) {
         imageView.setImageResource(R.drawable.ic_fish_boat1)
 
         val layout = mainActivity.findViewById<LinearLayout>(R.id.imageLayout)
-        layout?.addView(textView)
         layout?.addView(imageView)
+        layout?.addView(textView)
     }
 
     fun createBoatMenuListener() {
