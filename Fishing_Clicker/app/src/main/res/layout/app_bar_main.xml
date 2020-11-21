@@ -33,6 +33,19 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         app:drawableEndCompat="@drawable/ic_money" />
+    <ScrollView
+        android:id="@+id/scrollViewImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/imageLayout"
+        android:gravity="center"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+    </ScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         app:backgroundTint="@color/design_default_color_surface"
