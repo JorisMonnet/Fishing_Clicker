@@ -2,7 +2,8 @@ package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import hearc.dev_mobile.fishing_clicker.boat.Boat
 import com.google.android.material.navigation.NavigationView
 import hearc.dev_mobile.fishing_clicker.MainActivity
@@ -14,6 +15,8 @@ import java.util.*
 
 class BoatManager(private val mainActivity: MainActivity) {
 
+    private val boatImgW=60
+    private val boatImgH=25
 
     var boatList = LinkedList<Boat>()
     private var boatIndex = 1
@@ -23,7 +26,6 @@ class BoatManager(private val mainActivity: MainActivity) {
     private var navView: NavigationView = mainActivity.nav_view
     private var applicationContext: Context = mainActivity.applicationContext
     private var money = mainActivity.user.money
-
 
     private fun buyABoat() {
         boatList.add(
@@ -37,6 +39,21 @@ class BoatManager(private val mainActivity: MainActivity) {
         baseEfficiency = baseEfficiency.multiply(BigInteger.valueOf(10))
         mainActivity.updateMoneyTextView(currentNewBoatPrice.negate())
         currentNewBoatPrice = currentNewBoatPrice.multiply(BigInteger.valueOf(150))
+
+        val textView = TextView(mainActivity)
+        textView.textAlignment= View.TEXT_ALIGNMENT_CENTER
+        textView.text="Boat n° ${boatIndex++}"
+        
+        val imageView =
+            ImageView(mainActivity)
+        imageView.layoutParams = LinearLayout.LayoutParams(400, 400)
+        imageView.x = 2F // setting margin from left
+        imageView.y = 2F // setting margin from top
+        imageView.setImageResource(R.drawable.ic_fish_boat1)
+
+        val layout = mainActivity.findViewById<LinearLayout>(R.id.imageLayout)
+        layout?.addView(textView)
+        layout?.addView(imageView)
     }
 
     fun createBoatMenuListener() {
@@ -51,7 +68,28 @@ class BoatManager(private val mainActivity: MainActivity) {
                     boatTreatment(it, R.id.boat3, 1)
                 }
                 R.id.boat3 -> {
-                    boatTreatment(it, -1, 2)
+                    boatTreatment(it, R.id.boat4, 2)
+                }
+                R.id.boat4 -> {
+                    boatTreatment(it, R.id.boat5, 3)
+                }
+                R.id.boat5 -> {
+                    boatTreatment(it, R.id.boat6, 4)
+                }
+                R.id.boat6 -> {
+                    boatTreatment(it, R.id.boat7, 5)
+                }
+                R.id.boat7 -> {
+                    boatTreatment(it, R.id.boat8, 6)
+                }
+                R.id.boat8 -> {
+                    boatTreatment(it, R.id.boat9, 7)
+                }
+                R.id.boat9 -> {
+                    boatTreatment(it, R.id.boat10, 8)
+                }
+                R.id.boat10 -> {
+                    boatTreatment(it, -1, 9)
                 }
             }
             true
