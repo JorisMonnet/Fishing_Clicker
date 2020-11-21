@@ -1,5 +1,6 @@
 package hearc.dev_mobile.fishing_clicker
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var boatManager: BoatManager
 
 
-    var user = User()
+    lateinit var user : User
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        user = User(sharedPref)
         val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
         updateMoneyTextView(BigInteger.ZERO)
         contentLayout.setOnClickListener {
