@@ -106,8 +106,10 @@ class BoatManager(private val mainActivity: MainActivity) {
             buyABoat()
             if (nextIdBoat != -1) {
                 navView.menu.findItem(nextIdBoat).isVisible = true
+                var tempMoney=Money()
+                tempMoney.value=currentNewBoatPrice
                 navView.menu.findItem(nextIdBoat).title =
-                    "Buy Boat ${inxBoat + 2} for $currentNewBoatPrice$"
+                    "Buy Boat ${inxBoat + 2} for $tempMoney $"
             }
             Toast.makeText(
                 applicationContext,
@@ -140,7 +142,7 @@ class BoatManager(private val mainActivity: MainActivity) {
             val money = Money()
             money.value = boatList[inxBoat].priceUpdate
             it.title =
-                "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost ${money}$"
+                "Boat${inxBoat + 1} lvl ${boatList[inxBoat].level}- lvl up cost $money $"
         }
 
     }
