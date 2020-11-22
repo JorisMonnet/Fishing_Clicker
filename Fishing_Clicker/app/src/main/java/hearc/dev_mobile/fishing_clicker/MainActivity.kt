@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         user.createValuesFromPref(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         setContentView(R.layout.activity_main)
         boatManager = BoatManager(this)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        /*val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)*/
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val fab: FloatingActionButton = findViewById(R.id.fab)
