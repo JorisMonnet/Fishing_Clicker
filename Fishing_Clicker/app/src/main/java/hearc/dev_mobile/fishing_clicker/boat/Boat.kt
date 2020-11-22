@@ -1,11 +1,12 @@
 package hearc.dev_mobile.fishing_clicker.boat
 
 import hearc.dev_mobile.fishing_clicker.MainActivity
+import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
 import java.math.BigInteger
 
 
-class Boat(var efficiency: BigInteger, val resourceId: Int, var priceUpdate: BigInteger,
+class Boat(var efficiency: BigInteger, val resourceId: Int, var priceUpdate: Money,
            private val mainActivity: MainActivity) {
 
     var level = 1L
@@ -23,8 +24,8 @@ class Boat(var efficiency: BigInteger, val resourceId: Int, var priceUpdate: Big
     fun increaseLevel() {
         level+=1
         efficiency = efficiency.add(BigInteger.valueOf(5*level))
-        mainActivity.updateMoneyTextView(priceUpdate.negate())
-        priceUpdate+=priceUpdate.divide(BigInteger.valueOf(2))
+        mainActivity.updateMoneyTextView(priceUpdate.value.negate())
+        priceUpdate.value+=priceUpdate.value.divide(BigInteger("2"))
     }
 
     /**

@@ -2,13 +2,12 @@ package hearc.dev_mobile.fishing_clicker
 
 import android.content.SharedPreferences
 import java.math.BigInteger
-import java.util.*
 import kotlin.math.pow
 
 class User() {
     var level: Int = 0
     private var click = BigInteger.ONE
-    var money: Money = Money()
+    var money: Money = Money(BigInteger.ZERO)
 
     fun getClickValue(): BigInteger {
         return click.multiply(BigInteger.valueOf(10.0.pow(level).toLong()))
