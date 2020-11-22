@@ -22,7 +22,7 @@ class BoatManager(private val mainActivity: MainActivity) {
     private var applicationContext: Context = mainActivity.applicationContext
     private var displayedBoat=0
     private var playerMoney = mainActivity.user.money
-
+    private var toast : Toast = Toast.makeText(applicationContext,"",Toast.LENGTH_SHORT)
     private fun buyBoat(index : Int) {
         displayedBoat++
         mainActivity.updateMoneyTextView(boatList[index].purchasePrice.value.negate())
@@ -79,7 +79,7 @@ class BoatManager(private val mainActivity: MainActivity) {
     }
 
     private fun boatTreatment(it: MenuItem, nextIdBoat: Int, inxBoat: Int) {
-        if (playerMoney.value >= boatList[inxBoat+1].priceUpdate.value && displayedBoat <= inxBoat) {
+        if (inxBoat+1<boatList.size && playerMoney.value >= boatList[inxBoat+1].priceUpdate.value && displayedBoat <= inxBoat) {
             buyBoat(inxBoat)
             if (nextIdBoat != -1) {
                 navView.menu.findItem(nextIdBoat).isVisible = true
@@ -93,14 +93,15 @@ class BoatManager(private val mainActivity: MainActivity) {
             playerMoney.value.subtract(boatList[inxBoat].priceUpdate.value)
             makeToast("You upgraded ${boatList[inxBoat].name} ")
             it.title = "${boatList[inxBoat].name} lvl ${boatList[inxBoat].level}- lvl up cost ${boatList[inxBoat].priceUpdate}$"
-        } else if (!(boatList.size > inxBoat && (playerMoney.value.compareTo(boatList[inxBoat].priceUpdate.value) == 1
-                    || playerMoney.value == boatList[inxBoat].priceUpdate.value)) || !(playerMoney.value >= boatList[inxBoat+1].priceUpdate.value && boatList.size <= inxBoat)) {
+        } else {
             makeToast("Not enough money ! Go Fish !")
         }
     }
 
     private fun makeToast(message : String){
-        Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
+        toast.cancel()
+        toast = Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT)
+        toast.show()
     }
 
     private fun saveData(){
