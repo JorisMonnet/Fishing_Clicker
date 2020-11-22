@@ -5,13 +5,12 @@ import hearc.dev_mobile.fishing_clicker.R
 import java.math.BigInteger
 
 
-class Boat(var efficiency: BigInteger, private val index: Int, var priceUpdate: BigInteger,val mainActivity: MainActivity) {
-
-
+class Boat(var efficiency: BigInteger, val resourceId: Int, var priceUpdate: BigInteger,
+           private val mainActivity: MainActivity) {
 
     var level = 1L
 
-    private var imageId = when (index) {
+    private var imageId = when (resourceId) {
         0 -> R.drawable.ic_boat
         1 -> R.drawable.ic_boat2
         2 -> R.drawable.ic_boat3
