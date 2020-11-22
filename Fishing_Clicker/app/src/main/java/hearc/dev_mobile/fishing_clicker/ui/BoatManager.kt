@@ -25,6 +25,7 @@ class BoatManager(private val mainActivity: MainActivity) {
     private var toast : Toast = Toast.makeText(applicationContext,"",Toast.LENGTH_SHORT)
     private fun buyBoat(index : Int) {
         displayedBoat++
+        boatList[index].bought=true
         mainActivity.updateMoneyTextView(boatList[index].purchasePrice.value.negate())
 
         val textView = TextView(mainActivity)
@@ -59,7 +60,7 @@ class BoatManager(private val mainActivity: MainActivity) {
         list.add(
             Boat(
                 "Boat ${indexList+1}",
-                BigInteger.valueOf(10.0.pow(list.size).toLong()),
+                BigInteger.valueOf(10.0.pow(indexList).toLong()),
                 id,
                 Money(BigInteger.valueOf(150.0.pow(indexList).toLong())),
                 mainActivity
@@ -78,21 +79,21 @@ class BoatManager(private val mainActivity: MainActivity) {
         }
     }
 
-    private fun boatTreatment(it: MenuItem, nextIdBoat: Int, inxBoat: Int) {
-        if (inxBoat+1<boatList.size && playerMoney.value >= boatList[inxBoat+1].priceUpdate.value && displayedBoat <= inxBoat) {
-            buyBoat(inxBoat)
+    private fun boatTreatment(it: MenuItem, nextIdBoat: Int, indexBoat: Int) {
+        if (indexBoat+1<boatList.size && playerMoney.value >= boatList[indexBoat].purchasePrice.value && displayedBoat <= indexBoat) {
+            buyBoat(indexBoat)
             if (nextIdBoat != -1) {
                 navView.menu.findItem(nextIdBoat).isVisible = true
-                navView.menu.findItem(nextIdBoat).title ="Buy ${boatList[inxBoat+1].name} for ${boatList[inxBoat+1].purchasePrice} $"
+                navView.menu.findItem(nextIdBoat).title ="Buy ${boatList[indexBoat+1].name} for ${boatList[indexBoat+1].purchasePrice} $"
             }
-            makeToast("You bought ${boatList[inxBoat].name} ")
-            playerMoney.value.subtract(boatList[inxBoat].priceUpdate.value)
-            it.title = "${boatList[inxBoat].name} lvl ${boatList[inxBoat].level}- lvl up cost ${boatList[inxBoat].priceUpdate}$"
-        } else if (boatList.size > inxBoat && (playerMoney.value.compareTo(boatList[inxBoat].priceUpdate.value) == 1 || playerMoney.value == boatList[inxBoat].priceUpdate.value)) {
-            boatList[inxBoat].increaseLevel()
-            playerMoney.value.subtract(boatList[inxBoat].priceUpdate.value)
-            makeToast("You upgraded ${boatList[inxBoat].name} ")
-            it.title = "${boatList[inxBoat].name} lvl ${boatList[inxBoat].level}- lvl up cost ${boatList[inxBoat].priceUpdate}$"
+            makeToast("You bought ${boatList[indexBoat].name}")
+            playerMoney.value.subtract(boatList[indexBoat].purchasePrice.value)
+            it.title = "${boatList[indexBoat].name} lvl ${boatList[indexBoat].level}- lvl up cost ${boatList[indexBoat].priceUpdate}$"
+        } else if (displayedBoat > indexBoat && (playerMoney.value.compareTo(boatList[indexBoat].priceUpdate.value) == 1 || playerMoney.value == boatList[indexBoat].priceUpdate.value)) {
+            boatList[indexBoat].increaseLevel()
+            playerMoney.value.subtract(boatList[indexBoat].priceUpdate.value)
+            makeToast("You upgraded ${boatList[indexBoat].name} ")
+            it.title = "${boatList[indexBoat].name} lvl ${boatList[indexBoat].level}- lvl up cost ${boatList[indexBoat].priceUpdate}$"
         } else {
             makeToast("Not enough money ! Go Fish !")
         }

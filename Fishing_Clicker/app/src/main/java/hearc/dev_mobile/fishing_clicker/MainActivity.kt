@@ -55,7 +55,8 @@ class MainActivity : AppCompatActivity() {
                 for (boat in boatManager.boatList) {
                     // try to touch View of UI thread
                     this@MainActivity.runOnUiThread {
-                        boat.doMoneyReward(1L)
+                        if(boat.bought)
+                            boat.doMoneyReward(1L)
                     }
                 }
                 try {

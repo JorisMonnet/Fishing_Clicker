@@ -11,7 +11,7 @@ class Boat(
     private val mainActivity: MainActivity) {
     var priceUpdate: Money = Money(purchasePrice.value.multiply(BigInteger("2")))
     var level = 1L
-
+    var bought = false
     private var imageId = when (resourceId) {
         R.id.boat1 -> R.drawable.ic_fish_boat1
         1 -> R.drawable.ic_boat2
