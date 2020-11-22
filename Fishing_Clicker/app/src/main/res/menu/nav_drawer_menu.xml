@@ -23,6 +23,42 @@
             android:icon="@drawable/ic_boat3"
             android:visible="false"
             android:title="@string/menu_boat3_init" />
+        <item
+            android:id="@+id/boat4"
+            android:icon="@drawable/ic_boat3"
+            android:visible="false"
+            android:title="Click to buy boat 4" />
+
+        <item
+            android:id="@+id/boat5"
+            android:icon="@drawable/ic_boat3"
+            android:visible="false"
+            android:title="Click to buy boat 5" />
+        <item
+            android:id="@+id/boat6"
+            android:icon="@drawable/ic_boat3"
+            android:visible="false"
+            android:title="Click to buy boat 6" />
+        <item
+            android:id="@+id/boat7"
+            android:icon="@drawable/ic_boat3"
+            android:visible="false"
+            android:title="Click to buy boat 7" />
+        <item
+            android:id="@+id/boat8"
+            android:icon="@drawable/ic_boat3"
+            android:visible="false"
+            android:title="Click to buy boat 8" />
+        <item
+            android:id="@+id/boat9"
+            android:icon="@drawable/ic_boat3"
+            android:visible="false"
+            android:title="Click to buy boat 9" />
+        <item
+            android:id="@+id/boat10"
+            android:icon="@drawable/ic_boat3"
+            android:visible="false"
+            android:title="Click to buy boat 10" />
 
     </group>
 </menu>

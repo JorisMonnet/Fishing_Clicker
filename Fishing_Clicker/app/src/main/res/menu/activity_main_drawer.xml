@@ -13,5 +13,6 @@
         <item
             android:icon="@drawable/ic_boat"
             android:title="@string/menu_boat3" />
+
     </group>
 </menu>
