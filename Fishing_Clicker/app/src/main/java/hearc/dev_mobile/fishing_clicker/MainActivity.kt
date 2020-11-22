@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
-        nav_view.menu.findItem(R.id.boat1).title = "Boat1 cost ${boatManager.currentNewBoatPrice}$"
+        nav_view.menu.findItem(R.id.boat1).title = "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
         return true
     }
 

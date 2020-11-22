@@ -7,9 +7,9 @@ import java.math.BigInteger
 
 
 class Boat(
-    private var efficiency: BigInteger, val resourceId: Int, var priceUpdate: Money,
+    val name : String, private var efficiency: BigInteger, val resourceId: Int, val purchasePrice : Money,
     private val mainActivity: MainActivity) {
-
+    var priceUpdate: Money = Money(purchasePrice.value.multiply(BigInteger("2")))
     var level = 1L
 
     private var imageId = when (resourceId) {
@@ -23,7 +23,7 @@ class Boat(
      * Function to self update on call the level & then the efficiency of the boat
      */
     fun increaseLevel() {
-        level+=1
+        level++
         efficiency = efficiency.add(BigInteger.valueOf(5*level))
         mainActivity.updateMoneyTextView(priceUpdate.value.negate())
         priceUpdate.value+=priceUpdate.value.divide(BigInteger("2"))
@@ -35,4 +35,5 @@ class Boat(
     fun doMoneyReward(eSec: Long) {
         mainActivity.updateMoneyTextView(BigInteger.valueOf((efficiency.multiply(BigInteger.valueOf(eSec))).toLong()))
     }
+
 }
