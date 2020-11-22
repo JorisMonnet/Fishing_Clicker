@@ -94,7 +94,7 @@ class BoatManager(private val mainActivity: MainActivity) {
         navView.setNavigationItemSelectedListener {
             for( i in 0 until boatList.size){
                 if(boatList[i].resourceId==it.itemId){
-                    boatTreatment(it,if(i+1==boatList.size) -1 else boatList[i+1].resourceId,i)
+                    boatTreatment(it,i)
                 }
             }
             true
@@ -105,14 +105,14 @@ class BoatManager(private val mainActivity: MainActivity) {
      * Function which use the item clicked and decide what to do, buy it, upgrade it
      * or saying that there is not enough money to do one of these
      * @param indexBoat the index of the boat into the boat List
-     * @param it the menuItem 
+     * @param it the menuItem
      */
     private fun boatTreatment(it: MenuItem, indexBoat: Int) {
-        if (indexBoat+1<boatList.size && playerMoney.value >= boatList[indexBoat].purchasePrice.value && displayedBoat <= indexBoat) {
+        if (playerMoney.value >= boatList[indexBoat].purchasePrice.value && displayedBoat <= indexBoat) {
             createBoat(indexBoat,true)
-            if (nextIdBoat != -1) {
-                navView.menu.findItem(nextIdBoat).isVisible = true
-                navView.menu.findItem(nextIdBoat).title ="Buy ${boatList[indexBoat+1].name} for ${boatList[indexBoat+1].purchasePrice} $"
+            if (indexBoat != boatList.size-1) {
+                navView.menu.findItem(boatList[indexBoat+1].resourceId).isVisible = true
+                navView.menu.findItem(boatList[indexBoat+1].resourceId).title ="Buy ${boatList[indexBoat+1].name} for ${boatList[indexBoat+1].purchasePrice} $"
             }
             makeToast("You bought ${boatList[indexBoat].name}")
             playerMoney.value.subtract(boatList[indexBoat].purchasePrice.value)
@@ -127,12 +127,21 @@ class BoatManager(private val mainActivity: MainActivity) {
         }
     }
 
+    /**
+     * Create a Toast message on what the user just did, delete the precedent if existing
+     * @param message the message to display
+     */
     private fun makeToast(message : String){
         toast.cancel()
         toast = Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT)
         toast.show()
     }
-
+/*
+    /**
+     * save the data of all the boats bought
+     * @param sharedPrefBoat the shared preferences
+     * WORK IN PROGRESS TODO
+     */
     fun saveData(sharedPrefBoat : SharedPreferences){
         for(boat in boatList){
             if(boat.isBought){
@@ -141,8 +150,12 @@ class BoatManager(private val mainActivity: MainActivity) {
         }
         sharedPrefBoat.edit().putInt("DisplayedBoat",displayedBoat).apply()
     }
-    //NOT IMPLEMENTED YET
-    /*fun createBoatData(sharedPrefBoat : SharedPreferences){
+    /**
+     * Get the data of the boat bought
+     * @param sharedPrefBoat the shared preferences
+     * WORK IN PROGRESS TODO
+     */
+    fun createBoatData(sharedPrefBoat : SharedPreferences){
         displayedBoat = sharedPrefBoat.getInt("DisplayedBoat",0)
         if(displayedBoat!=0) {
             for (i in 0 until displayedBoat) {

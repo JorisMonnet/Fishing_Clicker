@@ -4,6 +4,9 @@ import org.junit.Test
 import java.math.BigInteger
 import org.junit.Assert.*
 
+/**
+ * A test on how works BigInteger with negative numbers
+ */
 class BigIntegerTest {
     @Test
     fun add(){

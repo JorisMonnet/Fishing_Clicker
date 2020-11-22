@@ -6,7 +6,7 @@ import org.junit.Assert.*
 import java.math.BigInteger
 
 /**
- *
+ * Class useful to test how work the function of our class Money
  */
 class MoneyTEst {
     @Test

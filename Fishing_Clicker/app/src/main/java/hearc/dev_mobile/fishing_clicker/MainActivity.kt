@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //get the user Preferences
         user.createValuesFromPref(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         setContentView(R.layout.activity_main)
         boatManager = BoatManager(this)
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
+            //open drawer when clicking on the button
             drawerLayout.openDrawer(GravityCompat.START)
         }
         val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
-        boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        //boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         super.onPause()
     }
 
@@ -104,13 +106,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestart() {
         user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
-        boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        //boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         super.onRestart()
     }
 
     override fun onDestroy() {
         user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
-        boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        //boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         super.onDestroy()
     }
 }

@@ -7,7 +7,7 @@ import java.math.BigInteger
 
 
 class Boat(
-    val name : String, private var efficiency: BigInteger, var resourceId: Int, val purchasePrice : Money,
+    val name : String, var efficiency: BigInteger, var resourceId: Int, val purchasePrice : Money,
     private val mainActivity: MainActivity) {
     var upgradePrice: Money = Money(purchasePrice.value.multiply(BigInteger("2")))
     var level = 1L
