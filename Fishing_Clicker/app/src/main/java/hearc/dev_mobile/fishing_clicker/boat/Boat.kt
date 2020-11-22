@@ -1,23 +1,17 @@
 package hearc.dev_mobile.fishing_clicker.boat
 
+import android.content.SharedPreferences
 import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.Money
-import hearc.dev_mobile.fishing_clicker.R
 import java.math.BigInteger
 
 
 class Boat(
-    val name : String, private var efficiency: BigInteger, val resourceId: Int, val purchasePrice : Money,
+    val name : String, private var efficiency: BigInteger, var resourceId: Int, val purchasePrice : Money,
     private val mainActivity: MainActivity) {
-    var priceUpdate: Money = Money(purchasePrice.value.multiply(BigInteger("2")))
+    var upgradePrice: Money = Money(purchasePrice.value.multiply(BigInteger("2")))
     var level = 1L
-    var bought = false
-    private var imageId = when (resourceId) {
-        R.id.boat1 -> R.drawable.ic_fish_boat1
-        1 -> R.drawable.ic_boat2
-        2 -> R.drawable.ic_boat3
-        else -> R.drawable.ic_boat
-    }
+    var isBought = false
 
     /**
      * Function to self update on call the level & then the efficiency of the boat
@@ -25,15 +19,29 @@ class Boat(
     fun increaseLevel() {
         level++
         efficiency = efficiency.add(BigInteger.valueOf(5*level))
-        mainActivity.updateMoneyTextView(priceUpdate.value.negate())
-        priceUpdate.value+=priceUpdate.value.divide(BigInteger("2"))
+        mainActivity.updateMoneyTextView(upgradePrice.value.negate())
+        upgradePrice.value+=upgradePrice.value.divide(BigInteger("2"))
     }
 
     /**
      * Function to return the reward within a time period
+     * @param eSec the time period
      */
     fun doMoneyReward(eSec: Long) {
         mainActivity.updateMoneyTextView(BigInteger.valueOf((efficiency.multiply(BigInteger.valueOf(eSec))).toLong()))
     }
 
+    /**
+     * function to save the data of the boat when quitting app
+     * @param sharedPrefBoat the sharedPreferences
+     */
+    fun save(sharedPrefBoat : SharedPreferences){
+        with(sharedPrefBoat.edit()){
+            putString("Efficiency",efficiency.toString())
+            putInt("ResourceId",resourceId)
+            putString("UpgradePrice",upgradePrice.value.toString())
+            putLong("LevelBoat",level)
+            apply()
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -23,10 +24,17 @@ class BoatManager(private val mainActivity: MainActivity) {
     private var displayedBoat=0
     private var playerMoney = mainActivity.user.money
     private var toast : Toast = Toast.makeText(applicationContext,"",Toast.LENGTH_SHORT)
-    private fun buyBoat(index : Int) {
+
+    /**
+     * function to create boat/buy boat and show them into the main view
+     * @param index the index of the boat to buy in the boat list
+     * @param buying if the boat is created from the sharedPreferences or bought
+     */
+    private fun createBoat(index : Int, buying : Boolean) {
         displayedBoat++
-        boatList[index].bought=true
-        mainActivity.updateMoneyTextView(boatList[index].purchasePrice.value.negate())
+        boatList[index].isBought=true
+        if(buying)
+            mainActivity.updateMoneyTextView(boatList[index].purchasePrice.value.negate())
 
         val textView = TextView(mainActivity)
         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -44,6 +52,10 @@ class BoatManager(private val mainActivity: MainActivity) {
         layout.addView(textView)
     }
 
+    /**
+     * Generate the boat list
+     * @return this list
+     */
     private fun generateBoatList() : LinkedList<Boat>{
         val list = LinkedList<Boat>()
         addToBoatList(list,R.id.boat1,0)
@@ -56,6 +68,13 @@ class BoatManager(private val mainActivity: MainActivity) {
         return list
     }
 
+    /**
+     * add a boat to the list
+     * @param list the list where the boat is added
+     * @param id the resourceId of the boat
+     * @param indexList the index list of the boat to know where
+     * it will be in the list ad change parameter of the boat with it
+     */
     private fun addToBoatList(list : LinkedList<Boat>, id : Int,indexList : Int) {
         list.add(
             Boat(
@@ -68,6 +87,9 @@ class BoatManager(private val mainActivity: MainActivity) {
         )
     }
 
+    /**
+     * Listen to the click into the navigationView on an item(the different boat)
+     */
     fun createBoatMenuListener() {
         navView.setNavigationItemSelectedListener {
             for( i in 0 until boatList.size){
@@ -79,21 +101,27 @@ class BoatManager(private val mainActivity: MainActivity) {
         }
     }
 
-    private fun boatTreatment(it: MenuItem, nextIdBoat: Int, indexBoat: Int) {
+    /**
+     * Function which use the item clicked and decide what to do, buy it, upgrade it
+     * or saying that there is not enough money to do one of these
+     * @param indexBoat the index of the boat into the boat List
+     * @param it the menuItem 
+     */
+    private fun boatTreatment(it: MenuItem, indexBoat: Int) {
         if (indexBoat+1<boatList.size && playerMoney.value >= boatList[indexBoat].purchasePrice.value && displayedBoat <= indexBoat) {
-            buyBoat(indexBoat)
+            createBoat(indexBoat,true)
             if (nextIdBoat != -1) {
                 navView.menu.findItem(nextIdBoat).isVisible = true
                 navView.menu.findItem(nextIdBoat).title ="Buy ${boatList[indexBoat+1].name} for ${boatList[indexBoat+1].purchasePrice} $"
             }
             makeToast("You bought ${boatList[indexBoat].name}")
             playerMoney.value.subtract(boatList[indexBoat].purchasePrice.value)
-            it.title = "${boatList[indexBoat].name} lvl ${boatList[indexBoat].level}- lvl up cost ${boatList[indexBoat].priceUpdate}$"
-        } else if (displayedBoat > indexBoat && (playerMoney.value.compareTo(boatList[indexBoat].priceUpdate.value) == 1 || playerMoney.value == boatList[indexBoat].priceUpdate.value)) {
+            it.title = "${boatList[indexBoat].name} lvl ${boatList[indexBoat].level}- lvl up cost ${boatList[indexBoat].upgradePrice}$"
+        } else if (displayedBoat > indexBoat && (playerMoney.value.compareTo(boatList[indexBoat].upgradePrice.value) == 1 || playerMoney.value == boatList[indexBoat].upgradePrice.value)) {
             boatList[indexBoat].increaseLevel()
-            playerMoney.value.subtract(boatList[indexBoat].priceUpdate.value)
+            playerMoney.value.subtract(boatList[indexBoat].upgradePrice.value)
             makeToast("You upgraded ${boatList[indexBoat].name} ")
-            it.title = "${boatList[indexBoat].name} lvl ${boatList[indexBoat].level}- lvl up cost ${boatList[indexBoat].priceUpdate}$"
+            it.title = "${boatList[indexBoat].name} lvl ${boatList[indexBoat].level}- lvl up cost ${boatList[indexBoat].upgradePrice}$"
         } else {
             makeToast("Not enough money ! Go Fish !")
         }
@@ -105,7 +133,28 @@ class BoatManager(private val mainActivity: MainActivity) {
         toast.show()
     }
 
-    private fun saveData(){
-
+    fun saveData(sharedPrefBoat : SharedPreferences){
+        for(boat in boatList){
+            if(boat.isBought){
+                boat.save(sharedPrefBoat)
+            }
+        }
+        sharedPrefBoat.edit().putInt("DisplayedBoat",displayedBoat).apply()
     }
+    //NOT IMPLEMENTED YET
+    /*fun createBoatData(sharedPrefBoat : SharedPreferences){
+        displayedBoat = sharedPrefBoat.getInt("DisplayedBoat",0)
+        if(displayedBoat!=0) {
+            for (i in 0 until displayedBoat) {
+                createBoat(i,false)
+                boatList[i].level = sharedPrefBoat.getLong("Level", 1L)
+                boatList[i].upgradePrice =
+                    Money(BigInteger(sharedPrefBoat.getString("UpgradePrice", "0")))
+                boatList[i].resourceId = sharedPrefBoat.getInt("ResourceId", 0)
+                boatList[i].efficiency = BigInteger(sharedPrefBoat.getString("Efficiency", ""))
+                navView.menu.findItem(boatList[i].resourceId).isVisible = true
+                navView.menu.findItem(boatList[i].resourceId).title = "${boatList[i].name} lvl ${boatList[i].level}- lvl up cost ${boatList[i].upgradePrice}$"
+            }
+        }
+    }*/
 }

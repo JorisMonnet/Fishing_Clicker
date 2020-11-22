@@ -10,7 +10,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentContainerView
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
@@ -30,8 +29,6 @@ class MainActivity : AppCompatActivity() {
         user.createValuesFromPref(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         setContentView(R.layout.activity_main)
         boatManager = BoatManager(this)
-        /*val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)*/
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val fab: FloatingActionButton = findViewById(R.id.fab)
@@ -50,12 +47,13 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         boatManager.createBoatMenuListener()
+        nav_view.menu.findItem(R.id.boat1).title = "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
         Thread {//AFK MECHANISM
             while (true) {
                 for (boat in boatManager.boatList) {
                     // try to touch View of UI thread
                     this@MainActivity.runOnUiThread {
-                        if(boat.bought)
+                        if(boat.isBought)
                             boat.doMoneyReward(1L)
                     }
                 }
@@ -78,7 +76,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
-        nav_view.menu.findItem(R.id.boat1).title = "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
         return true
     }
 
@@ -95,21 +92,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         super.onPause()
     }
 
     override fun onResume() {
         user.createValuesFromPref(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        //boatManager.createBoatData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         super.onResume()
     }
 
     override fun onRestart() {
         user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         super.onRestart()
     }
 
     override fun onDestroy() {
         user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        boatManager.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
         super.onDestroy()
     }
 }
