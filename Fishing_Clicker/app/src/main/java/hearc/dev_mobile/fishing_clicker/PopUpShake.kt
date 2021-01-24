@@ -10,11 +10,10 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 import java.lang.Math.sqrt
@@ -34,7 +33,7 @@ class PopUpShake : AppCompatActivity() {
         setContentView(R.layout.activity_pop_up_shake)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        Objects.requireNonNull(sensorManager)!!.registerListener(
+        sensorManager?.registerListener(
             sensorListener, sensorManager!!
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL
         )
@@ -58,11 +57,6 @@ class PopUpShake : AppCompatActivity() {
         pop_up_shake_view_with_border.animate().alpha(1f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
         ).start()
-
-        //connect button abort
-        pop_up_shake_button.setOnClickListener {
-            onBackPressed()
-        }
     }
 
     private val sensorListener: SensorEventListener = object : SensorEventListener {
@@ -74,7 +68,7 @@ class PopUpShake : AppCompatActivity() {
             currentAcceleration = sqrt((x * x + y * y + z * z).toDouble()).toFloat()
             val delta: Float = currentAcceleration - lastAcceleration
             acceleration = acceleration * 0.9f + delta
-            if (acceleration > 12) {
+            if (acceleration > 64) {
                 Toast.makeText(applicationContext, "Shake event detected", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -84,7 +78,7 @@ class PopUpShake : AppCompatActivity() {
     }
 
     override fun onResume() {
-        sensorManager?.registerListener(
+        sensorManager!!.registerListener(
             sensorListener, sensorManager!!.getDefaultSensor(
                 Sensor.TYPE_ACCELEROMETER
             ), SensorManager.SENSOR_DELAY_NORMAL
@@ -96,33 +90,4 @@ class PopUpShake : AppCompatActivity() {
         sensorManager!!.unregisterListener(sensorListener)
         super.onPause()
     }
-
-
-    override fun onBackPressed() {
-        // Fade animation for the background of Popup Window when you press the back button
-        val alpha = 100 // between 0-255
-        val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor("#000000"), alpha)
-        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), alphaColor, Color.TRANSPARENT)
-        colorAnimation.duration = 500 // milliseconds
-        colorAnimation.addUpdateListener { animator ->
-            pop_up_shake_background.setBackgroundColor(
-                animator.animatedValue as Int
-            )
-        }
-
-        // Fade animation for the Popup Window when you press the back button
-        pop_up_shake_view_with_border.animate().alpha(0f).setDuration(500).setInterpolator(
-            DecelerateInterpolator()
-        ).start()
-
-        // After animation finish, close the Activity
-        colorAnimation.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                finish()
-                overridePendingTransition(0, 0)
-            }
-        })
-        colorAnimation.start()
-    }
-
 }
