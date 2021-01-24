@@ -1,6 +1,7 @@
 package hearc.dev_mobile.fishing_clicker
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -15,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentContainerView
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import java.lang.Exception
 import java.math.BigInteger
 import kotlin.math.pow
@@ -23,11 +25,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var boatManager: BoatManager
-    var user : User = User()
+    var user: User = User()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        user.createValuesFromPref(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        user.createValuesFromPref(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         setContentView(R.layout.activity_main)
         boatManager = BoatManager(this)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-        val contentLayout : FragmentContainerView = findViewById(R.id.FragmentContainerView)
+        val contentLayout: FragmentContainerView = findViewById(R.id.FragmentContainerView)
         updateMoneyTextView(BigInteger.ZERO)
         contentLayout.setOnClickListener {
             updateMoneyTextView(user.getClickValue())
@@ -65,6 +67,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.start()
+
+        popup_test.setOnClickListener {
+            startActivity(Intent(this, PopUpShake::class.java))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -81,11 +87,16 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    fun updateMoneyTextView(valueToAdd : BigInteger){
+    fun updateMoneyTextView(valueToAdd: BigInteger) {
         val text: TextView = findViewById(R.id.moneyTextView)
         user.money.value = user.money.value.add(valueToAdd)
         text.text = user.money.toString()
-        if(user.money.value.compareTo(BigInteger.valueOf(10.0.pow(user.level*3+6).toLong()))==1){
+        if (user.money.value.compareTo(
+                BigInteger.valueOf(
+                    10.0.pow(user.level * 3 + 6).toLong()
+                )
+            ) == 1
+        ) {
             user.level++
             //TODO()  //change background when changing of level
             //contentLayout.background = R.drawable.bgLevel1
@@ -93,22 +104,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         super.onPause()
     }
 
     override fun onResume() {
-        user.createValuesFromPref(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        user.createValuesFromPref(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         super.onResume()
     }
 
     override fun onRestart() {
-        user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         super.onRestart()
     }
 
     override fun onDestroy() {
-        user.saveData(getSharedPreferences("Preferences",Context.MODE_PRIVATE))
+        user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         super.onDestroy()
     }
 }
