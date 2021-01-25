@@ -21,12 +21,12 @@ import java.lang.Exception
 import java.math.BigInteger
 import kotlin.math.pow
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var boatManager: BoatManager
     var user: User = User()
-
+    var percentToAddAfterShakeEvent = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         user.createValuesFromPref(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
@@ -69,7 +69,9 @@ class MainActivity : AppCompatActivity() {
         }.start()
 
         popup_test.setOnClickListener {
-            startActivity(Intent(this, PopUpShake::class.java))
+            val intent = Intent(this, PopUpShake::class.java)
+
+            startActivity(intent)
         }
     }
 
@@ -85,6 +87,21 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         nav_view.menu.findItem(R.id.boat1).title = "Boat1 cost ${boatManager.currentNewBoatPrice}$"
         return true
+    }
+
+    fun doShakeReward() {
+        Log.d("kkette","JE SUIS dans le reward")
+        setContentView(R.layout.activity_main)
+        updateMoneyTextView(
+            BigInteger.valueOf(
+                user.money.value.divide(
+                    BigInteger.valueOf(
+                        percentToAddAfterShakeEvent.toLong()
+                    )
+                ).toLong()
+            )
+        )
+        percentToAddAfterShakeEvent = 0
     }
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
