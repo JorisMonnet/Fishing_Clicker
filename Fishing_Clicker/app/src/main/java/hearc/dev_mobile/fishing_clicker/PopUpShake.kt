@@ -78,7 +78,7 @@ class PopUpShake() : MainActivity() {
             if (acceleration > shakeFloor) {
                 shakeFloor*=2
                 percentToAddAfterShakeEvent+=1
-                Log.d("shakeCount","shakecount"+percentToAddAfterShakeEvent)
+                Log.v("shakeCount","shakecount"+percentToAddAfterShakeEvent)
             }
         }
 

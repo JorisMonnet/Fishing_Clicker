@@ -5,19 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.TextView
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import java.lang.Exception
 import java.math.BigInteger
 import kotlin.math.pow
 
@@ -26,7 +25,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var boatManager: BoatManager
     var user: User = User()
-    var percentToAddAfterShakeEvent = 0
+    var percentToAddAfterShakeEvent = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         user.createValuesFromPref(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
@@ -69,8 +68,7 @@ open class MainActivity : AppCompatActivity() {
         }.start()
 
         popup_test.setOnClickListener {
-            val intent = Intent(this, PopUpShake::class.java)
-
+            val intent = Intent(this.applicationContext, PopUpShake::class.java)
             startActivity(intent)
         }
     }
@@ -90,7 +88,6 @@ open class MainActivity : AppCompatActivity() {
     }
 
     fun doShakeReward() {
-        Log.d("kkette","JE SUIS dans le reward")
         setContentView(R.layout.activity_main)
         updateMoneyTextView(
             BigInteger.valueOf(
@@ -101,7 +98,9 @@ open class MainActivity : AppCompatActivity() {
                 ).toLong()
             )
         )
-        percentToAddAfterShakeEvent = 0
+        percentToAddAfterShakeEvent = 1
+        startActivity(Intent(this.applicationContext, MainActivity::class.java))
+        finish()
     }
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
