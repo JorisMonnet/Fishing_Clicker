@@ -4,22 +4,19 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.os.Bundle
-import android.os.Handler
-import android.util.Log
+import android.os.*
 import android.view.animation.DecelerateInterpolator
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 import java.lang.Math.sqrt
-import java.math.BigInteger
+
 
 class PopUpShake() : MainActivity() {
 
@@ -28,13 +25,13 @@ class PopUpShake() : MainActivity() {
     private var currentAcceleration = 0f
     private var lastAcceleration = 0f
     private var shakeFloor = 24
-    private var canIncPercent=true;
+    private var canIncPercent = true;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0)
         setContentView(R.layout.activity_pop_up_shake)
-
+        vibration()
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager?.registerListener(
             sensorListener, sensorManager!!
@@ -63,7 +60,7 @@ class PopUpShake() : MainActivity() {
 
         //timer to stop event
         Handler().postDelayed({
-            canIncPercent=false
+            canIncPercent = false
             setDisplayText()
         }, 5000)
     }
@@ -81,6 +78,7 @@ class PopUpShake() : MainActivity() {
             if (acceleration > shakeFloor && canIncPercent) {
                 shakeFloor += shakeFloor / 4
                 percentToAddAfterShakeEvent += 1
+                vibration()
             }
         }
 
@@ -101,11 +99,12 @@ class PopUpShake() : MainActivity() {
         super.onPause()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setDisplayText() {
-        popup_window_text.text=percentToAddAfterShakeEvent.toString()+"% Gain !"
+        popup_window_text.text = "$percentToAddAfterShakeEvent% Gain !"
         popup_window_text.textSize = 30F;
         Handler().postDelayed({
-            canIncPercent=true
+            canIncPercent = true
             onBackPressed()
         }, 3000)
     }
@@ -136,5 +135,15 @@ class PopUpShake() : MainActivity() {
             }
         })
         colorAnimation.start()
+    }
+
+    private fun vibration() {
+        val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            //deprecated in API 26
+            v.vibrate(500)
+        }
     }
 }
