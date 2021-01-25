@@ -5,7 +5,7 @@ import java.math.BigInteger
 import java.util.*
 import kotlin.math.pow
 
-class User() {
+class User()  {
     var level: Int = 0
     private var click = BigInteger.ONE
     var money: Money = Money()
@@ -20,7 +20,7 @@ class User() {
         val clickPref = sharedPrefUser.getString("Click", "1")
         click = if(clickPref!=null) BigInteger(clickPref) else BigInteger.ONE
         level = sharedPrefUser.getInt("Level", 0)
-        money.value=money.value.add(BigInteger.valueOf(50000000000000000))//TODO TOREMOVE
+        money.value=money.value.add(BigInteger.valueOf(50000000))//TODO TOREMOVE
     }
 
     fun saveData(sharedPrefUser : SharedPreferences){
