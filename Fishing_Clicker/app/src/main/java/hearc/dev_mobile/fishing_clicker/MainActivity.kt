@@ -79,7 +79,7 @@ open class MainActivity : AppCompatActivity() {
                 } else {
                     try {
                         Thread.sleep(ThreadLocalRandom.current().nextInt(40000, 90000).toLong())
-                        isDisplayingShake=false
+                        isDisplayingShake = false
                     } catch (e: Exception) {
                         Log.d("ThreadSleepError", e.toString())
                     }
@@ -103,26 +103,21 @@ open class MainActivity : AppCompatActivity() {
     }
 
     fun doShakeReward() {
-        setContentView(R.layout.activity_main)
         updateMoneyTextView(
             BigInteger.valueOf(
-                user.money.value.divide(
-                    BigInteger.valueOf(
-                        percentToAddAfterShakeEvent.toLong()
-                    )
-                ).toLong()
+                BigInteger.valueOf(percentToAddAfterShakeEvent.toLong()).divide(user.money.value)
+                    .toLong()
             )
         )
+        setContentView(R.layout.activity_main)
         percentToAddAfterShakeEvent = 1
-        startActivity(Intent(this.applicationContext, MainActivity::class.java))
-        finish()
         isDisplayingShake = false
     }
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
-        val text: TextView = findViewById(R.id.moneyTextView)
         user.money.value = user.money.value.add(valueToAdd)
-        text.text = user.money.toString()
+        moneyTextView.text = user.money.toString()
+
         if (user.money.value.compareTo(
                 BigInteger.valueOf(
                     10.0.pow(user.level * 3 + 6).toLong()
