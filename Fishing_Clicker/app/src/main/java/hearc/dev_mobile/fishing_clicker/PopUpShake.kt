@@ -17,7 +17,6 @@ import androidx.core.graphics.ColorUtils
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 
 
-
 class PopUpShake : MainActivity() {
 
     private var sensorManager: SensorManager? = null
@@ -143,6 +142,7 @@ class PopUpShake : MainActivity() {
             v.vibrate(VibrationEffect.createOneShot(delay, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             //deprecated in API 26
+            @Suppress("DEPRECATION")
             v.vibrate(delay)
         }
     }
