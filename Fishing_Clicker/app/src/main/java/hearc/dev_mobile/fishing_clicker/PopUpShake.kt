@@ -27,7 +27,8 @@ class PopUpShake() : MainActivity() {
     private var acceleration = 0f
     private var currentAcceleration = 0f
     private var lastAcceleration = 0f
-    private var shakeFloor=24
+    private var shakeFloor = 24
+    private var canIncPercent=true;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +63,11 @@ class PopUpShake() : MainActivity() {
 
         //timer to stop event
         Handler().postDelayed({
-            onBackPressed()
+            canIncPercent=false
+            setDisplayText()
         }, 5000)
     }
+
 
     private val sensorListener: SensorEventListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
@@ -75,10 +78,9 @@ class PopUpShake() : MainActivity() {
             currentAcceleration = sqrt((x * x + y * y + z * z).toDouble()).toFloat()
             val delta: Float = currentAcceleration - lastAcceleration
             acceleration = acceleration * 0.9f + delta
-            if (acceleration > shakeFloor) {
-                shakeFloor*=2
-                percentToAddAfterShakeEvent+=1
-                Log.v("shakeCount","shakecount"+percentToAddAfterShakeEvent)
+            if (acceleration > shakeFloor && canIncPercent) {
+                shakeFloor += shakeFloor / 4
+                percentToAddAfterShakeEvent += 1
             }
         }
 
@@ -97,6 +99,15 @@ class PopUpShake() : MainActivity() {
     override fun onPause() {
         sensorManager!!.unregisterListener(sensorListener)
         super.onPause()
+    }
+
+    private fun setDisplayText() {
+        popup_window_text.text=percentToAddAfterShakeEvent.toString()+"% Gain !"
+        popup_window_text.textSize = 30F;
+        Handler().postDelayed({
+            canIncPercent=true
+            onBackPressed()
+        }, 3000)
     }
 
     override fun onBackPressed() {
