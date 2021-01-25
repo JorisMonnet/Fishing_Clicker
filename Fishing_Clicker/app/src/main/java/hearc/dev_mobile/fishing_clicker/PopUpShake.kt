@@ -75,7 +75,7 @@ class PopUpShake : MainActivity() {
             val delta: Float = currentAcceleration - lastAcceleration
             acceleration = acceleration * 0.9f + delta
             if (acceleration > shakeFloor && canIncPercent) {
-                shakeFloor += shakeFloor / 4
+                shakeFloor += shakeFloor / 6
                 percentToAddAfterShakeEvent += 1
                 vibration(750L)
             }
