@@ -72,16 +72,18 @@ open class MainActivity : AppCompatActivity() {
 
         Thread {
             while (true) {
-                if (!isDisplayingShake) {
-                    isDisplayingShake = true
-                    val intent = Intent(this.applicationContext, PopUpShake::class.java)
-                    startActivity(intent)
-                } else {
-                    try {
-                        Thread.sleep(ThreadLocalRandom.current().nextInt(40000, 90000).toLong())
-                        isDisplayingShake = false
-                    } catch (e: Exception) {
-                        Log.d("ThreadSleepError", e.toString())
+                if (!boatManager.boatList.isEmpty()) {
+                    if (!isDisplayingShake) {
+                        isDisplayingShake = true
+                        val intent = Intent(this.applicationContext, PopUpShake::class.java)
+                        startActivity(intent)
+                    } else {
+                        try {
+                            Thread.sleep(ThreadLocalRandom.current().nextInt(40000, 90000).toLong())
+                            isDisplayingShake = false
+                        } catch (e: Exception) {
+                            Log.d("ThreadSleepError", e.toString())
+                        }
                     }
                 }
             }
@@ -111,7 +113,6 @@ open class MainActivity : AppCompatActivity() {
         )
         setContentView(R.layout.activity_main)
         percentToAddAfterShakeEvent = 1
-        isDisplayingShake = false
     }
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
