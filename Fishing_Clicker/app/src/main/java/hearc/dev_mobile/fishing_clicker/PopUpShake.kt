@@ -15,23 +15,23 @@ import android.os.*
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
-import java.lang.Math.sqrt
 
 
-class PopUpShake() : MainActivity() {
+
+class PopUpShake : MainActivity() {
 
     private var sensorManager: SensorManager? = null
     private var acceleration = 0f
     private var currentAcceleration = 0f
     private var lastAcceleration = 0f
     private var shakeFloor = 24
-    private var canIncPercent = true;
+    private var canIncPercent = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0)
         setContentView(R.layout.activity_pop_up_shake)
-        vibration()
+        vibration(1500L)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager?.registerListener(
             sensorListener, sensorManager!!
@@ -59,7 +59,7 @@ class PopUpShake() : MainActivity() {
         ).start()
 
         //timer to stop event
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             canIncPercent = false
             setDisplayText()
         }, 5000)
@@ -72,13 +72,13 @@ class PopUpShake() : MainActivity() {
             val y = event.values[1]
             val z = event.values[2]
             lastAcceleration = currentAcceleration
-            currentAcceleration = sqrt((x * x + y * y + z * z).toDouble()).toFloat()
+            currentAcceleration = kotlin.math.sqrt((x * x + y * y + z * z).toDouble()).toFloat()
             val delta: Float = currentAcceleration - lastAcceleration
             acceleration = acceleration * 0.9f + delta
             if (acceleration > shakeFloor && canIncPercent) {
                 shakeFloor += shakeFloor / 4
                 percentToAddAfterShakeEvent += 1
-                vibration()
+                vibration(750L)
             }
         }
 
@@ -102,8 +102,8 @@ class PopUpShake() : MainActivity() {
     @SuppressLint("SetTextI18n")
     private fun setDisplayText() {
         popup_window_text.text = "$percentToAddAfterShakeEvent% Gain !"
-        popup_window_text.textSize = 30F;
-        Handler().postDelayed({
+        popup_window_text.textSize = 30F
+        Handler(Looper.getMainLooper()).postDelayed({
             canIncPercent = true
             onBackPressed()
         }, 3000)
@@ -137,13 +137,13 @@ class PopUpShake() : MainActivity() {
         colorAnimation.start()
     }
 
-    private fun vibration() {
+    private fun vibration(delay: Long) {
         val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+            v.vibrate(VibrationEffect.createOneShot(delay, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             //deprecated in API 26
-            v.vibrate(500)
+            v.vibrate(delay)
         }
     }
 }
