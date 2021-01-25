@@ -3,6 +3,7 @@ package hearc.dev_mobile.fishing_clicker
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -18,10 +19,12 @@ import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigInteger
+import java.util.concurrent.ThreadLocalRandom
 import kotlin.math.pow
 
 open class MainActivity : AppCompatActivity() {
 
+    private var isDisplayingShake = true
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var boatManager: BoatManager
     var user: User = User()
@@ -67,10 +70,22 @@ open class MainActivity : AppCompatActivity() {
             }
         }.start()
 
-        popup_test.setOnClickListener {
-            val intent = Intent(this.applicationContext, PopUpShake::class.java)
-            startActivity(intent)
-        }
+        Thread {
+            while (true) {
+                if (!isDisplayingShake) {
+                    isDisplayingShake = true
+                    val intent = Intent(this.applicationContext, PopUpShake::class.java)
+                    startActivity(intent)
+                } else {
+                    try {
+                        Thread.sleep(ThreadLocalRandom.current().nextInt(40000, 90000).toLong())
+                        isDisplayingShake=false
+                    } catch (e: Exception) {
+                        Log.d("ThreadSleepError", e.toString())
+                    }
+                }
+            }
+        }.start()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -101,6 +116,7 @@ open class MainActivity : AppCompatActivity() {
         percentToAddAfterShakeEvent = 1
         startActivity(Intent(this.applicationContext, MainActivity::class.java))
         finish()
+        isDisplayingShake = false
     }
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
