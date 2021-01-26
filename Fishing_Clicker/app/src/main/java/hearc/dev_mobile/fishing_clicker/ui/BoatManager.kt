@@ -13,14 +13,14 @@ import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
 import hearc.dev_mobile.fishing_clicker.boat.Boat
-import java.io.File
+import java.io.IOException
+import java.io.InputStream
 import java.math.BigInteger
 import java.util.*
-import kotlin.math.pow
 
 class BoatManager(private val mainActivity: MainActivity) {
 
-    val boatList: LinkedList<Boat> = generateBoatList("BoatList.txt")
+    val boatList: LinkedList<Boat> = generateBoatList()
 
     private var navView: NavigationView = mainActivity.findViewById(R.id.nav_view)
     private var applicationContext: Context = mainActivity.applicationContext
@@ -47,7 +47,7 @@ class BoatManager(private val mainActivity: MainActivity) {
         imageView.layoutParams = LinearLayout.LayoutParams(400, 400)
         imageView.x = 2F // setting margin from left
         imageView.y = 2F // setting margin from top
-        imageView.setImageResource(R.drawable.ic_fish_boat1)
+        imageView.setImageResource(boatList[index].drawableId)
 
         val layout = mainActivity.findViewById<LinearLayout>(R.id.imageLayout)
         layout.addView(imageView)
@@ -58,31 +58,30 @@ class BoatManager(private val mainActivity: MainActivity) {
      * Generate the boat list
      * @return this list
      */
-    private fun generateBoatList(fileName : String): LinkedList<Boat> {
-        val list = LinkedList<Boat>()
-        File(fileName).forEachLine {
-            val a = it.split(";")
-            list.add(Boat(a[0],BigInteger(a[1]),a[2].toInt(),Money(BigInteger(a[3]))))
+    private fun generateBoatList(): LinkedList<Boat> {
+        val list: LinkedList<Boat> = LinkedList()
+        var string = ""
+        try {
+            val inputStream: InputStream = mainActivity.assets.open("Boats.txt")
+            val size: Int = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            string = String(buffer)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        for (line in string.split('\n')) {
+            val attributes = line.split(";")
+            if(attributes.size==4){
+                list.add(
+                    Boat(
+                        attributes[0], BigInteger(attributes[1]), attributes[2].toInt(),
+                        Money(BigInteger(attributes[3].substring(0, attributes[3].length - 1)))
+                    )
+                )
+            }
         }
         return list
-    }
-
-    /**
-     * add a boat to the list
-     * @param list the list where the boat is added
-     * @param id the resourceId of the boat
-     * @param indexList the index list of the boat to know where
-     * it will be in the list ad change parameter of the boat with it
-     */
-    private fun addToBoatList(list: LinkedList<Boat>, id: Int, indexList: Int) {
-        list.add(
-            Boat(
-                "Boat ${indexList + 1}",
-                BigInteger.valueOf(10.0.pow(indexList).toLong()),
-                id,
-                Money(BigInteger.valueOf(150.0.pow(indexList).toLong()))
-            )
-        )
     }
 
     /**
@@ -158,7 +157,7 @@ class BoatManager(private val mainActivity: MainActivity) {
         if (displayedBoat != 0) {
             for (i in 0 until displayedBoat) {
                 createBoat(i, false)
-                boatList[i].level = sharedPrefBoat.getLong("Level", 1L)
+                boatList[i].level = sharedPrefBoat.getLong("Level", 0L)
                 boatList[i].upgradePrice = Money(
                     BigInteger(
                         sharedPrefBoat.getString("UpgradePrice", "") ?: ""
@@ -173,7 +172,7 @@ class BoatManager(private val mainActivity: MainActivity) {
                 navView.menu.findItem(boatList[i].resourceId).title = boatList[i].getTitleUpgrade()
             }
         } else {
-            navView.menu.findItem(R.id.boat1).title = boatList[0].getTitleUpgrade()
+            navView.menu.findItem(R.id.boat1).title = boatList[0].getTitlePurchase()
         }
     }
 }
