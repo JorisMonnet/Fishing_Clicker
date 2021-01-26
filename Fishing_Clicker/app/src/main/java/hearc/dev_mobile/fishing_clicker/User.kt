@@ -1,6 +1,7 @@
 package hearc.dev_mobile.fishing_clicker
 
 import android.content.SharedPreferences
+import android.util.Log
 import java.math.BigInteger
 import kotlin.math.pow
 
@@ -14,7 +15,7 @@ class User {
      * @return the value of the click
      */
     fun getClickValue(): BigInteger {
-        return click.multiply(BigInteger.valueOf(10.0.pow(level).toLong()))
+        return click.multiply(BigInteger.TEN.pow(level.toInt() * 3))
     }
 
     /**
@@ -27,6 +28,7 @@ class User {
         val clickPref = sharedPrefUser.getString("Click", "1")
         click = if(clickPref!=null) BigInteger(clickPref) else BigInteger.ONE
         level = sharedPrefUser.getInt("LevelUser", 0)
+        money.value=money.value.add(BigInteger.valueOf(50000000))//TODO TOREMOVE
     }
 
     /**
