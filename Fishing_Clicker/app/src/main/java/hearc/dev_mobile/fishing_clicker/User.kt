@@ -15,7 +15,7 @@ class User {
      * @return the value of the click
      */
     fun getClickValue(): BigInteger {
-        return click.multiply(BigInteger.valueOf(10.0.pow(level*3+2).toLong()))
+        return click.multiply(BigInteger.TEN.pow(level.toInt() * 3))
     }
 
     /**

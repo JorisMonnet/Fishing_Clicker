@@ -2,12 +2,10 @@ package hearc.dev_mobile.fishing_clicker
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -119,18 +117,9 @@ open class MainActivity : AppCompatActivity() {
     fun updateMoneyTextView(valueToAdd: BigInteger) {
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
-        Log.v(
-            "test", (user.money.value.compareTo(
-                BigInteger.valueOf(
-                    10.0.pow(user.level * 3).toLong()
-                )
-            ) >= 1).toString()
-        )
         if (user.money.value.compareTo(
-                BigInteger.valueOf(
-                    10.0.pow(user.level * 3).toLong()
-                )
-            ) >= 1
+                BigInteger.TEN.pow(user.level.toInt() * 3)
+            ) == 1
         ) {
             user.level++
             main.setBackgroundColor(
@@ -159,12 +148,10 @@ open class MainActivity : AppCompatActivity() {
             )
         }
         Log.v(
-            "target", Money(
-                BigInteger.valueOf(
-                    10.0.pow(user.level * 3).toLong()
-                )
-            ).toString()
+            "target", (
+                    BigInteger.TEN.pow(user.level.toInt() * 3)).toString()
         )
+        Log.v("moula", user.money.value.toString())
         Log.v("level", user.level.toString())
     }
 
