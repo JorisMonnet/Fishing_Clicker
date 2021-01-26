@@ -1,4 +1,4 @@
-package hearc.dev_mobile.fishing_clicker.fragment
+package hearc.dev_mobile.fishing_clicker.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -12,7 +12,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.*
-import android.util.Log
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
 import hearc.dev_mobile.fishing_clicker.MainActivity
@@ -133,7 +132,7 @@ class PopUpShake : MainActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 finish()
                 overridePendingTransition(0, 0)
-                Log.v("here", "hereiam")
+//                Log.v("here", "hereiam")
                 doShakeReward()
             }
         })

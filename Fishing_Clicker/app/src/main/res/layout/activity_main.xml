@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#3f8bba"
-                android:text="Details"
+                android:text="Specs"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
