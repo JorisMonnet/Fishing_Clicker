@@ -16,7 +16,7 @@ import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
 import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.R
-import kotlinx.android.synthetic.main.activity_pop_up_shake.*
+import kotlinx.android.synthetic.main.activity_pop_up_about.*
 
 
 class PopUpAbout : MainActivity() {
@@ -34,14 +34,15 @@ class PopUpAbout : MainActivity() {
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), Color.TRANSPARENT, alphaColor)
         colorAnimation.duration = 500 // milliseconds
         colorAnimation.addUpdateListener { animator ->
-            pop_up_shake_background.setBackgroundColor(animator.animatedValue as Int)
+            pop_up_about_background.setBackgroundColor(animator.animatedValue as Int)
         }
+        colorAnimation.start()
         colorAnimation.start()
 
         //animation for popup window
         pop_up_about_view_with_border.alpha = 0f
         pop_up_about_view_with_border.animate().alpha(1f).setDuration(500).setInterpolator(
-            DecelerateInterpolator()s
+            DecelerateInterpolator()
         ).start()
 
     }
@@ -72,7 +73,7 @@ class PopUpAbout : MainActivity() {
         }
 
         // Fade animation for the Popup Window when you press the back button
-        pop_up_shake_view_with_border.animate().alpha(0f).setDuration(500).setInterpolator(
+        pop_up_about_view_with_border.animate().alpha(0f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
         ).start()
 

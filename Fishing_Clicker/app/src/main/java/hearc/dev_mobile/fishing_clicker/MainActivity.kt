@@ -12,6 +12,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import hearc.dev_mobile.fishing_clicker.activities.PopUpAbout
 import hearc.dev_mobile.fishing_clicker.activities.PopUpShake
 import hearc.dev_mobile.fishing_clicker.model.user.User
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
@@ -50,6 +51,12 @@ open class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        about_button.setOnClickListener{
+            val intent = Intent(this.applicationContext, PopUpAbout::class.java)
+            startActivity(intent)
+        }
+
 
         boatManager.createBoatMenuListener()
         nav_view.menu.findItem(R.id.boat1).title =
