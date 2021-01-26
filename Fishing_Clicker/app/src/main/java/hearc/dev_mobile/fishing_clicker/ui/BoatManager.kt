@@ -2,38 +2,40 @@ package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
-import hearc.dev_mobile.fishing_clicker.boat.Boat
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.navigation.NavigationView
 import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
+import hearc.dev_mobile.fishing_clicker.boat.Boat
 import java.math.BigInteger
 import java.util.*
 import kotlin.math.pow
 
 class BoatManager(private val mainActivity: MainActivity) {
 
-    val boatList : LinkedList<Boat> = generateBoatList()
+    val boatList: LinkedList<Boat> = generateBoatList()
 
     private var navView: NavigationView = mainActivity.findViewById(R.id.nav_view)
     private var applicationContext: Context = mainActivity.applicationContext
-    private var displayedBoat=0
+    private var displayedBoat = 0
     private var playerMoney = mainActivity.user.money
-    private var toast : Toast = Toast.makeText(applicationContext,"",Toast.LENGTH_SHORT)
+    private var toast: Toast = Toast.makeText(applicationContext, "", Toast.LENGTH_SHORT)
 
     /**
      * function to create boat/buy boat and show them into the main view
      * @param index the index of the boat to buy in the boat list
      * @param buying if the boat is created from the sharedPreferences or bought
      */
-    private fun createBoat(index : Int, buying : Boolean) {
+    private fun createBoat(index: Int, buying: Boolean) {
         displayedBoat++
-        boatList[index].isBought=true
-        if(buying)
+        boatList[index].isBought = true
+        if (buying)
             mainActivity.updateMoneyTextView(boatList[index].purchasePrice.value.negate())
 
         val textView = TextView(mainActivity)
@@ -56,15 +58,15 @@ class BoatManager(private val mainActivity: MainActivity) {
      * Generate the boat list
      * @return this list
      */
-    private fun generateBoatList() : LinkedList<Boat>{
+    private fun generateBoatList(): LinkedList<Boat> {
         val list = LinkedList<Boat>()
-        addToBoatList(list,R.id.boat1,0)
-        addToBoatList(list,R.id.boat2,1)
-        addToBoatList(list,R.id.boat3,2)
-        addToBoatList(list,R.id.boat4,3)
-        addToBoatList(list,R.id.boat5,4)
-        addToBoatList(list,R.id.boat6,5)
-        addToBoatList(list,R.id.boat7,6)
+        addToBoatList(list, R.id.boat1, 0)
+        addToBoatList(list, R.id.boat2, 1)
+        addToBoatList(list, R.id.boat3, 2)
+        addToBoatList(list, R.id.boat4, 3)
+        addToBoatList(list, R.id.boat5, 4)
+        addToBoatList(list, R.id.boat6, 5)
+        addToBoatList(list, R.id.boat7, 6)
         return list
     }
 
@@ -75,14 +77,13 @@ class BoatManager(private val mainActivity: MainActivity) {
      * @param indexList the index list of the boat to know where
      * it will be in the list ad change parameter of the boat with it
      */
-    private fun addToBoatList(list : LinkedList<Boat>, id : Int,indexList : Int) {
+    private fun addToBoatList(list: LinkedList<Boat>, id: Int, indexList: Int) {
         list.add(
             Boat(
-                "Boat ${indexList+1}",
+                "Boat ${indexList + 1}",
                 BigInteger.valueOf(10.0.pow(indexList).toLong()),
                 id,
-                Money(BigInteger.valueOf(150.0.pow(indexList).toLong())),
-                mainActivity
+                Money(BigInteger.valueOf(150.0.pow(indexList).toLong()))
             )
         )
     }
@@ -92,9 +93,9 @@ class BoatManager(private val mainActivity: MainActivity) {
      */
     fun createBoatMenuListener() {
         navView.setNavigationItemSelectedListener {
-            for( i in 0 until boatList.size){
-                if(boatList[i].resourceId==it.itemId){
-                    boatTreatment(it,i)
+            for (i in 0 until boatList.size) {
+                if (boatList[i].resourceId == it.itemId) {
+                    boatTreatment(it, i)
                 }
             }
             true
@@ -108,26 +109,21 @@ class BoatManager(private val mainActivity: MainActivity) {
      * @param it the menuItem
      */
     private fun boatTreatment(it: MenuItem, indexBoat: Int) {
-        Log.d("TAG", "boatTreatment: ENTER")
-        Log.d("TAG", "boatTreatment: $indexBoat")
-        Log.d("TAG", "boatTreatment: $displayedBoat")
         if (playerMoney.value >= boatList[indexBoat].purchasePrice.value && displayedBoat <= indexBoat) {
-            createBoat(indexBoat,true)
-            Log.d("TAG", "boatTreatment: $indexBoat")
-            Log.d("TAG", "boatTreatment: ${boatList.size}")
-            if (indexBoat != boatList.size-1) {
-                Log.d("TAG", "boatTreatment: ENTER")
-                navView.menu.findItem(boatList[indexBoat+1].resourceId).isVisible = true
-                navView.menu.findItem(boatList[indexBoat+1].resourceId).title ="Buy ${boatList[indexBoat+1].name} for ${boatList[indexBoat+1].purchasePrice} $"
+            createBoat(indexBoat, true)
+            if (indexBoat != boatList.size - 1) {
+                navView.menu.findItem(boatList[indexBoat + 1].resourceId).isVisible = true
+                navView.menu.findItem(boatList[indexBoat + 1].resourceId).title =
+                    boatList[indexBoat + 1].getTitlePurchase()
             }
             makeToast("You bought ${boatList[indexBoat].name}")
             playerMoney.value.subtract(boatList[indexBoat].purchasePrice.value)
-            it.title = "${boatList[indexBoat].name} lvl ${boatList[indexBoat].level}- lvl up cost ${boatList[indexBoat].upgradePrice}$"
+            it.title = boatList[indexBoat].getTitleUpgrade()
         } else if (displayedBoat > indexBoat && (playerMoney.value.compareTo(boatList[indexBoat].upgradePrice.value) == 1 || playerMoney.value == boatList[indexBoat].upgradePrice.value)) {
             boatList[indexBoat].increaseLevel()
             playerMoney.value.subtract(boatList[indexBoat].upgradePrice.value)
             makeToast("You upgraded ${boatList[indexBoat].name} ")
-            it.title = "${boatList[indexBoat].name} lvl ${boatList[indexBoat].level}- lvl up cost ${boatList[indexBoat].upgradePrice}$"
+            it.title = boatList[indexBoat].getTitleUpgrade()
         } else {
             makeToast("Not enough money ! Go Fish !")
         }
@@ -137,43 +133,50 @@ class BoatManager(private val mainActivity: MainActivity) {
      * Create a Toast message on what the user just did, delete the precedent if existing
      * @param message the message to display
      */
-    private fun makeToast(message : String){
+    private fun makeToast(message: String) {
         toast.cancel()
-        toast = Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT)
+        toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
         toast.show()
     }
+
     /**
      * save the data of all the boats bought
      * @param sharedPrefBoat the shared preferences
      */
-    fun saveData(sharedPrefBoat : SharedPreferences){
-        for(boat in boatList){
-            if(boat.isBought){
+    fun saveData(sharedPrefBoat: SharedPreferences) {
+        for (boat in boatList) {
+            if (boat.isBought) {
                 boat.save(sharedPrefBoat)
             }
         }
-        sharedPrefBoat.edit().putInt("DisplayedBoat",displayedBoat).apply()
+        sharedPrefBoat.edit().putInt("DisplayedBoat", displayedBoat).apply()
     }
+
     /**
      * Get the data of the boat bought
      * @param sharedPrefBoat the shared preferences
      */
-    fun createBoatData(sharedPrefBoat : SharedPreferences){
-        displayedBoat = sharedPrefBoat.getInt("DisplayedBoat",0)
-        if(displayedBoat!=0) {
+    fun createBoatData(sharedPrefBoat: SharedPreferences) {
+        displayedBoat = sharedPrefBoat.getInt("DisplayedBoat", 0)
+        if (displayedBoat != 0) {
             for (i in 0 until displayedBoat) {
-                createBoat(i,false)
+                createBoat(i, false)
                 boatList[i].level = sharedPrefBoat.getLong("Level", 1L)
-                boatList[i].upgradePrice = Money(BigInteger(
-                    sharedPrefBoat.getString("UpgradePrice", "") ?: ""))
-                boatList[i].purchasePrice = Money(BigInteger(sharedPrefBoat.getString("PurchasePrice", "")?: ""))
+                boatList[i].upgradePrice = Money(
+                    BigInteger(
+                        sharedPrefBoat.getString("UpgradePrice", "") ?: ""
+                    )
+                )
+                boatList[i].purchasePrice =
+                    Money(BigInteger(sharedPrefBoat.getString("PurchasePrice", "") ?: ""))
                 boatList[i].resourceId = sharedPrefBoat.getInt("ResourceId", 0)
-                boatList[i].efficiency = BigInteger(sharedPrefBoat.getString("Efficiency", "")?: "")
+                boatList[i].efficiency =
+                    BigInteger(sharedPrefBoat.getString("Efficiency", "") ?: "")
                 navView.menu.findItem(boatList[i].resourceId).isVisible = true
-                navView.menu.findItem(boatList[i].resourceId).title = "${boatList[i].name} lvl ${boatList[i].level}- lvl up cost ${boatList[i].upgradePrice}$"
+                navView.menu.findItem(boatList[i].resourceId).title = boatList[i].getTitleUpgrade()
             }
         } else {
-            navView.menu.findItem(R.id.boat1).title = "${boatList[0].name} cost ${boatList[0].purchasePrice}$"
+            navView.menu.findItem(R.id.boat1).title = boatList[0].getTitleUpgrade()
         }
     }
 }
