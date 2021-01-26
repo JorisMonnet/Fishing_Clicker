@@ -13,13 +13,14 @@ import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
 import hearc.dev_mobile.fishing_clicker.boat.Boat
+import java.io.File
 import java.math.BigInteger
 import java.util.*
 import kotlin.math.pow
 
 class BoatManager(private val mainActivity: MainActivity) {
 
-    val boatList: LinkedList<Boat> = generateBoatList()
+    val boatList: LinkedList<Boat> = generateBoatList("BoatList.txt")
 
     private var navView: NavigationView = mainActivity.findViewById(R.id.nav_view)
     private var applicationContext: Context = mainActivity.applicationContext
@@ -42,8 +43,7 @@ class BoatManager(private val mainActivity: MainActivity) {
         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         textView.text = boatList[index].name
 
-        val imageView =
-            ImageView(mainActivity)
+        val imageView = ImageView(mainActivity)
         imageView.layoutParams = LinearLayout.LayoutParams(400, 400)
         imageView.x = 2F // setting margin from left
         imageView.y = 2F // setting margin from top
@@ -58,15 +58,12 @@ class BoatManager(private val mainActivity: MainActivity) {
      * Generate the boat list
      * @return this list
      */
-    private fun generateBoatList(): LinkedList<Boat> {
+    private fun generateBoatList(fileName : String): LinkedList<Boat> {
         val list = LinkedList<Boat>()
-        addToBoatList(list, R.id.boat1, 0)
-        addToBoatList(list, R.id.boat2, 1)
-        addToBoatList(list, R.id.boat3, 2)
-        addToBoatList(list, R.id.boat4, 3)
-        addToBoatList(list, R.id.boat5, 4)
-        addToBoatList(list, R.id.boat6, 5)
-        addToBoatList(list, R.id.boat7, 6)
+        File(fileName).forEachLine {
+            val a = it.split(";")
+            list.add(Boat(a[0],BigInteger(a[1]),a[2].toInt(),Money(BigInteger(a[3]))))
+        }
         return list
     }
 
