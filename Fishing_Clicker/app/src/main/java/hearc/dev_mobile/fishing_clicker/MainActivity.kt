@@ -17,14 +17,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
-import kotlin.math.pow
 
 open class MainActivity : AppCompatActivity() {
 
     private var isDisplayingShake = true
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var boatManager: BoatManager
-    var user: User = User()
+    var user: User = User(this)
     var percentToAddAfterShakeEvent = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,14 +114,10 @@ open class MainActivity : AppCompatActivity() {
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
         user.money.value = user.money.value.add(valueToAdd)
-        if (valueToAdd > BigInteger.valueOf(0L)) {
-            user.moneyGained.value = user.moneyGained.value.add(valueToAdd)
-            Log.v("moula gained ",user.moneyGained.toString())
-        }
         moneyTextView.text = user.money.toString()
-        lvlProgressBar.progress = user.levelProgress
-        lvlText.text = "Level : " + user.level.toString()
         user.doLevel()
+        lvlProgressBar.progress = user.levelProgress
+        lvlText.text = "Level :  ${user.level.toString()}"
     }
 
     override fun onPause() {
