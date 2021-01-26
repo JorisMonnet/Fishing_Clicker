@@ -50,13 +50,14 @@ open class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         boatManager.createBoatMenuListener()
-        nav_view.menu.findItem(R.id.boat1).title = "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
+        nav_view.menu.findItem(R.id.boat1).title =
+            "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
         Thread {//AFK MECHANISM
             while (true) {
                 for (boat in boatManager.boatList) {
                     // try to touch View of UI thread
                     this@MainActivity.runOnUiThread {
-                        if(boat.isBought)
+                        if (boat.isBought)
                             boat.doMoneyReward(1L)
                     }
                 }
@@ -114,18 +115,14 @@ open class MainActivity : AppCompatActivity() {
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
         user.money.value = user.money.value.add(valueToAdd)
-        moneyTextView.text = user.money.toString()
-
-        if (user.money.value.compareTo(
-                BigInteger.valueOf(
-                    10.0.pow(user.level * 3 + 6).toLong()
-                )
-            ) == 1
-        ) {
-            user.level++
-            //TODO()  //change background when changing of level
-            //contentLayout.background = R.drawable.bgLevel1
+        if (valueToAdd > BigInteger.valueOf(0L)) {
+            user.moneyGained.value = user.moneyGained.value.add(valueToAdd)
+            Log.v("moula gained ",user.moneyGained.toString())
         }
+        moneyTextView.text = user.money.toString()
+        lvlProgressBar.progress = user.levelProgress
+        lvlText.text = "Level : " + user.level.toString()
+        user.doLevel()
     }
 
     override fun onPause() {

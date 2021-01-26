@@ -46,7 +46,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" />
     </ScrollView>
+    <LinearLayout
+        android:id="@+id/progressBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
+        <ProgressBar
+            android:id="@+id/lvlProgressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="2dp"
+            android:layout_marginRight="2dp"
+            android:max="100"
+            android:min="0"
+            />
+
+        <TextView
+            android:id="@+id/lvlText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="2dp"
+            android:text="level" />
+
+    </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         app:backgroundTint="@color/design_default_color_surface"

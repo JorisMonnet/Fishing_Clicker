@@ -5,9 +5,26 @@ import java.math.BigInteger
 import kotlin.math.pow
 
 class User {
+    var levelProgress: Int = 0
     var level: Int = 0
     private var click = BigInteger.ONE
     var money: Money = Money(BigInteger.ZERO)
+    var moneyGained: Money = Money(BigInteger.ZERO)
+
+    fun doLevel() {
+
+        if (money.value.compareTo(
+                BigInteger.valueOf(
+                    10.0.pow(level * 3 + 6).toLong()
+                )
+            ) == 1
+        ) {
+            level++
+            //TODO()  //change background when changing of level
+            //contentLayout.background = R.drawable.bgLevel1
+        }
+    }
+
 
     /**
      * Function to get value of the click with the given user level
@@ -21,24 +38,25 @@ class User {
      * Get the value of the user from the shared Preferences when game is quit and restart
      * @param sharedPrefUser the SharedPreferences
      */
-    fun createValuesFromPref(sharedPrefUser : SharedPreferences){
+    fun createValuesFromPref(sharedPrefUser: SharedPreferences) {
         val moneyPref = sharedPrefUser.getString("GeneralMoney", "0")
-        money.value = if(moneyPref!=null) BigInteger(moneyPref) else BigInteger.ZERO
+        money.value = if (moneyPref != null) BigInteger(moneyPref) else BigInteger.ZERO
         val clickPref = sharedPrefUser.getString("Click", "1")
-        click = if(clickPref!=null) BigInteger(clickPref) else BigInteger.ONE
+        click = if (clickPref != null) BigInteger(clickPref) else BigInteger.ONE
         level = sharedPrefUser.getInt("Level", 0)
-        money.value=money.value.add(BigInteger.valueOf(50000000))//TODO TOREMOVE
+        money.value = money.value.add(BigInteger.valueOf(50000000))//TODO TOREMOVE
+        moneyGained=money
     }
 
     /**
      * save the user Data
      * @param sharedPrefUser the sharedPreferences where it's saved
      */
-    fun saveData(sharedPrefUser : SharedPreferences){
-        with(sharedPrefUser.edit()){
-            putInt("LevelUser",level)
-            putString("Click",click.toString())
-            putString("GeneralMoney",money.value.toString())
+    fun saveData(sharedPrefUser: SharedPreferences) {
+        with(sharedPrefUser.edit()) {
+            putInt("LevelUser", level)
+            putString("Click", click.toString())
+            putString("GeneralMoney", money.value.toString())
             apply()
         }
     }
