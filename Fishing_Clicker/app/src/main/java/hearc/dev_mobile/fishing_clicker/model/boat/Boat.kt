@@ -1,8 +1,8 @@
-package hearc.dev_mobile.fishing_clicker.boat
+package hearc.dev_mobile.fishing_clicker.model.boat
 
 import android.content.SharedPreferences
 import hearc.dev_mobile.fishing_clicker.MainActivity
-import hearc.dev_mobile.fishing_clicker.Money
+import hearc.dev_mobile.fishing_clicker.model.money.Money
 import java.math.BigInteger
 
 

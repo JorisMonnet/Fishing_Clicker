@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".PopUpShake"
+            android:name=".fragment.PopUpShake"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>

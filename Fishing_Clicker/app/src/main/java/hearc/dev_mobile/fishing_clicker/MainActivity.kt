@@ -12,13 +12,14 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import hearc.dev_mobile.fishing_clicker.fragment.PopUpShake
+import hearc.dev_mobile.fishing_clicker.model.user.User
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
-import kotlin.math.pow
 
 open class MainActivity : AppCompatActivity() {
 

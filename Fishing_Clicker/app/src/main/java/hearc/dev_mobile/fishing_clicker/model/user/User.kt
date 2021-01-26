@@ -1,9 +1,8 @@
-package hearc.dev_mobile.fishing_clicker
+package hearc.dev_mobile.fishing_clicker.model.user
 
 import android.content.SharedPreferences
-import android.util.Log
+import hearc.dev_mobile.fishing_clicker.model.money.Money
 import java.math.BigInteger
-import kotlin.math.pow
 
 class User {
     var level: Int = 0

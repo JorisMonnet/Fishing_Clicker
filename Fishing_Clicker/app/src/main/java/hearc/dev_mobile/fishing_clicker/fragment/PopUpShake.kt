@@ -1,4 +1,4 @@
-package hearc.dev_mobile.fishing_clicker
+package hearc.dev_mobile.fishing_clicker.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -15,6 +15,8 @@ import android.os.*
 import android.util.Log
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
+import hearc.dev_mobile.fishing_clicker.MainActivity
+import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 
 

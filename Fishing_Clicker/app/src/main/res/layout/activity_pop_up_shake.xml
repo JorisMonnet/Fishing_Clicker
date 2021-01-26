@@ -5,7 +5,7 @@
     android:id="@+id/pop_up_shake_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PopUpShake"
+    tools:context=".fragment.PopUpShake"
     android:background="#FF000000">
 
 
