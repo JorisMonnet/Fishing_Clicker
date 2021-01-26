@@ -15,7 +15,7 @@ class User {
      * @return the value of the click
      */
     fun getClickValue(): BigInteger {
-        return click.multiply(BigInteger.valueOf(10.0.pow(level).toLong()))
+        return click.multiply(BigInteger.valueOf(10.0.pow(level*3+2).toLong()))
     }
 
     /**
@@ -27,7 +27,7 @@ class User {
         money.value = if(moneyPref!=null) BigInteger(moneyPref) else BigInteger.ZERO
         val clickPref = sharedPrefUser.getString("Click", "1")
         click = if(clickPref!=null) BigInteger(clickPref) else BigInteger.ONE
-        level = sharedPrefUser.getInt("Level", 0)
+        level = sharedPrefUser.getInt("LevelUser", 0)
         money.value=money.value.add(BigInteger.valueOf(50000000))//TODO TOREMOVE
     }
 

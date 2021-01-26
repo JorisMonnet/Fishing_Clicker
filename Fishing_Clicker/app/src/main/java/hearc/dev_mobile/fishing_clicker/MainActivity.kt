@@ -119,16 +119,20 @@ open class MainActivity : AppCompatActivity() {
     fun updateMoneyTextView(valueToAdd: BigInteger) {
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
-
+        Log.v(
+            "test", (user.money.value.compareTo(
+                BigInteger.valueOf(
+                    10.0.pow(user.level * 3).toLong()
+                )
+            ) >= 1).toString()
+        )
         if (user.money.value.compareTo(
                 BigInteger.valueOf(
-                    10.0.pow(user.level * 3 + 6).toLong()
+                    10.0.pow(user.level * 3).toLong()
                 )
-            ) == 1
+            ) >= 1
         ) {
             user.level++
-            Log.v("level", user.level.toString())
-            //TODO()  //change background when changing of level
             main.setBackgroundColor(
                 resources.getColor(
                     when (user.level % 17) {
@@ -154,6 +158,14 @@ open class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        Log.v(
+            "target", Money(
+                BigInteger.valueOf(
+                    10.0.pow(user.level * 3).toLong()
+                )
+            ).toString()
+        )
+        Log.v("level", user.level.toString())
     }
 
     override fun onPause() {
