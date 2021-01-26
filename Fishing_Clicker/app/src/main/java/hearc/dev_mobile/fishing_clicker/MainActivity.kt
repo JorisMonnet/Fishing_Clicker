@@ -113,6 +113,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
+        Log.v("moula avant",user.money.value.toString())
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
 
@@ -126,6 +127,7 @@ open class MainActivity : AppCompatActivity() {
             //TODO()  //change background when changing of level
             //contentLayout.background = R.drawable.bgLevel1
         }
+        Log.v("moulaApres",user.money.value.toString())
     }
 
     override fun onPause() {

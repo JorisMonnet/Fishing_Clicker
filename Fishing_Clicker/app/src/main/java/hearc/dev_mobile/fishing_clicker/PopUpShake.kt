@@ -12,6 +12,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.*
+import android.util.Log
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
@@ -23,7 +24,7 @@ class PopUpShake : MainActivity() {
     private var acceleration = 0f
     private var currentAcceleration = 0f
     private var lastAcceleration = 0f
-    private var shakeFloor = 24
+    private var shakeFloor = 6
     private var canIncPercent = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,6 +131,7 @@ class PopUpShake : MainActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 finish()
                 overridePendingTransition(0, 0)
+                Log.v("here", "hereiam")
                 doShakeReward()
             }
         })
