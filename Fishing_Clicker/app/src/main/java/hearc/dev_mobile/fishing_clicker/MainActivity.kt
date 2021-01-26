@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
+import java.lang.Exception
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -29,10 +30,12 @@ open class MainActivity : AppCompatActivity() {
     var percentToAddAfterShakeEvent = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+      //get the user Preferences
         user.createValuesFromPref(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         setContentView(R.layout.activity_main)
         boatManager = BoatManager(this)
-
+        boatManager.createBoatData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+        boatManager.createBoatMenuListener()
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
@@ -58,8 +61,9 @@ open class MainActivity : AppCompatActivity() {
                 for (boat in boatManager.boatList) {
                     // try to touch View of UI thread
                     this@MainActivity.runOnUiThread {
-                        if (boat.isBought)
-                            boat.doMoneyReward(1L)
+                        if (boat.isBought) {
+                            updateMoneyTextView(boat.efficiency)
+                        }
                     }
                 }
                 try {
@@ -102,7 +106,6 @@ open class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
-
     fun doShakeReward() {
         updateMoneyTextView(
             BigInteger.valueOf(
@@ -157,21 +160,25 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+        boatManager.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         super.onPause()
     }
 
     override fun onResume() {
         user.createValuesFromPref(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+        boatManager.createBoatData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         super.onResume()
     }
 
     override fun onRestart() {
         user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+        boatManager.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         super.onRestart()
     }
 
     override fun onDestroy() {
         user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+        boatManager.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         super.onDestroy()
     }
 }
