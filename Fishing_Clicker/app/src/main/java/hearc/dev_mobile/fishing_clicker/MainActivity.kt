@@ -2,10 +2,12 @@ package hearc.dev_mobile.fishing_clicker
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -14,6 +16,7 @@ import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
@@ -50,13 +53,14 @@ open class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         boatManager.createBoatMenuListener()
-        nav_view.menu.findItem(R.id.boat1).title = "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
+        nav_view.menu.findItem(R.id.boat1).title =
+            "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
         Thread {//AFK MECHANISM
             while (true) {
                 for (boat in boatManager.boatList) {
                     // try to touch View of UI thread
                     this@MainActivity.runOnUiThread {
-                        if(boat.isBought)
+                        if (boat.isBought)
                             boat.doMoneyReward(1L)
                     }
                 }
@@ -113,7 +117,6 @@ open class MainActivity : AppCompatActivity() {
     }
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {
-        Log.v("moula avant",user.money.value.toString())
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
 
@@ -124,10 +127,33 @@ open class MainActivity : AppCompatActivity() {
             ) == 1
         ) {
             user.level++
+            Log.v("level", user.level.toString())
             //TODO()  //change background when changing of level
-            //contentLayout.background = R.drawable.bgLevel1
+            main.setBackgroundColor(
+                resources.getColor(
+                    when (user.level % 17) {
+                        0 -> R.color.colorMainBG0
+                        1 -> R.color.colorMainBG1
+                        2 -> R.color.colorMainBG2
+                        3 -> R.color.colorMainBG3
+                        4 -> R.color.colorMainBG4
+                        5 -> R.color.colorMainBG5
+                        6 -> R.color.colorMainBG6
+                        7 -> R.color.colorMainBG7
+                        8 -> R.color.colorMainBG8
+                        9 -> R.color.colorMainBG9
+                        10 -> R.color.colorMainBG10
+                        11 -> R.color.colorMainBG11
+                        12 -> R.color.colorMainBG12
+                        13 -> R.color.colorMainBG13
+                        14 -> R.color.colorMainBG14
+                        15 -> R.color.colorMainBG15
+                        16 -> R.color.colorMainBG16
+                        else -> R.color.colorMainBG0
+                    } as Int
+                )
+            )
         }
-        Log.v("moulaApres",user.money.value.toString())
     }
 
     override fun onPause() {
