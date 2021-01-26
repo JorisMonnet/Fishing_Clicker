@@ -2,6 +2,7 @@ package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -10,7 +11,6 @@ import com.google.android.material.navigation.NavigationView
 import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
-import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigInteger
 import java.util.*
 import kotlin.math.pow
@@ -19,7 +19,7 @@ class BoatManager(private val mainActivity: MainActivity) {
 
     val boatList : LinkedList<Boat> = generateBoatList()
 
-    private var navView: NavigationView = mainActivity.nav_view
+    private var navView: NavigationView = mainActivity.findViewById(R.id.nav_view)
     private var applicationContext: Context = mainActivity.applicationContext
     private var displayedBoat=0
     private var playerMoney = mainActivity.user.money
@@ -108,9 +108,15 @@ class BoatManager(private val mainActivity: MainActivity) {
      * @param it the menuItem
      */
     private fun boatTreatment(it: MenuItem, indexBoat: Int) {
+        Log.d("TAG", "boatTreatment: ENTER")
+        Log.d("TAG", "boatTreatment: $indexBoat")
+        Log.d("TAG", "boatTreatment: $displayedBoat")
         if (playerMoney.value >= boatList[indexBoat].purchasePrice.value && displayedBoat <= indexBoat) {
             createBoat(indexBoat,true)
+            Log.d("TAG", "boatTreatment: $indexBoat")
+            Log.d("TAG", "boatTreatment: ${boatList.size}")
             if (indexBoat != boatList.size-1) {
+                Log.d("TAG", "boatTreatment: ENTER")
                 navView.menu.findItem(boatList[indexBoat+1].resourceId).isVisible = true
                 navView.menu.findItem(boatList[indexBoat+1].resourceId).title ="Buy ${boatList[indexBoat+1].name} for ${boatList[indexBoat+1].purchasePrice} $"
             }
@@ -136,11 +142,9 @@ class BoatManager(private val mainActivity: MainActivity) {
         toast = Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT)
         toast.show()
     }
-/*
     /**
      * save the data of all the boats bought
      * @param sharedPrefBoat the shared preferences
-     * WORK IN PROGRESS TODO
      */
     fun saveData(sharedPrefBoat : SharedPreferences){
         for(boat in boatList){
@@ -153,7 +157,6 @@ class BoatManager(private val mainActivity: MainActivity) {
     /**
      * Get the data of the boat bought
      * @param sharedPrefBoat the shared preferences
-     * WORK IN PROGRESS TODO
      */
     fun createBoatData(sharedPrefBoat : SharedPreferences){
         displayedBoat = sharedPrefBoat.getInt("DisplayedBoat",0)
@@ -161,13 +164,16 @@ class BoatManager(private val mainActivity: MainActivity) {
             for (i in 0 until displayedBoat) {
                 createBoat(i,false)
                 boatList[i].level = sharedPrefBoat.getLong("Level", 1L)
-                boatList[i].upgradePrice =
-                    Money(BigInteger(sharedPrefBoat.getString("UpgradePrice", "0")))
+                boatList[i].upgradePrice = Money(BigInteger(
+                    sharedPrefBoat.getString("UpgradePrice", "") ?: ""))
+                boatList[i].purchasePrice = Money(BigInteger(sharedPrefBoat.getString("PurchasePrice", "")?: ""))
                 boatList[i].resourceId = sharedPrefBoat.getInt("ResourceId", 0)
-                boatList[i].efficiency = BigInteger(sharedPrefBoat.getString("Efficiency", ""))
+                boatList[i].efficiency = BigInteger(sharedPrefBoat.getString("Efficiency", "")?: "")
                 navView.menu.findItem(boatList[i].resourceId).isVisible = true
                 navView.menu.findItem(boatList[i].resourceId).title = "${boatList[i].name} lvl ${boatList[i].level}- lvl up cost ${boatList[i].upgradePrice}$"
             }
+        } else {
+            navView.menu.findItem(R.id.boat1).title = "${boatList[0].name} cost ${boatList[0].purchasePrice}$"
         }
-    }*/
+    }
 }
