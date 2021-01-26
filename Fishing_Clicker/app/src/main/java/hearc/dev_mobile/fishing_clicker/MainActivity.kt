@@ -12,8 +12,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import hearc.dev_mobile.fishing_clicker.activities.PopUpAbout
-import hearc.dev_mobile.fishing_clicker.activities.PopUpShake
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpAbout
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpShake
 import hearc.dev_mobile.fishing_clicker.model.user.User
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import kotlinx.android.synthetic.main.activity_main.*
@@ -53,7 +53,7 @@ open class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         about_button.setOnClickListener{
-            val intent = Intent(this.applicationContext, PopUpAbout::class.java)
+            val intent = Intent(this, PopUpAbout::class.java)
             startActivity(intent)
         }
 

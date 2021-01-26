@@ -5,7 +5,7 @@
     android:id="@+id/pop_up_about_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.PopUpAbout"
+    tools:context=".ui.activities.PopUpAbout"
     android:background="#FF000000">
 
 
@@ -45,21 +45,21 @@
                 android:background="#3f8bba"
                 android:minHeight="170dp">
 
-
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/popup_window_text"
+                    android:id="@+id/pop_up_about_display"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_height="45dp"
+                    android:background="#3f8bba"
                     android:gravity="center"
                     android:text="About"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
+                    android:textSize="20sp"
+                    app:autoSizeMaxTextSize="24dp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>

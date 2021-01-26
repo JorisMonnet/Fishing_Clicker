@@ -13,10 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".activities.PopUpAbout"></activity>
+        <activity android:name="hearc.dev_mobile.fishing_clicker.ui.activities.PopUpAbout"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activities.PopUpShake"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name="hearc.dev_mobile.fishing_clicker.ui.activities.PopUpShake"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

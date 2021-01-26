@@ -1,4 +1,4 @@
-package hearc.dev_mobile.fishing_clicker.activities
+package hearc.dev_mobile.fishing_clicker.ui.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

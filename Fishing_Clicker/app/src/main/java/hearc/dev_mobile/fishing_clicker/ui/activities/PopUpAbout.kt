@@ -1,16 +1,10 @@
-package hearc.dev_mobile.fishing_clicker.activities
+package hearc.dev_mobile.fishing_clicker.ui.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.*
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
