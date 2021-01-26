@@ -116,7 +116,6 @@ open class MainActivity : AppCompatActivity() {
         percentToAddAfterShakeEvent = 1
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     fun updateMoneyTextView(valueToAdd: BigInteger) {
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
@@ -128,10 +127,10 @@ open class MainActivity : AppCompatActivity() {
             ) == 1
         ) {
             user.level++
-            Log.v("level",user.level.toString())
+            Log.v("level", user.level.toString())
             //TODO()  //change background when changing of level
             main.setBackgroundColor(
-                getColor(
+                resources.getColor(
                     when (user.level % 17) {
                         0 -> R.color.colorMainBG0
                         1 -> R.color.colorMainBG1
