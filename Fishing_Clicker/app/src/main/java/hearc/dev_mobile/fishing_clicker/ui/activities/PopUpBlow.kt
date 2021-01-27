@@ -13,10 +13,11 @@ import androidx.core.graphics.ColorUtils
 import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_pop_up_blow.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlin.math.abs
 
-
+/**
+ * Class managing the blow page
+ */
 class PopUpBlow : MainActivity() {
 
     private var hasBlow = false
@@ -77,6 +78,10 @@ class PopUpBlow : MainActivity() {
 
     }
 
+    /**
+     * Function to vibrate th phone
+     * @param delay the delay between vibrations
+     */
     private fun vibration(delay: Long) {
         val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -88,6 +93,10 @@ class PopUpBlow : MainActivity() {
         }
     }
 
+    /**
+     * Check if the user is blowing in his microphone
+     * @return if is blowing
+     */
     private fun isBlowing(): Boolean {
         val recorder = true
         val minSize = AudioRecord.getMinBufferSize(

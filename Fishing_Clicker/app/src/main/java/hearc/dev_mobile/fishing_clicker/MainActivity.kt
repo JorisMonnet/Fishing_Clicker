@@ -31,11 +31,16 @@ import kotlinx.android.synthetic.main.content_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
 
-
+/**
+ * Main Activity
+ * Created by Adrien Paysant & Joris Monnet
+ * 2020-2021
+ * HE-ARC
+ */
 open class MainActivity : AppCompatActivity() {
 
     private var isDisplayingShake = true
-    var isSharkBeated = false
+    var isSharkBeaten = false
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var boatManager: BoatManager
     var user: User = User()
@@ -131,6 +136,7 @@ open class MainActivity : AppCompatActivity() {
             }
         }.start()
 
+        //Fish management
         Thread {
             while (true) {
                 if (!boatManager.boatList.isEmpty()) {
@@ -187,26 +193,33 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Get the result of the activity
+     * @param data the intent from the result
+     * @param requestCode code requested
+     * @param resultCode code result
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null) {
-            isSharkBeated = when (data.getIntExtra("SHARKY", 0)) {
+            isSharkBeaten = when (data.getIntExtra("SHARKY", 0)) {
                 1 -> true
                 0 -> false
                 else -> false
             }
         }
 
-        if (!isSharkBeated) {
+        if (!isSharkBeaten) {
             user.money.value /= BigInteger.TEN
             updateMoneyTextView(BigInteger.ZERO)
         }
         shark.visibility = View.GONE
     }
 
-
+    /**
+     * Check if record audio is allowed
+     */
     private fun checkRecordPermission() {
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
             != PackageManager.PERMISSION_GRANTED
         ) {
@@ -231,6 +244,9 @@ open class MainActivity : AppCompatActivity() {
         return true
     }
 
+    /**
+     * Function which manage the shake Event
+     */
     fun doShakeReward() {
         if (user.money.value > BigInteger.ZERO) {
             updateMoneyTextView(
@@ -240,6 +256,11 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Display the new money from money + valueToAdd
+     * and change background when level is changing
+     * @param valueToAdd BigInteger
+     */
     fun updateMoneyTextView(valueToAdd: BigInteger) {
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()

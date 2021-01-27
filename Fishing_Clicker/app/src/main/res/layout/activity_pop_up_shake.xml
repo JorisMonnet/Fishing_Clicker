@@ -26,7 +26,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/pop_up_shake_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -38,7 +37,6 @@
             app:cardPreventCornerOverlap="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/pop_up_shake_background_container"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -80,7 +78,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/pop_up_shake_display"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="#9E1C40"

@@ -12,15 +12,15 @@ import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_pop_up_specs.*
 
-
+/**
+ * Class managing specs page
+ */
 class PopUpSpecs : MainActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0)
         setContentView(R.layout.activity_pop_up_specs)
-
 
         //animation for background
         val alpha = 100 //between 0-255
@@ -53,6 +53,9 @@ class PopUpSpecs : MainActivity() {
         }
     }
 
+    /**
+     * Function when quitting the about page with an animation
+     */
     override fun onBackPressed() {
         // Fade animation for the background of Popup Window when you press the back button
         val alpha = 100 // between 0-255

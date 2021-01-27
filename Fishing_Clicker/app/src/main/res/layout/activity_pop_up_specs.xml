@@ -26,7 +26,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/pop_up_specs_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -38,7 +37,6 @@
             app:cardPreventCornerOverlap="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/pop_up_specs_background_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -58,7 +56,6 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/pop_up_specs_display"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:background="#3f8bba"

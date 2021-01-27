@@ -2,6 +2,9 @@ package hearc.dev_mobile.fishing_clicker.model.money
 
 import java.math.BigInteger
 
+/**
+ * Class managing the money with a custom display
+ */
 class Money(var value: BigInteger) {
     private val digitDisplayed = 6   //power of ten
     private val mthousandsList: MutableList<String> = generateThousandsList()
@@ -34,6 +37,4 @@ class Money(var value: BigInteger) {
                 thousandsList.add(firstChar.toString() + SecondChar.toString())
         return thousandsList
     }
-
-
 }

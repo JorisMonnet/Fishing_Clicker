@@ -5,7 +5,9 @@ import hearc.dev_mobile.fishing_clicker.R
 import hearc.dev_mobile.fishing_clicker.model.money.Money
 import java.math.BigInteger
 
-
+/**
+ * Class managing Boats which give idle money
+ */
 class Boat(
     val name: String,
     var efficiency: BigInteger,
@@ -19,12 +21,20 @@ class Boat(
     var isBought = false
     var resourceId = getResourceId(resourceIdNumber)
 
+    /**
+     * Create the upgradePrice, resourceId and drawableId
+     */
     fun createAttributes() {
         upgradePrice = Money(purchasePrice.value.multiply(BigInteger("2")))
         resourceId = getResourceId(resourceIdNumber)
         drawableId = getDrawableId(resourceIdNumber)
     }
 
+    /**
+     * return the resource Id associated to the resourceIdNumber
+     * @param resourceIdNumber Int
+     * @return resourceId
+     */
     private fun getResourceId(resourceIdNumber: Int): Int {
         return when (resourceIdNumber) {
             1 -> R.id.boat1
@@ -41,6 +51,11 @@ class Boat(
         }
     }
 
+    /**
+     * Return the drawable for the given resourceId
+     * @param resourceIdNumber Int
+     * @return the drawable
+     */
     private fun getDrawableId(resourceIdNumber: Int): Int {
         return when (resourceIdNumber) {
             1 -> R.drawable.ic_boat

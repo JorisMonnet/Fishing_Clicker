@@ -26,7 +26,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/pop_up_blow_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -38,7 +37,6 @@
             app:cardPreventCornerOverlap="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/pop_up_blow_background_container"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -47,7 +45,6 @@
 
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/popup_blow_window_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
@@ -80,7 +77,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/pop_up_blow_display"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="#ad701c"

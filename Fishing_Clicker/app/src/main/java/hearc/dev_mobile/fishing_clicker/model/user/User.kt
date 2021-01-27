@@ -4,6 +4,9 @@ import android.content.SharedPreferences
 import hearc.dev_mobile.fishing_clicker.model.money.Money
 import java.math.BigInteger
 
+/**
+ * Class manging the user with his money, level and click value
+ */
 class User {
     var level: Int = 0
     private var click = BigInteger.ONE

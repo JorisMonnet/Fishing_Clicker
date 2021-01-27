@@ -18,6 +18,9 @@ import java.io.InputStream
 import java.math.BigInteger
 import java.util.*
 
+/**
+ * Class Managing the list of boat usable by the user
+ */
 class BoatManager(private val mainActivity: MainActivity) {
 
     val boatList: LinkedList<Boat> = generateBoatList()

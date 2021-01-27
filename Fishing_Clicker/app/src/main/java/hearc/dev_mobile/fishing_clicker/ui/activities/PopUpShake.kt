@@ -17,7 +17,9 @@ import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 
-
+/**
+ * Class managing the shakeEvent page
+ */
 class PopUpShake : MainActivity() {
 
     private var sensorManager: SensorManager? = null
@@ -65,7 +67,9 @@ class PopUpShake : MainActivity() {
         }, 5000)
     }
 
-
+    /**
+     * Sensor listener for accelerometer
+     */
     private val sensorListener: SensorEventListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
             val x = event.values[0]
@@ -94,6 +98,9 @@ class PopUpShake : MainActivity() {
         super.onResume()
     }
 
+    /**
+     * Display text in the popup
+     */
     private fun setDisplayText() {
         try {
             popup_window_text.text =
@@ -109,6 +116,9 @@ class PopUpShake : MainActivity() {
         }, 3000)
     }
 
+    /**
+     * Function when quitting the shake page with an animation
+     */
     override fun onBackPressed() {
         // Fade animation for the background of Popup Window when you press the back button
         val alpha = 100 // between 0-255
@@ -131,13 +141,16 @@ class PopUpShake : MainActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 finish()
                 overridePendingTransition(0, 0)
-//                Log.v("here", "hereiam")
                 doShakeReward()
             }
         })
         colorAnimation.start()
     }
 
+    /**
+     * Function to vibrate th phone
+     * @param delay the delay between vibrations
+     */
     private fun vibration(delay: Long) {
         val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

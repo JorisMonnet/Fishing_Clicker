@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group
-        android:id="@+id/menu"
-        android:checkableBehavior="all">
+    <group android:checkableBehavior="all">
 
         <item
             android:id="@+id/boat1"
