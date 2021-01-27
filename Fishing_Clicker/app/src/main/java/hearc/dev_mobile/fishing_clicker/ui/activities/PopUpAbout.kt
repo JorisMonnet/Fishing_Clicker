@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_pop_up_about.*
 
 class PopUpAbout : MainActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0)
@@ -38,21 +37,7 @@ class PopUpAbout : MainActivity() {
         pop_up_about_view_with_border.animate().alpha(1f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
         ).start()
-
     }
-
-
-    override fun onResume() {
-
-        super.onResume()
-    }
-
-    override fun onPause() {
-
-        super.onPause()
-    }
-
-
 
     override fun onBackPressed() {
         // Fade animation for the background of Popup Window when you press the back button

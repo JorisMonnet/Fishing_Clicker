@@ -2,6 +2,7 @@ package hearc.dev_mobile.fishing_clicker
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -26,13 +27,18 @@ import kotlinx.android.synthetic.main.content_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
 
+
 open class MainActivity : AppCompatActivity() {
 
     private var isDisplayingShake = true
     private lateinit var toggle: ActionBarDrawerToggle
-    lateinit var boatManager: BoatManager
+    private lateinit var boatManager: BoatManager
     var user: User = User()
     var percentToAddAfterShakeEvent = 1
+
+    companion object {
+        var mediaPlayer: MediaPlayer? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,6 +165,12 @@ open class MainActivity : AppCompatActivity() {
                 }
             }
         }.start()
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(applicationContext, R.raw.music)
+            mediaPlayer!!.setVolume(50f, 50f)
+            mediaPlayer!!.isLooping = true
+            mediaPlayer!!.start()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -175,10 +187,12 @@ open class MainActivity : AppCompatActivity() {
     }
 
     fun doShakeReward() {
-        updateMoneyTextView(
-            BigInteger.valueOf(percentToAddAfterShakeEvent.toLong()).divide(user.money.value)
-        )
-        percentToAddAfterShakeEvent = 1
+        if (user.money.value > BigInteger.ZERO) {
+            updateMoneyTextView(
+                BigInteger.valueOf(percentToAddAfterShakeEvent.toLong()).divide(user.money.value)
+            )
+            percentToAddAfterShakeEvent = 1
+        }
     }
 
     fun updateMoneyTextView(valueToAdd: BigInteger) {

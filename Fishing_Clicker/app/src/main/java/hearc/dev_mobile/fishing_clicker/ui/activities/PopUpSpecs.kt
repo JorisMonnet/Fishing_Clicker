@@ -54,18 +54,6 @@ class PopUpSpecs : MainActivity() {
 
     }
 
-
-    override fun onResume() {
-        super.onResume()
-
-    }
-
-    override fun onPause() {
-
-        super.onPause()
-    }
-
-
     override fun onBackPressed() {
         // Fade animation for the background of Popup Window when you press the back button
         val alpha = 100 // between 0-255

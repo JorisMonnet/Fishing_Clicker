@@ -94,11 +94,6 @@ class PopUpShake : MainActivity() {
         super.onResume()
     }
 
-    override fun onPause() {
-        sensorManager!!.unregisterListener(sensorListener)
-        super.onPause()
-    }
-
     private fun setDisplayText() {
         try {
             popup_window_text.text = "$percentToAddAfterShakeEvent% Gain !"
