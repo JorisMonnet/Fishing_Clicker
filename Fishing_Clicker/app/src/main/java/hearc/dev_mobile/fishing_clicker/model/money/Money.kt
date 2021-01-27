@@ -1,4 +1,4 @@
-package hearc.dev_mobile.fishing_clicker
+package hearc.dev_mobile.fishing_clicker.model.money
 
 import java.math.BigInteger
 

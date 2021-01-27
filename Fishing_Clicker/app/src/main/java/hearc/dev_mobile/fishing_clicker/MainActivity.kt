@@ -12,19 +12,24 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import hearc.dev_mobile.fishing_clicker.model.money.Money
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpAbout
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpShake
+import hearc.dev_mobile.fishing_clicker.model.user.User
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpSpecs
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
+import kotlinx.android.synthetic.main.activity_pop_up_specs.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
-import kotlin.math.pow
 
 open class MainActivity : AppCompatActivity() {
 
     private var isDisplayingShake = true
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var boatManager: BoatManager
+    lateinit var boatManager: BoatManager
     var user: User = User()
     var percentToAddAfterShakeEvent = 1
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,22 +55,39 @@ open class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        about_button.setOnClickListener {
+            val intent = Intent(this, PopUpAbout::class.java)
+            startActivity(intent)
+        }
+        specs_button.setOnClickListener {
+            val intent = Intent(this, PopUpSpecs::class.java)
+            intent.putExtra("eff", boatManager.globalEfficiency.toString())
+            startActivity(intent)
+        }
+
         boatManager.createBoatMenuListener()
         nav_view.menu.findItem(R.id.boat1).title =
             "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
         Thread {//AFK MECHANISM
             while (true) {
+                var bigbig = BigInteger.ZERO
                 for (boat in boatManager.boatList) {
-                    // try to touch View of UI thread
-                    this@MainActivity.runOnUiThread {
-                        if (boat.isBought)
+                    if (boat.isBought) {
+                        this@MainActivity.runOnUiThread {
                             boat.doMoneyReward(1L)
+                        }
+                        bigbig = bigbig.add(boat.efficiency)
                     }
+
                 }
                 try {
                     Thread.sleep(999)
                 } catch (e: Exception) {
                     Log.d("ThreadSleepError", e.toString())
+                }
+//                Log.v("bigbig",bigbig.toString())
+                if (bigbig > boatManager.globalEfficiency.value) {
+                    boatManager.globalEfficiency.value = bigbig
                 }
             }
         }.start()
@@ -110,7 +132,6 @@ open class MainActivity : AppCompatActivity() {
                     .toLong()
             )
         )
-        setContentView(R.layout.activity_main)
         percentToAddAfterShakeEvent = 1
     }
 
@@ -118,7 +139,7 @@ open class MainActivity : AppCompatActivity() {
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
         if (user.money.value.compareTo(
-                BigInteger.TEN.pow(user.level.toInt() * 3)
+                BigInteger.TEN.pow(user.level * 3)
             ) == 1
         ) {
             user.level++
@@ -143,16 +164,10 @@ open class MainActivity : AppCompatActivity() {
                         15 -> R.color.colorMainBG15
                         16 -> R.color.colorMainBG16
                         else -> R.color.colorMainBG0
-                    } as Int
+                    }
                 )
             )
         }
-        Log.v(
-            "target", (
-                    BigInteger.TEN.pow(user.level.toInt() * 3)).toString()
-        )
-        Log.v("moula", user.money.value.toString())
-        Log.v("level", user.level.toString())
     }
 
     override fun onPause() {

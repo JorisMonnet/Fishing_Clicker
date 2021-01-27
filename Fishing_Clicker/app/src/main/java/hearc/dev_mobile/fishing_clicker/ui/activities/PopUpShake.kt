@@ -1,4 +1,4 @@
-package hearc.dev_mobile.fishing_clicker
+package hearc.dev_mobile.fishing_clicker.ui.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -12,9 +12,10 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.*
-import android.util.Log
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
+import hearc.dev_mobile.fishing_clicker.MainActivity
+import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 
 
@@ -101,8 +102,13 @@ class PopUpShake : MainActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setDisplayText() {
-        popup_window_text.text = "$percentToAddAfterShakeEvent% Gain !"
-        popup_window_text.textSize = 30F
+        try {
+            popup_window_text.text = "$percentToAddAfterShakeEvent% Gain !"
+            popup_window_text.textSize = 30F
+        } catch (e: Exception) {
+
+        }
+
         Handler(Looper.getMainLooper()).postDelayed({
             canIncPercent = true
             onBackPressed()
@@ -131,7 +137,7 @@ class PopUpShake : MainActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 finish()
                 overridePendingTransition(0, 0)
-                Log.v("here", "hereiam")
+//                Log.v("here", "hereiam")
                 doShakeReward()
             }
         })

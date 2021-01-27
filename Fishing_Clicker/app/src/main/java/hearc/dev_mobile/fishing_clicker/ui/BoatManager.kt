@@ -1,14 +1,13 @@
 package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import hearc.dev_mobile.fishing_clicker.boat.Boat
+import hearc.dev_mobile.fishing_clicker.model.boat.Boat
 import com.google.android.material.navigation.NavigationView
 import hearc.dev_mobile.fishing_clicker.MainActivity
-import hearc.dev_mobile.fishing_clicker.Money
+import hearc.dev_mobile.fishing_clicker.model.money.Money
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigInteger
@@ -17,6 +16,7 @@ import kotlin.math.pow
 
 class BoatManager(private val mainActivity: MainActivity) {
 
+    var globalEfficiency: Money = Money(BigInteger.ZERO)
     val boatList : LinkedList<Boat> = generateBoatList()
 
     private var navView: NavigationView = mainActivity.nav_view
