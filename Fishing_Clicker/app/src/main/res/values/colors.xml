@@ -3,5 +3,22 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="colorMainBG">#afc9c2</color>
+
+    <color name="colorMainBG0">#51756a</color>
+    <color name="colorMainBG1">#265446</color>
+    <color name="colorMainBG2">#265435</color>
+    <color name="colorMainBG3">#528764</color>
+    <color name="colorMainBG4">#68a34b</color>
+    <color name="colorMainBG5">#9abd6d</color>
+    <color name="colorMainBG6">#996dbd</color>
+    <color name="colorMainBG7">#411763</color>
+    <color name="colorMainBG8">#9311ad</color>
+    <color name="colorMainBG9">#ad1190</color>
+    <color name="colorMainBG10">#ad115f</color>
+    <color name="colorMainBG11">#db5b42</color>
+    <color name="colorMainBG12">#d2e352</color>
+    <color name="colorMainBG13">#cbcfae</color>
+    <color name="colorMainBG14">#cfaeb1</color>
+    <color name="colorMainBG15">#bf75a0</color>
+    <color name="colorMainBG16">#afcAEE</color>
 </resources>

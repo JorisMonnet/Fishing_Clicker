@@ -1,59 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMainBG"
+    android:background="@color/colorMainBG0"
     tools:context=".MainActivity"
     tools:ignore="Overdraw">
 
-    <!--<com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <include layout="@layout/content_main" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/moneyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            app:drawableEndCompat="@drawable/ic_money" />
+
+        <ImageView
+            android:id="@+id/shark"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/defaultDescription"
+            android:focusable="true"
+            android:src="@drawable/ic_shark"
+            android:visibility="gone" />
 
-    </com.google.android.material.appbar.AppBarLayout>-->
+        <ImageView
+            android:id="@+id/blueFish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:contentDescription="@string/defaultDescription"
+            android:focusable="true"
+            android:src="@drawable/ic_blue_fish"
+            android:visibility="gone" />
 
-    <include layout="@layout/content_main"/>
-    <TextView
-        android:id="@+id/moneyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
-        app:drawableEndCompat="@drawable/ic_money" />
-    <ScrollView
-        android:id="@+id/scrollViewImages"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/imageLayout"
-        android:gravity="center"
+        <ImageView
+            android:id="@+id/goldenFish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:contentDescription="@string/defaultDescription"
+            android:focusable="true"
+            android:src="@drawable/ic_golden_fish"
+            android:visibility="gone" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
-    </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:scrollbars="none">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        app:backgroundTint="@color/design_default_color_surface"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|start"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_menu" />
+            <LinearLayout
+                android:id="@+id/imageLayout"
+                android:layout_width="match_parent"
 
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical" />
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/defaultDescription"
+            app:backgroundTint="@color/design_default_color_surface"
+            app:srcCompat="@drawable/ic_menu" />
+    </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

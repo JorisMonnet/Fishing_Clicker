@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group
-        android:id="@+id/menu"
-        android:checkableBehavior="all">
+    <group android:checkableBehavior="all">
 
         <item
             android:id="@+id/boat1"
@@ -25,38 +23,38 @@
             android:title="@string/menu_boat_init" />
         <item
             android:id="@+id/boat4"
-            android:icon="@drawable/ic_boat3"
+            android:icon="@drawable/ic_boat4"
             android:visible="false"
             android:title="@string/menu_boat_init" />
 
         <item
             android:id="@+id/boat5"
-            android:icon="@drawable/ic_boat3"
+            android:icon="@drawable/ic_boat5"
             android:visible="false"
             android:title="@string/menu_boat_init" />
         <item
             android:id="@+id/boat6"
-            android:icon="@drawable/ic_boat3"
+            android:icon="@drawable/ic_boat6"
             android:visible="false"
             android:title="@string/menu_boat_init" />
         <item
             android:id="@+id/boat7"
-            android:icon="@drawable/ic_boat3"
+            android:icon="@drawable/ic_boat7"
             android:visible="false"
             android:title="@string/menu_boat_init" />
         <item
             android:id="@+id/boat8"
-            android:icon="@drawable/ic_boat3"
+            android:icon="@drawable/ic_boat8"
             android:visible="false"
             android:title="@string/menu_boat_init" />
         <item
             android:id="@+id/boat9"
-            android:icon="@drawable/ic_boat3"
+            android:icon="@drawable/ic_fish_boat1"
             android:visible="false"
             android:title="@string/menu_boat_init" />
         <item
             android:id="@+id/boat10"
-            android:icon="@drawable/ic_boat3"
+            android:icon="@drawable/ic_fish_boat1"
             android:visible="false"
             android:title="@string/menu_boat_init" />
 
