@@ -35,24 +35,26 @@ class BoatManager(private val mainActivity: MainActivity) {
      * @param buying if the boat is created from the sharedPreferences or bought
      */
     private fun createBoat(index: Int, buying: Boolean) {
-        displayedBoat++
-        boatList[index].isBought = true
-        if (buying)
-            mainActivity.updateMoneyTextView(boatList[index].purchasePrice.value.negate())
+        if(!boatList[index].isBought) {
+            displayedBoat++
+            boatList[index].isBought = true
+            if (buying)
+                mainActivity.updateMoneyTextView(boatList[index].purchasePrice.value.negate())
 
-        val textView = TextView(mainActivity)
-        textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        textView.text = boatList[index].name
+            val textView = TextView(mainActivity)
+            textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+            textView.text = boatList[index].name
 
-        val imageView = ImageView(mainActivity)
-        imageView.layoutParams = LinearLayout.LayoutParams(400, 400)
-        imageView.x = 2F // setting margin from left
-        imageView.y = 2F // setting margin from top
-        imageView.setImageResource(boatList[index].drawableId)
+            val imageView = ImageView(mainActivity)
+            imageView.layoutParams = LinearLayout.LayoutParams(400, 400)
+            imageView.x = 2F // setting margin from left
+            imageView.y = 2F // setting margin from top
+            imageView.setImageResource(boatList[index].drawableId)
 
-        val layout = mainActivity.findViewById<LinearLayout>(R.id.imageLayout)
-        layout.addView(imageView)
-        layout.addView(textView)
+            val layout = mainActivity.findViewById<LinearLayout>(R.id.imageLayout)
+            layout.addView(imageView)
+            layout.addView(textView)
+        }
     }
 
     /**
@@ -157,7 +159,6 @@ class BoatManager(private val mainActivity: MainActivity) {
      */
     fun createBoatData(sharedPrefBoat: SharedPreferences) {
         val displayedBoatFromPref = sharedPrefBoat.getInt("DisplayedBoat", 0)
-
         displayedBoat = 0
         if (displayedBoatFromPref != 0) {
             for (i in 0 until displayedBoatFromPref) {
