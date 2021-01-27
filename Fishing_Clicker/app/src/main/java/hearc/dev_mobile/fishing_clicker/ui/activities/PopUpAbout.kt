@@ -5,7 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Color
-import android.os.*
+import android.os.Bundle
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
 import hearc.dev_mobile.fishing_clicker.MainActivity
@@ -37,6 +37,9 @@ class PopUpAbout : MainActivity() {
         pop_up_about_view_with_border.animate().alpha(1f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
         ).start()
+        close_about.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun onBackPressed() {

@@ -9,9 +9,9 @@ import java.math.BigInteger
 class Boat(
     val name: String,
     var efficiency: BigInteger,
-    var resourceIdNumber: Int,
+    private var resourceIdNumber: Int,
     var purchasePrice: Money,
-    var indexList: Int
+    private var indexList: Int
 ) {
     var drawableId = getDrawableId(resourceIdNumber)
     var upgradePrice: Money = Money(purchasePrice.value.multiply(BigInteger("2")))

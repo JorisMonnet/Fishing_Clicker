@@ -2,15 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pop_up_shake_background"
+    android:id="@+id/pop_up_blow_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.PopUpShake"
+    tools:context=".ui.activities.PopUpBlow"
     android:background="#FF000000">
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/pop_up_shake_view_with_border"
+        android:id="@+id/pop_up_blow_view_with_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/pop_up_shake_view"
+            android:id="@+id/pop_up_blow_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -38,23 +38,23 @@
             app:cardPreventCornerOverlap="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/pop_up_shake_background_container"
+                android:id="@+id/pop_up_blow_background_container"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:background="#bc214b"
+                android:background="#f5aa42"
                 android:minHeight="170dp">
 
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/popup_window_text"
+                    android:id="@+id/popup_blow_window_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="60dp"
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
-                    android:text="@string/percent2"
+                    android:text="@string/percent"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
@@ -62,15 +62,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pop_up_shake_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/pop_up_blow_title" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/pop_up_shake_title"
+                    android:id="@+id/pop_up_blow_title"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:background="#9E1C40"
+                    android:background="#1E1C40"
                     android:gravity="center"
-                    android:text="@string/shake_banner"
+                    android:text="@string/blow_banner"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
@@ -80,12 +80,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/pop_up_shake_display"
+                    android:id="@+id/pop_up_blow_display"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:background="#9E1C40"
+                    android:background="#ad701c"
                     android:gravity="center"
-                    android:text="@string/shake_banner"
+                    android:text="@string/blow_banner"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
