@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 import kotlinx.android.synthetic.main.activity_pop_up_specs.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
 
@@ -31,6 +33,7 @@ open class MainActivity : AppCompatActivity() {
     lateinit var boatManager: BoatManager
     var user: User = User()
     var percentToAddAfterShakeEvent = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //get the user Preferences
@@ -69,6 +72,28 @@ open class MainActivity : AppCompatActivity() {
         boatManager.createBoatMenuListener()
         nav_view.menu.findItem(R.id.boat1).title =
             "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
+
+        goldenFish.setOnClickListener {
+            Log.d("TAG", "onCreate: click")
+            goldenFish.visibility = View.GONE
+            val intent = Intent(this.applicationContext, PopUpShake::class.java)
+            startActivity(intent)
+        }
+
+        blueFish.setOnClickListener {
+            Log.d("TAG", "onCreate: click")
+            user.money.value *= BigInteger.TEN
+            updateMoneyTextView(BigInteger.ZERO)
+            blueFish.visibility = View.GONE
+        }
+
+        shark.setOnClickListener {
+            Log.d("TAG", "onCreate: click")
+            user.money.value /= BigInteger.TEN
+            updateMoneyTextView(BigInteger.ZERO)
+            shark.visibility = View.GONE
+        }
+
         Thread {//AFK MECHANISM
             while (true) {
                 var cumulativeEfficiency = BigInteger.ZERO
@@ -80,7 +105,6 @@ open class MainActivity : AppCompatActivity() {
                         }
                         cumulativeEfficiency = cumulativeEfficiency.add(boat.efficiency)
                     }
-
                 }
                 try {
                     Thread.sleep(999)
@@ -97,17 +121,40 @@ open class MainActivity : AppCompatActivity() {
         Thread {
             while (true) {
                 if (!boatManager.boatList.isEmpty()) {
-                    if (!isDisplayingShake) {
+                    if (!isDisplayingShake && ThreadLocalRandom.current()
+                            .nextInt(40000, 90000) % 75 == 0
+                    ) {
                         isDisplayingShake = true
-                        val intent = Intent(this.applicationContext, PopUpShake::class.java)
-                        startActivity(intent)
-                    } else {
-                        try {
-                            Thread.sleep(ThreadLocalRandom.current().nextInt(40000, 90000).toLong())
-                            isDisplayingShake = false
-                        } catch (e: Exception) {
-                            Log.d("ThreadSleepError", e.toString())
+                        this@MainActivity.runOnUiThread {
+                            goldenFish.visibility = View.VISIBLE
+                            goldenFish.bringToFront()
                         }
+                    } else {
+                        isDisplayingShake = false
+                    }
+                }
+                //1 time per 50
+                if (ThreadLocalRandom.current().nextInt(0, 1000) % 50 == 0) {
+                    try {
+                        this@MainActivity.runOnUiThread {
+                            blueFish.visibility = View.VISIBLE
+                            blueFish.bringToFront()
+                        }
+                        Thread.sleep(ThreadLocalRandom.current().nextInt(2500, 5000).toLong())
+                    } catch (e: Exception) {
+                        Log.d("ThreadSleepError", e.toString())
+                    }
+                }
+                //1 time per 20
+                else if (ThreadLocalRandom.current().nextInt(0, 10000) % 20 == 0) {
+                    try {
+                        this@MainActivity.runOnUiThread {
+                            shark.visibility = View.VISIBLE
+                            shark.bringToFront()
+                        }
+                        Thread.sleep(ThreadLocalRandom.current().nextInt(5000, 6000).toLong())
+                    } catch (e: Exception) {
+                        Log.d("ThreadSleepError", e.toString())
                     }
                 }
             }
