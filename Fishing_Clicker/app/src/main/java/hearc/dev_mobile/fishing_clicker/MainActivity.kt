@@ -149,6 +149,10 @@ open class MainActivity : AppCompatActivity() {
                             blueFish.bringToFront()
                         }
                         Thread.sleep(ThreadLocalRandom.current().nextInt(25000, 50000).toLong())
+                        this@MainActivity.runOnUiThread {
+                            blueFish.visibility = View.GONE
+                        }
+
                     } catch (e: Exception) {
                         Log.d("ThreadSleepError", e.toString())
                     }
@@ -161,6 +165,9 @@ open class MainActivity : AppCompatActivity() {
                             shark.bringToFront()
                         }
                         Thread.sleep(ThreadLocalRandom.current().nextInt(15000, 60000).toLong())
+                        this@MainActivity.runOnUiThread {
+                            shark.visibility = View.GONE
+                        }
                     } catch (e: Exception) {
                         Log.d("ThreadSleepError", e.toString())
                     }
@@ -224,7 +231,7 @@ open class MainActivity : AppCompatActivity() {
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
         if (user.money.value.compareTo(
-                BigInteger.TEN.pow(user.level * 3+5)
+                BigInteger.TEN.pow(user.level * 3 + 5)
             ) == 1
         ) {
             user.level++
