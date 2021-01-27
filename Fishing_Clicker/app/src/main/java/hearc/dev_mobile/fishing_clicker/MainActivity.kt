@@ -224,7 +224,7 @@ open class MainActivity : AppCompatActivity() {
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
         if (user.money.value.compareTo(
-                BigInteger.TEN.pow(user.level * 3)
+                BigInteger.TEN.pow(user.level * 3+5)
             ) == 1
         ) {
             user.level++
