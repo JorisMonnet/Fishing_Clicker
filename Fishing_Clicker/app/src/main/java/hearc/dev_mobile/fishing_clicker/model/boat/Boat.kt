@@ -1,11 +1,9 @@
 package hearc.dev_mobile.fishing_clicker.model.boat
 
 import android.content.SharedPreferences
-import android.util.Log
 import hearc.dev_mobile.fishing_clicker.R
 import hearc.dev_mobile.fishing_clicker.model.money.Money
 import java.math.BigInteger
-import kotlin.math.pow
 
 /**
  * Class managing Boats which give idle money
