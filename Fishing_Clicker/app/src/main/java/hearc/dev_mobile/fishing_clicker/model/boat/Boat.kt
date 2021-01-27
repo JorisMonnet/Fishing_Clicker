@@ -26,6 +26,11 @@ class Boat(
      */
     fun createAttributes() {
         upgradePrice = Money(purchasePrice.value.multiply(BigInteger("2")))
+        if(level != 1L){
+            for(i in 0..level+1){
+                upgradePrice.value += upgradePrice.value.divide(BigInteger("2"))
+            }
+        }
         resourceId = getResourceId(resourceIdNumber)
         drawableId = getDrawableId(resourceIdNumber)
     }
@@ -90,7 +95,8 @@ class Boat(
      * Function to self update on call the level & then the efficiency of the boat
      */
     fun increaseLevel() {
-        efficiency += BigInteger.valueOf(5 * ++level)
+        level++
+        efficiency += BigInteger.valueOf(5 * level)
         upgradePrice.value += upgradePrice.value.divide(BigInteger("2"))
     }
 
