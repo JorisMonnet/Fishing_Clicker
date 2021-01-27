@@ -11,5 +11,6 @@
 
     <string name="shake_banner">Shake Me !</string>
     <string name="abort">Abort</string>
-
+    <string name="about"> Project made by Joris Monnet &amp; Adrien Paysant.    </string>
+    <string name="about2">  27/01/2021</string>
 </resources>
