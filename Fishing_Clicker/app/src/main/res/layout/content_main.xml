@@ -16,40 +16,6 @@
         app:defaultNavHost="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/shark"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:contentDescription="@string/defaultDescription"
-                android:focusable="true"
-                android:src="@drawable/ic_shark" />
-
-            <ImageView
-                android:id="@+id/blueFish"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:contentDescription="@string/defaultDescription"
-                android:focusable="true"
-                android:src="@drawable/ic_blue_fish" />
-
-            <ImageView
-                android:id="@+id/goldenFish"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:contentDescription="@string/defaultDescription"
-                android:focusable="true"
-                android:src="@drawable/ic_golden_fish" />
-
-        </RelativeLayout>
-    </androidx.fragment.app.FragmentContainerView>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
