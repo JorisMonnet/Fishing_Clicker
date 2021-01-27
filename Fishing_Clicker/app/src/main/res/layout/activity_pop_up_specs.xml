@@ -103,14 +103,15 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="@string/defaultDescription"
                             android:src="@drawable/ic_poiscaille" />
 
                         <Button
-                            android:gravity="bottom"
                             android:id="@+id/close_specs"
                             style="?android:attr/borderlessButtonStyle"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
                             android:background="#1A1F35"
                             android:text="Back"
                             android:textAllCaps="false"
@@ -120,11 +121,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
                     </LinearLayout>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_poiscaille"
-                        android:contentDescription="@string/defaultDescription" />
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

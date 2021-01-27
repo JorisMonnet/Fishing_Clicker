@@ -48,7 +48,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -70,29 +70,55 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:contentDescription="@string/defaultDescription"
                         android:src="@mipmap/ic_hearc"
-                        android:contentDescription="@string/defaultDescription"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_gravity="center"/>
 
 
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
                         <TextView
-                            android:textSize="18sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="@string/about" />
+                            android:gravity="center"
+                            android:text="@string/about"
+                            android:textSize="18sp" />
+
                         <TextView
-                            android:textSize="20sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
                             android:layout_marginTop="20dp"
-                            android:text="@string/about2" />
+                            android:gravity="center"
+                            android:text="@string/about2"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="bottom|center"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/close_about"
+                                style="?android:attr/borderlessButtonStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:background="#1A1F35"
+                                android:gravity="center"
+                                android:text="Back"
+                                android:textAllCaps="false"
+                                android:textColor="#FFFFFF"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>

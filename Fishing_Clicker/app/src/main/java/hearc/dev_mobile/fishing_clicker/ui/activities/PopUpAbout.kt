@@ -11,6 +11,7 @@ import androidx.core.graphics.ColorUtils
 import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_pop_up_about.*
+import kotlinx.android.synthetic.main.activity_pop_up_specs.*
 
 
 class PopUpAbout : MainActivity() {
@@ -38,7 +39,9 @@ class PopUpAbout : MainActivity() {
         pop_up_about_view_with_border.animate().alpha(1f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
         ).start()
-
+        close_about.setOnClickListener {
+            onBackPressed()
+        }
     }
 
 
