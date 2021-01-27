@@ -9,8 +9,8 @@
     <string name="close">close</string>
 
     <string name="level">Level : %1$S</string>
-    <string name="efficiency" >Efficiency($/sec) : %1$S</string>
-
+    <string name="efficiency">Efficiency($/sec) : %1$S</string>
+    <string name="blow_banner">Blow On Me !</string>
     <string name="shake_banner">Shake Me !</string>
     <string name="abort">Abort</string>
     <string name="about"> Project made by Joris Monnet &amp; Adrien Paysant.    </string>

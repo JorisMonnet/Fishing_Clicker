@@ -1,7 +1,9 @@
 package hearc.dev_mobile.fishing_clicker
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
@@ -16,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import hearc.dev_mobile.fishing_clicker.model.user.User
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
 import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpAbout
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpBlow
 import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpShake
 import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpSpecs
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,6 +29,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
+
 
 open class MainActivity : AppCompatActivity() {
 
@@ -59,6 +64,8 @@ open class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        checkRecordPermission()
+
         about_button.setOnClickListener {
             val intent = Intent(this, PopUpAbout::class.java)
             startActivity(intent)
@@ -89,6 +96,8 @@ open class MainActivity : AppCompatActivity() {
 
         shark.setOnClickListener {
             Log.d("TAG", "onCreate: click")
+            val intent = Intent(this.applicationContext, PopUpBlow::class.java)
+            startActivity(intent)
             user.money.value /= BigInteger.TEN
             updateMoneyTextView(BigInteger.ZERO)
             shark.visibility = View.GONE
@@ -159,6 +168,19 @@ open class MainActivity : AppCompatActivity() {
                 }
             }
         }.start()
+    }
+
+    private fun checkRecordPermission() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            ActivityCompat.requestPermissions(
+                this, Array(1) { Manifest.permission.RECORD_AUDIO },
+                123
+            )
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
