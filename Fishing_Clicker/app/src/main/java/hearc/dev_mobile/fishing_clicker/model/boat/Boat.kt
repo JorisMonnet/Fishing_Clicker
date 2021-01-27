@@ -1,8 +1,8 @@
-package hearc.dev_mobile.fishing_clicker.boat
+package hearc.dev_mobile.fishing_clicker.model.boat
 
 import android.content.SharedPreferences
-import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
+import hearc.dev_mobile.fishing_clicker.model.money.Money
 import java.math.BigInteger
 
 
@@ -11,7 +11,7 @@ class Boat(
     var efficiency: BigInteger,
     var resourceIdNumber: Int,
     var purchasePrice: Money,
-    var indexList : Int
+    var indexList: Int
 ) {
     var drawableId = getDrawableId(resourceIdNumber)
     var upgradePrice: Money = Money(purchasePrice.value.multiply(BigInteger("2")))
@@ -19,7 +19,7 @@ class Boat(
     var isBought = false
     var resourceId = getResourceId(resourceIdNumber)
 
-    fun createAttributes(){
+    fun createAttributes() {
         upgradePrice = Money(purchasePrice.value.multiply(BigInteger("2")))
         resourceId = getResourceId(resourceIdNumber)
         drawableId = getDrawableId(resourceIdNumber)

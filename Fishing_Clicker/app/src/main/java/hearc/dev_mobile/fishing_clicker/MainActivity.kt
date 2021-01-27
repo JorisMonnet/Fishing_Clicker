@@ -12,9 +12,14 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import hearc.dev_mobile.fishing_clicker.model.user.User
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpAbout
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpShake
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpSpecs
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
+import kotlinx.android.synthetic.main.activity_pop_up_specs.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
@@ -23,12 +28,12 @@ open class MainActivity : AppCompatActivity() {
 
     private var isDisplayingShake = true
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var boatManager: BoatManager
+    lateinit var boatManager: BoatManager
     var user: User = User()
     var percentToAddAfterShakeEvent = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-      //get the user Preferences
+        //get the user Preferences
         user.createValuesFromPref(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
         setContentView(R.layout.activity_main)
         boatManager = BoatManager(this)
@@ -51,23 +56,40 @@ open class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        about_button.setOnClickListener {
+            val intent = Intent(this, PopUpAbout::class.java)
+            startActivity(intent)
+        }
+        specs_button.setOnClickListener {
+            val intent = Intent(this, PopUpSpecs::class.java)
+            intent.putExtra("eff", boatManager.globalEfficiency.toString())
+            startActivity(intent)
+        }
+
         boatManager.createBoatMenuListener()
         nav_view.menu.findItem(R.id.boat1).title =
             "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
         Thread {//AFK MECHANISM
             while (true) {
+                var cumulativeEfficiency = BigInteger.ZERO
                 for (boat in boatManager.boatList) {
                     // try to touch View of UI thread
-                    this@MainActivity.runOnUiThread {
-                        if (boat.isBought) {
+                    if (boat.isBought) {
+                        this@MainActivity.runOnUiThread {
                             updateMoneyTextView(boat.efficiency)
                         }
+                        cumulativeEfficiency = cumulativeEfficiency.add(boat.efficiency)
                     }
+
                 }
                 try {
                     Thread.sleep(999)
                 } catch (e: Exception) {
                     Log.d("ThreadSleepError", e.toString())
+                }
+
+                if (cumulativeEfficiency > boatManager.globalEfficiency.value) {
+                    boatManager.globalEfficiency.value = cumulativeEfficiency
                 }
             }
         }.start()
@@ -104,11 +126,11 @@ open class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+
     fun doShakeReward() {
         updateMoneyTextView(
             BigInteger.valueOf(percentToAddAfterShakeEvent.toLong()).divide(user.money.value)
         )
-        setContentView(R.layout.activity_main)
         percentToAddAfterShakeEvent = 1
     }
 

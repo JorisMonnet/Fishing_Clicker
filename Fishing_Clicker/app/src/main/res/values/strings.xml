@@ -8,8 +8,13 @@
     <string name="open">open</string>
     <string name="close">close</string>
 
+    <string name="level">Level : %1$S</string>
+    <string name="efficiency" >Efficiency($/sec) : %1$S</string>
 
     <string name="shake_banner">Shake Me !</string>
     <string name="abort">Abort</string>
-
+    <string name="about"> Project made by Joris Monnet &amp; Adrien Paysant.    </string>
+    <string name="about2">  27/01/2021</string>
+    <string name="about3">About</string>
+    <string name="specs0">Specs</string>
 </resources>

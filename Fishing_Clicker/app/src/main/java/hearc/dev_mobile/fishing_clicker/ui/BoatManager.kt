@@ -10,9 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.navigation.NavigationView
 import hearc.dev_mobile.fishing_clicker.MainActivity
-import hearc.dev_mobile.fishing_clicker.Money
 import hearc.dev_mobile.fishing_clicker.R
-import hearc.dev_mobile.fishing_clicker.boat.Boat
+import hearc.dev_mobile.fishing_clicker.model.boat.Boat
+import hearc.dev_mobile.fishing_clicker.model.money.Money
 import java.io.IOException
 import java.io.InputStream
 import java.math.BigInteger
@@ -22,6 +22,8 @@ class BoatManager(private val mainActivity: MainActivity) {
 
     val boatList: LinkedList<Boat> = generateBoatList()
     private var navView: NavigationView = mainActivity.findViewById(R.id.nav_view)
+    var globalEfficiency: Money = Money(BigInteger.ZERO)
+
     private var applicationContext: Context = mainActivity.applicationContext
     private var displayedBoat = 0
     private var playerMoney = mainActivity.user.money
@@ -33,7 +35,7 @@ class BoatManager(private val mainActivity: MainActivity) {
      * @param buying if the boat is created from the sharedPreferences or bought
      */
     private fun createBoat(index: Int, buying: Boolean) {
-        if(!boatList[index].isBought) {
+        if (!boatList[index].isBought) {
             displayedBoat++
             boatList[index].isBought = true
             if (buying)
@@ -74,12 +76,11 @@ class BoatManager(private val mainActivity: MainActivity) {
         var i = 0
         for (line in string.split('\n')) {
             val attributes = line.split(";")
-            if(attributes.size==4){
+            if (attributes.size == 4) {
                 list.add(
                     Boat(
                         attributes[0], BigInteger(attributes[1]), attributes[2].toInt(),
-                        Money(BigInteger(attributes[3].substring(0, attributes[3].length - 1)))
-                    ,i++
+                        Money(BigInteger(attributes[3].substring(0, attributes[3].length - 1))), i++
                     )
                 )
             }
@@ -163,7 +164,11 @@ class BoatManager(private val mainActivity: MainActivity) {
                 createBoat(i, false)
                 boatList[i].level = sharedPrefBoat.getLong("LevelBoat$i", 0L)
                 boatList[i].purchasePrice =
-                    Money(BigInteger(sharedPrefBoat.getString("PurchasePrice$i", "") ?: "123456789"))
+                    Money(
+                        BigInteger(
+                            sharedPrefBoat.getString("PurchasePrice$i", "") ?: "123456789"
+                        )
+                    )
                 boatList[i].resourceId = sharedPrefBoat.getInt("ResourceIdNumber$i", 0)
                 boatList[i].efficiency =
                     BigInteger(sharedPrefBoat.getString("Efficiency$i", "") ?: "1")
@@ -172,9 +177,10 @@ class BoatManager(private val mainActivity: MainActivity) {
                 navView.menu.findItem(boatList[i].resourceId).isVisible = true
                 navView.menu.findItem(boatList[i].resourceId).title = boatList[i].getTitleUpgrade()
             }
-            if(displayedBoatFromPref!=boatList.size){
+            if (displayedBoatFromPref != boatList.size) {
                 navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).isVisible = true
-                navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).title = boatList[displayedBoatFromPref].getTitlePurchase()
+                navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).title =
+                    boatList[displayedBoatFromPref].getTitlePurchase()
             }
             displayedBoat = displayedBoatFromPref
         } else {
