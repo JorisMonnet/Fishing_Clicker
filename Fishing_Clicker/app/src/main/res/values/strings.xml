@@ -13,4 +13,6 @@
     <string name="abort">Abort</string>
     <string name="about"> Project made by Joris Monnet &amp; Adrien Paysant.    </string>
     <string name="about2">  27/01/2021</string>
+    <string name="about3">About</string>
+    <string name="specs0">Specs</string>
 </resources>

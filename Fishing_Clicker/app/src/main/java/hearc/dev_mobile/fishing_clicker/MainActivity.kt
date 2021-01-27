@@ -16,6 +16,7 @@ import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpAbout
 import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpShake
 import hearc.dev_mobile.fishing_clicker.model.user.User
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
+import hearc.dev_mobile.fishing_clicker.ui.activities.PopUpSpecs
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -56,7 +57,10 @@ open class MainActivity : AppCompatActivity() {
             val intent = Intent(this, PopUpAbout::class.java)
             startActivity(intent)
         }
-
+        specs_button.setOnClickListener{
+            val intent = Intent(this, PopUpSpecs::class.java)
+            startActivity(intent)
+        }
 
         boatManager.createBoatMenuListener()
         nav_view.menu.findItem(R.id.boat1).title =

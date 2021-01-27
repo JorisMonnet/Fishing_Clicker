@@ -29,12 +29,12 @@
             android:gravity="bottom"
             android:orientation="vertical">
             <Button
-                android:id="@+id/details_button"
+                android:id="@+id/specs_button"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#3f8bba"
-                android:text="Specs"
+                android:text="@string/specs0"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#3f8bba"
-                android:text="About"
+                android:text="@string/about3"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"

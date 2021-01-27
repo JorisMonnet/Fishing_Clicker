@@ -2,15 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pop_up_about_background"
+    android:id="@+id/pop_up_specs_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FF000000"
-    tools:context=".ui.activities.PopUpAbout">
+    tools:context=".ui.activities.PopUpSpecs">
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/pop_up_about_view_with_border"
+        android:id="@+id/pop_up_specs_view_with_border"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/pop_up_about_view"
+            android:id="@+id/pop_up_specs_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -38,7 +38,7 @@
             app:cardPreventCornerOverlap="false">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/pop_up_about_background_container"
+                android:id="@+id/pop_up_specs_background_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -52,12 +52,12 @@
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/pop_up_about_display"
+                        android:id="@+id/pop_up_specs_display"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="#3f8bba"
                         android:gravity="center"
-                        android:text="@string/about3"
+                        android:text="@string/specs0"
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
@@ -67,34 +67,16 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_hearc"></ImageView>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:textSize="18sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="@string/about" />
-                        <TextView
-                            android:textSize="20sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/about2" />
-                    </LinearLayout>
-
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/about2"
+                        android:textSize="20sp" />
                 </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
