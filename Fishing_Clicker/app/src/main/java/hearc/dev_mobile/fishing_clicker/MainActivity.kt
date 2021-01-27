@@ -13,13 +13,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import hearc.dev_mobile.fishing_clicker.ui.BoatManager
-import java.lang.Exception
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_pop_up_shake.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.math.BigInteger
 import java.util.concurrent.ThreadLocalRandom
-import kotlin.math.pow
 
 open class MainActivity : AppCompatActivity() {
 
@@ -108,10 +106,7 @@ open class MainActivity : AppCompatActivity() {
     }
     fun doShakeReward() {
         updateMoneyTextView(
-            BigInteger.valueOf(
-                BigInteger.valueOf(percentToAddAfterShakeEvent.toLong()).divide(user.money.value)
-                    .toLong()
-            )
+            BigInteger.valueOf(percentToAddAfterShakeEvent.toLong()).divide(user.money.value)
         )
         setContentView(R.layout.activity_main)
         percentToAddAfterShakeEvent = 1
@@ -121,7 +116,7 @@ open class MainActivity : AppCompatActivity() {
         user.money.value = user.money.value.add(valueToAdd)
         moneyTextView.text = user.money.toString()
         if (user.money.value.compareTo(
-                BigInteger.TEN.pow(user.level.toInt() * 3)
+                BigInteger.TEN.pow(user.level * 3)
             ) == 1
         ) {
             user.level++
@@ -146,16 +141,10 @@ open class MainActivity : AppCompatActivity() {
                         15 -> R.color.colorMainBG15
                         16 -> R.color.colorMainBG16
                         else -> R.color.colorMainBG0
-                    } as Int
+                    }
                 )
             )
         }
-        Log.v(
-            "target", (
-                    BigInteger.TEN.pow(user.level.toInt() * 3)).toString()
-        )
-        Log.v("moula", user.money.value.toString())
-        Log.v("level", user.level.toString())
     }
 
     override fun onPause() {

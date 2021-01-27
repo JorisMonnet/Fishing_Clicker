@@ -2,6 +2,7 @@ package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -70,6 +71,7 @@ class BoatManager(private val mainActivity: MainActivity) {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+        var i = 0
         for (line in string.split('\n')) {
             val attributes = line.split(";")
             if(attributes.size==4){
@@ -77,6 +79,7 @@ class BoatManager(private val mainActivity: MainActivity) {
                     Boat(
                         attributes[0], BigInteger(attributes[1]), attributes[2].toInt(),
                         Money(BigInteger(attributes[3].substring(0, attributes[3].length - 1)))
+                    ,i++
                     )
                 )
             }
@@ -153,24 +156,26 @@ class BoatManager(private val mainActivity: MainActivity) {
      * @param sharedPrefBoat the shared preferences
      */
     fun createBoatData(sharedPrefBoat: SharedPreferences) {
-        displayedBoat = sharedPrefBoat.getInt("DisplayedBoat", 0)
-        if (displayedBoat != 0) {
-            for (i in 0 until displayedBoat) {
+        val displayedBoatFromPref = sharedPrefBoat.getInt("DisplayedBoat", 0)
+
+        displayedBoat = 0
+        if (displayedBoatFromPref != 0) {
+            for (i in 0 until displayedBoatFromPref) {
                 createBoat(i, false)
-                boatList[i].level = sharedPrefBoat.getLong("Level", 0L)
-                boatList[i].upgradePrice = Money(
-                    BigInteger(
-                        sharedPrefBoat.getString("UpgradePrice", "") ?: ""
-                    )
-                )
+                boatList[i].level = sharedPrefBoat.getLong("LevelBoat$i", 0L)
                 boatList[i].purchasePrice =
-                    Money(BigInteger(sharedPrefBoat.getString("PurchasePrice", "") ?: ""))
-                boatList[i].resourceId = sharedPrefBoat.getInt("ResourceId", 0)
+                    Money(BigInteger(sharedPrefBoat.getString("PurchasePrice$i", "") ?: "123456789"))
+                boatList[i].resourceId = sharedPrefBoat.getInt("ResourceIdNumber$i", 0)
                 boatList[i].efficiency =
-                    BigInteger(sharedPrefBoat.getString("Efficiency", "") ?: "")
+                    BigInteger(sharedPrefBoat.getString("Efficiency$i", "") ?: "1")
+                boatList[i].createAttributes()
+
                 navView.menu.findItem(boatList[i].resourceId).isVisible = true
                 navView.menu.findItem(boatList[i].resourceId).title = boatList[i].getTitleUpgrade()
             }
+            navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).isVisible = true
+            navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).title = boatList[displayedBoatFromPref].getTitlePurchase()
+            displayedBoat = displayedBoatFromPref
         } else {
             navView.menu.findItem(R.id.boat1).title = boatList[0].getTitlePurchase()
         }
