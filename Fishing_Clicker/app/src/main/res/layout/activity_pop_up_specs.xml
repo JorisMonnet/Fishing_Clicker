@@ -113,7 +113,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:background="#1A1F35"
-                            android:text="Back"
+                            android:text="@string/back"
                             android:textAllCaps="false"
                             android:textColor="#FFFFFF"
                             android:textSize="20sp"

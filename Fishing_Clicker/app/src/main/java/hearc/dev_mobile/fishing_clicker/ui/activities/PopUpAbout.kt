@@ -5,13 +5,12 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Color
-import android.os.*
+import android.os.Bundle
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
 import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.R
 import kotlinx.android.synthetic.main.activity_pop_up_about.*
-import kotlinx.android.synthetic.main.activity_pop_up_specs.*
 
 
 class PopUpAbout : MainActivity() {

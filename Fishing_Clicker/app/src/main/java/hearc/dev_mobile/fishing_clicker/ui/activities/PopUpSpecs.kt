@@ -5,15 +5,12 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Color
-import android.os.*
-import android.util.Log
+import android.os.Bundle
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
 import hearc.dev_mobile.fishing_clicker.MainActivity
 import hearc.dev_mobile.fishing_clicker.R
-import hearc.dev_mobile.fishing_clicker.model.money.Money
 import kotlinx.android.synthetic.main.activity_pop_up_specs.*
-import java.math.BigInteger
 
 
 class PopUpSpecs : MainActivity() {

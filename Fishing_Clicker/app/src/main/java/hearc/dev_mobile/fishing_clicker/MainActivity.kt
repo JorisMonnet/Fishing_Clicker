@@ -34,10 +34,12 @@ import java.util.concurrent.ThreadLocalRandom
 open class MainActivity : AppCompatActivity() {
 
     private var isDisplayingShake = true
+    var isSharkBeated = false
     private lateinit var toggle: ActionBarDrawerToggle
-    lateinit var boatManager: BoatManager
+    private lateinit var boatManager: BoatManager
     var user: User = User()
     var percentToAddAfterShakeEvent = 1
+    private val SHARK_STATEMENT = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,10 +99,7 @@ open class MainActivity : AppCompatActivity() {
         shark.setOnClickListener {
             Log.d("TAG", "onCreate: click")
             val intent = Intent(this.applicationContext, PopUpBlow::class.java)
-            startActivity(intent)
-            user.money.value /= BigInteger.TEN
-            updateMoneyTextView(BigInteger.ZERO)
-            shark.visibility = View.GONE
+            startActivityForResult(intent, SHARK_STATEMENT)
         }
 
         Thread {//AFK MECHANISM
@@ -149,7 +148,7 @@ open class MainActivity : AppCompatActivity() {
                             blueFish.visibility = View.VISIBLE
                             blueFish.bringToFront()
                         }
-                        Thread.sleep(ThreadLocalRandom.current().nextInt(2500, 5000).toLong())
+                        Thread.sleep(ThreadLocalRandom.current().nextInt(25000, 50000).toLong())
                     } catch (e: Exception) {
                         Log.d("ThreadSleepError", e.toString())
                     }
@@ -161,7 +160,7 @@ open class MainActivity : AppCompatActivity() {
                             shark.visibility = View.VISIBLE
                             shark.bringToFront()
                         }
-                        Thread.sleep(ThreadLocalRandom.current().nextInt(5000, 6000).toLong())
+                        Thread.sleep(ThreadLocalRandom.current().nextInt(15000, 60000).toLong())
                     } catch (e: Exception) {
                         Log.d("ThreadSleepError", e.toString())
                     }
@@ -169,6 +168,24 @@ open class MainActivity : AppCompatActivity() {
             }
         }.start()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            isSharkBeated = when (data.getIntExtra("SHARKY", 0)) {
+                1 -> true
+                0 -> false
+                else -> false
+            }
+        }
+
+        if (!isSharkBeated) {
+            user.money.value /= BigInteger.TEN
+            updateMoneyTextView(BigInteger.ZERO)
+        }
+        shark.visibility = View.GONE
+    }
+
 
     private fun checkRecordPermission() {
 

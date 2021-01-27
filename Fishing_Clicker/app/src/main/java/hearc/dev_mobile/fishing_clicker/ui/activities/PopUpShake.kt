@@ -101,7 +101,8 @@ class PopUpShake : MainActivity() {
 
     private fun setDisplayText() {
         try {
-            popup_window_text.text = "$percentToAddAfterShakeEvent% Gain !"
+            popup_window_text.text =
+                this.resources.getString(R.string.percent2, percentToAddAfterShakeEvent.toString())
             popup_window_text.textSize = 30F
         } catch (e: Exception) {
 
