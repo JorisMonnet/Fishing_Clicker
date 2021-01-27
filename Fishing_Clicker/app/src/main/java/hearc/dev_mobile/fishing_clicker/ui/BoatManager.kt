@@ -16,6 +16,7 @@ import kotlin.math.pow
 
 class BoatManager(private val mainActivity: MainActivity) {
 
+    var globalEfficiency: Money = Money(BigInteger.ZERO)
     val boatList : LinkedList<Boat> = generateBoatList()
 
     private var navView: NavigationView = mainActivity.nav_view

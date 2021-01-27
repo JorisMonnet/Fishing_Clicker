@@ -102,8 +102,13 @@ class PopUpShake : MainActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setDisplayText() {
-        popup_window_text.text = "$percentToAddAfterShakeEvent% Gain !"
-        popup_window_text.textSize = 30F
+        try {
+            popup_window_text.text = "$percentToAddAfterShakeEvent% Gain !"
+            popup_window_text.textSize = 30F
+        } catch (e: Exception) {
+
+        }
+
         Handler(Looper.getMainLooper()).postDelayed({
             canIncPercent = true
             onBackPressed()

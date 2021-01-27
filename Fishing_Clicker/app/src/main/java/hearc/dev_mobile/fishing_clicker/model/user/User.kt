@@ -27,7 +27,7 @@ class User {
         val clickPref = sharedPrefUser.getString("Click", "1")
         click = if(clickPref!=null) BigInteger(clickPref) else BigInteger.ONE
         level = sharedPrefUser.getInt("LevelUser", 0)
-        money.value=money.value.add(BigInteger.valueOf(50000000))//TODO TOREMOVE
+//        money.value=money.value.add(BigInteger.valueOf(50000000))//TODO TOREMOVE
     }
 
     /**
