@@ -42,7 +42,7 @@ open class MainActivity : AppCompatActivity() {
     private var isDisplayingShake = true
     var isSharkBeaten = false
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var boatManager: BoatManager
+    lateinit var boatManager: BoatManager
     var user: User = User()
     var percentToAddAfterShakeEvent = 1
     private val SHARK_STATEMENT = 0
@@ -80,11 +80,15 @@ open class MainActivity : AppCompatActivity() {
 
         about_button.setOnClickListener {
             val intent = Intent(this, PopUpAbout::class.java)
+            user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+            boatManager.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
             startActivity(intent)
         }
         specs_button.setOnClickListener {
             val intent = Intent(this, PopUpSpecs::class.java)
             intent.putExtra("eff", boatManager.globalEfficiency.toString())
+            user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+            boatManager.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
             startActivity(intent)
         }
 
@@ -93,22 +97,23 @@ open class MainActivity : AppCompatActivity() {
             "${boatManager.boatList[0].name} cost ${boatManager.boatList[0].purchasePrice}$"
 
         goldenFish.setOnClickListener {
-            Log.d("TAG", "onCreate: click")
             goldenFish.visibility = View.GONE
             val intent = Intent(this.applicationContext, PopUpShake::class.java)
+            user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+            boatManager.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
             startActivity(intent)
         }
 
         blueFish.setOnClickListener {
-            Log.d("TAG", "onCreate: click")
             user.money.value *= BigInteger.TEN
             updateMoneyTextView(BigInteger.ZERO)
             blueFish.visibility = View.GONE
         }
 
         shark.setOnClickListener {
-            Log.d("TAG", "onCreate: click")
             val intent = Intent(this.applicationContext, PopUpBlow::class.java)
+            user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+            boatManager.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
             startActivityForResult(intent, SHARK_STATEMENT)
         }
 
@@ -294,6 +299,12 @@ open class MainActivity : AppCompatActivity() {
                 )
             )
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        user.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+        boatManager.saveData(getSharedPreferences("Preferences", Context.MODE_PRIVATE))
+        super.onDetachedFromWindow()
     }
 
     override fun onPause() {

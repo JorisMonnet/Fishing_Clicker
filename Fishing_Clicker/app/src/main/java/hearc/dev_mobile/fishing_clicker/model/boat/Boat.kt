@@ -1,9 +1,11 @@
 package hearc.dev_mobile.fishing_clicker.model.boat
 
 import android.content.SharedPreferences
+import android.util.Log
 import hearc.dev_mobile.fishing_clicker.R
 import hearc.dev_mobile.fishing_clicker.model.money.Money
 import java.math.BigInteger
+import kotlin.math.pow
 
 /**
  * Class managing Boats which give idle money
@@ -26,6 +28,9 @@ class Boat(
      */
     fun createAttributes() {
         upgradePrice = Money(purchasePrice.value.multiply(BigInteger("2")))
+        for(i in 0..level+1){
+            upgradePrice.value += upgradePrice.value.divide(BigInteger("2"))
+        }
         resourceId = getResourceId(resourceIdNumber)
         drawableId = getDrawableId(resourceIdNumber)
     }
@@ -90,7 +95,8 @@ class Boat(
      * Function to self update on call the level & then the efficiency of the boat
      */
     fun increaseLevel() {
-        efficiency += BigInteger.valueOf(5 * ++level)
+        level++
+        efficiency += BigInteger.valueOf(5 * level)
         upgradePrice.value += upgradePrice.value.divide(BigInteger("2"))
     }
 

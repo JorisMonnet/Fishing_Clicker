@@ -65,6 +65,7 @@ class PopUpShake : MainActivity() {
             canIncPercent = false
             setDisplayText()
         }, 5000)
+        setDisplayText()
     }
 
     /**
