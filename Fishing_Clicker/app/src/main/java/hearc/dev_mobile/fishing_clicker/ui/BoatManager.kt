@@ -2,7 +2,6 @@ package hearc.dev_mobile.fishing_clicker.ui
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -22,7 +21,6 @@ import java.util.*
 class BoatManager(private val mainActivity: MainActivity) {
 
     val boatList: LinkedList<Boat> = generateBoatList()
-
     private var navView: NavigationView = mainActivity.findViewById(R.id.nav_view)
     private var applicationContext: Context = mainActivity.applicationContext
     private var displayedBoat = 0
@@ -174,8 +172,10 @@ class BoatManager(private val mainActivity: MainActivity) {
                 navView.menu.findItem(boatList[i].resourceId).isVisible = true
                 navView.menu.findItem(boatList[i].resourceId).title = boatList[i].getTitleUpgrade()
             }
-            navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).isVisible = true
-            navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).title = boatList[displayedBoatFromPref].getTitlePurchase()
+            if(displayedBoatFromPref!=boatList.size){
+                navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).isVisible = true
+                navView.menu.findItem(boatList[displayedBoatFromPref].resourceId).title = boatList[displayedBoatFromPref].getTitlePurchase()
+            }
             displayedBoat = displayedBoatFromPref
         } else {
             navView.menu.findItem(R.id.boat1).title = boatList[0].getTitlePurchase()

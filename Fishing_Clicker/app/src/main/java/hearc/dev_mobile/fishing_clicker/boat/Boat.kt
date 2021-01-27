@@ -52,7 +52,7 @@ class Boat(
             7 -> R.drawable.ic_boat6
             8 -> R.drawable.ic_boat7
             9 -> R.drawable.ic_boat8
-            10 -> R.drawable.ic_fish_boat1
+            10 -> R.drawable.ic_fish_boat2
             else -> R.drawable.ic_fish_boat1
         }
     }
