@@ -36,9 +36,11 @@
         android:textSize="20sp"
         app:drawableEndCompat="@drawable/ic_money" />
     <ScrollView
+        android:scrollbars="none"
         android:id="@+id/scrollViewImages"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp">
     <LinearLayout
         android:id="@+id/imageLayout"
         android:gravity="center"
