@@ -17,4 +17,5 @@
     <string name="about2">  27/01/2021</string>
     <string name="about3">About</string>
     <string name="specs0">Specs</string>
+    <string name="defaultDescription">Image</string>
 </resources>
