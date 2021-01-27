@@ -52,6 +52,9 @@ class PopUpSpecs : MainActivity() {
         text_specs_lvl.text =
             this.resources.getString(R.string.level, user.level.toString())
 
+        close_specs.setOnClickListener {
+            onBackPressed()
+        }
     }
 
 
