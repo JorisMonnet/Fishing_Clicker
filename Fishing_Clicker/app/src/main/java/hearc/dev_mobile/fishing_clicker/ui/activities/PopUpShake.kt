@@ -11,6 +11,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.*
+import android.util.Log
 import android.view.animation.DecelerateInterpolator
 import androidx.core.graphics.ColorUtils
 import hearc.dev_mobile.fishing_clicker.MainActivity
@@ -86,7 +87,6 @@ class PopUpShake : MainActivity() {
                 vibration(750L)
             }
         }
-
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
     }
 
@@ -107,9 +107,7 @@ class PopUpShake : MainActivity() {
             popup_window_text.text =
                 this.resources.getString(R.string.percent2, percentToAddAfterShakeEvent.toString())
             popup_window_text.textSize = 30F
-        } catch (e: Exception) {
-
-        }
+        } catch (e: Exception) {}
 
         Handler(Looper.getMainLooper()).postDelayed({
             canIncPercent = true
@@ -121,6 +119,7 @@ class PopUpShake : MainActivity() {
      * Function when quitting the shake page with an animation
      */
     override fun onBackPressed() {
+        setDisplayText()
         // Fade animation for the background of Popup Window when you press the back button
         val alpha = 100 // between 0-255
         val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor("#000000"), alpha)
@@ -131,7 +130,6 @@ class PopUpShake : MainActivity() {
                 animator.animatedValue as Int
             )
         }
-
         // Fade animation for the Popup Window when you press the back button
         pop_up_shake_view_with_border.animate().alpha(0f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
